@@ -14,7 +14,7 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1FadetoBlack;
-class j1Player;
+class j1EntityManager;
 
 class j1App
 {
@@ -86,6 +86,7 @@ public:
 	j1FadetoBlack*		fade;
 	j1Scene*			scene;
 	j1Map*				map;
+	j1EntityManager*	entityManager;
 
 private:
 

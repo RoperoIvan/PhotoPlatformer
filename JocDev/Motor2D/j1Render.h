@@ -43,6 +43,8 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	bool IsOnCamera(const int &x, const int &y, const int &w, const int &h)const;
+
 public:
 
 	SDL_Renderer*	renderer;

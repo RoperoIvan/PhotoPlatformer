@@ -42,6 +42,9 @@ void j1Map::Draw()
 			{
 				for (int j = 0; j < data.height; j++)
 				{
+					if (!App->render->IsOnCamera(MapToWorld(i, j).x, MapToWorld(i, j).y, data.tile_width, data.tile_height))
+						continue;
+
 					uint gid = layer_iterator->data->data[GetArrayPos(i, j)];
 					if (gid != 0)
 					{

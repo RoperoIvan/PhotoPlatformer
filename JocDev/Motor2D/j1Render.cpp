@@ -118,6 +118,15 @@ void j1Render::SetBackgroundColor(SDL_Color color)
 	background = color;
 }
 
+bool j1Render::IsOnCamera(const int & x, const int & y, const int & w, const int & h) const
+{
+	uint scale = App->win->GetScale();
+	SDL_Rect rect = { x*scale ,y*scale ,w*scale ,h*scale };
+	SDL_Rect cam = { -camera.x*scale ,-camera.y*scale ,camera.w*scale ,camera.h*scale };
+
+	return SDL_HasIntersection(&rect, &cam);
+}
+
 void j1Render::SetViewPort(const SDL_Rect& rect)
 {
 	SDL_RenderSetViewport(renderer, &rect);
