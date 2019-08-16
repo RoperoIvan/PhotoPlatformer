@@ -15,6 +15,7 @@ class j1Scene;
 class j1Map;
 class j1FadetoBlack;
 class j1EntityManager;
+class j1Collisions;
 
 class j1App
 {
@@ -78,15 +79,16 @@ private:
 public:
 
 	// Modules
-	j1Window*			win;
-	j1Input*			input;
-	j1Render*			render;
-	j1Textures*			tex;
-	j1Audio*			audio;
-	j1FadetoBlack*		fade;
-	j1Scene*			scene;
-	j1Map*				map;
-	j1EntityManager*	entityManager;
+	j1Window*			win	= nullptr;
+	j1Input*			input = nullptr;
+	j1Render*			render = nullptr;
+	j1Textures*			tex = nullptr;
+	j1Audio*			audio = nullptr;
+	j1FadetoBlack*		fade = nullptr;
+	j1Scene*			scene = nullptr;
+	j1Map*				map = nullptr;
+	j1EntityManager*	entityManager = nullptr;
+	j1Collisions*		collisions = nullptr;
 
 private:
 

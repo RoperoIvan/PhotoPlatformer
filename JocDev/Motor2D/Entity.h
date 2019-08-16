@@ -3,6 +3,7 @@
 
 #include "p2Point.h"
 #include "j1Textures.h"
+#include "Animation.h"
 
 enum class ENTITY_TYPE
 {
@@ -22,8 +23,12 @@ public:
 	void Draw();
 
 public:
-	
-	SDL_Texture* texture;
+	Collider* collider = nullptr;
+	SDL_Texture* texture = nullptr;
+	Animation* currentAnimation = nullptr;
+
+	fPoint position;
+	fPoint speed;
 };
 
 #endif

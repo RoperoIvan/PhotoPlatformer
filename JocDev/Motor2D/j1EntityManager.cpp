@@ -15,12 +15,12 @@ bool j1EntityManager::Start()
 
 bool j1EntityManager::PreUpdate()
 {
-	ret = true;
+	bool ret = true;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != entities.end; entityItem = entityItem->next)
 	{
-		
+
 	}
-	return true;
+	return ret;
 }
 
 bool j1EntityManager::Update()

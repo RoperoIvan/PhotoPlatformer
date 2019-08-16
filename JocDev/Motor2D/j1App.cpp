@@ -12,6 +12,7 @@
 #include "j1Map.h"
 #include "j1FadetoBlack.h"
 #include "j1EntityManager.h"
+#include "j1Collisions.h"
 #include "j1App.h"
 
 // Constructor
@@ -29,7 +30,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	entityManager = new j1EntityManager();
-
+	collisions = new j1Collisions();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -39,7 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(entityManager);
-
+	AddModule(collisions);
 	// render last to swap buffer
 	AddModule(render);
 }
