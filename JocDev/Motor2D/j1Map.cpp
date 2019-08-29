@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collisions.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -174,6 +175,18 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(layer);
 	}
 
+	pugi::xml_node object_iterator;
+	for (object_iterator = map_file.child("map").child("mapObject"); object_iterator && ret; object_iterator = object_iterator.next_sibling("mapObject"))
+	{
+		Layer* layer = new Layer();
+
+		if (ret == true)
+		{
+			ret = LoadLayer(layer_iterator, layer);
+		}
+
+		data.layers.add(layer);
+	}
 
 	if(ret == true)
 	{
@@ -366,5 +379,15 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer)
 		}
 	}
 
+	return ret;
+}
+
+bool j1Map::LoadObject(pugi::xml_node& node)
+{
+	bool ret = true;
+	//p2SString objectName = node.attribute("name").as_string();
+
+	//if(objectName.GetString() == "Collisions")
+	//	App->collisions->AddCollider({})
 	return ret;
 }

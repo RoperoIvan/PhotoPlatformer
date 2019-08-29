@@ -15,12 +15,13 @@ class Entity
 {
 public:
 
-	Entity(fPoint position);
+	Entity(const fPoint &position, const fPoint &speed);
 	~Entity();
 
-	bool Start();
-	void Move();
-	void Draw();
+	virtual bool Start() = 0;
+	virtual void Move(float dt) = 0;
+	virtual void Draw() = 0;
+	virtual void OnCollision(Collider*) = 0;
 
 public:
 	Collider* collider = nullptr;

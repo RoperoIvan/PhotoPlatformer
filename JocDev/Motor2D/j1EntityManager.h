@@ -14,20 +14,26 @@ public:
 	~j1EntityManager();
 
 	bool Start();
-	bool PreUpdate();
-	bool Update();
-	bool PostUpdate();
+	bool PreUpdate(float dt) override;
+	bool Update(float dt) override;
+	bool PostUpdate(float dt) override;
 	bool CleanUp();
 
 public:
 
-	void CreateEntity(const fPoint &position);
+	Entity* CreateEntity(const fPoint &position, ENTITY_TYPE type);
 	void DeleteEntity(Entity* entity);
+
+	void OnCollision(Collider*, Collider*);
 
 private:
 
 	p2List<Entity*> entities;
 	p2List<Entity*> interactive_entities;
+
+public:
+
+	Entity* player = nullptr;
 };
 
 

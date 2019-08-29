@@ -1,13 +1,10 @@
-﻿  Entity.cpp
+﻿  Player.cpp
 c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\animation.h(41): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
-  Player.cpp
-c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\animation.h(41): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
-  j1App.cpp
-c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\animation.h(41): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
-  j1EntityManager.cpp
-c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\animation.h(41): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
-  j1Render.cpp
-c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\j1render.cpp(124): warning C4838: la conversión de 'uint' en 'int' requiere una conversión de restricción
-c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\j1render.cpp(125): warning C4838: la conversión de 'uint' en 'int' requiere una conversión de restricción
-  Generando código...
+c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\player.h(38): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\player.cpp(11): warning C4305: 'argumento': truncamiento de 'double' a 'const TYPE'
+          with
+          [
+              TYPE=float
+          ]
+c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\player.cpp(34): warning C4305: '=': truncamiento de 'double' a 'float'
   Motor2D.vcxproj -> C:\Users\Isabel\Desktop\class vec3\PhotoPlatformer\JocDev\Debug\Motor 2D.exe

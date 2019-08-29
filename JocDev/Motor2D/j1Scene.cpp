@@ -9,6 +9,9 @@
 #include "j1Map.h"
 #include "j1FadetoBlack.h"
 #include "j1Scene.h"
+#include "j1EntityManager.h"
+
+#include "j1Collisions.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -32,12 +35,15 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	//App->map->Load("SeaTempleMap.tmx");
-	App->map->Load("Volcano_Map.tmx");
+
+	Collider* col = App->collisions->AddCollider({ -App->render->camera.x,-30,1500,100 },COLLIDER_TYPE::COLLIDER_WALL);
+	
+	App->entityManager->player = App->entityManager->CreateEntity({ 100,-500 }, ENTITY_TYPE::PLAYER);
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
+bool j1Scene::PreUpdate(float dt)
 {
 	return true;
 }
@@ -52,46 +58,32 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 5;
+		App->render->camera.y += 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 5;
+		App->render->camera.y -= 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += 5;
+		App->render->camera.x += 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 5;
-
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && App->fade->IsFading() == false)
-	{
-		App->map->CleanUp();
-		App->fade->fadetoBlack();
-		App->map->Load("SeaTempleMap.tmx");
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && App->fade->IsFading() == false) 
-	{
-		App->map->CleanUp();
-		App->fade->fadetoBlack();
-		App->map->Load("Volcano_Map.tmx");
-	}
+		App->render->camera.x -= 1;
 
 	//App->render->Blit(img, 0, 0);
-	App->map->Draw();
+	//App->map->Draw();
 
 	
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count());
+	//p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+	//				App->map->data.width, App->map->data.height,
+	//				App->map->data.tile_width, App->map->data.tile_height,
+	//				App->map->data.tilesets.count());
 
-	App->win->SetTitle(title.GetString());
+	//App->win->SetTitle(title.GetString());
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::PostUpdate()
+bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 

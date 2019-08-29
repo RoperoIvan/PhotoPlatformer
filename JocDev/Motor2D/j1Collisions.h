@@ -43,14 +43,14 @@ public:
 	j1Collisions();
 	~j1Collisions();
 
-	bool PreUpdate() override;
+	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 	Collider * colliders[MAX_COLLIDERS];
-	bool debug = false;
+	bool debug = true;
 private:
 
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];

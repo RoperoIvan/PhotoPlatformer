@@ -10,7 +10,7 @@ j1Collisions::j1Collisions()
 		colliders[i] = nullptr;
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
@@ -21,7 +21,7 @@ j1Collisions::j1Collisions()
 j1Collisions::~j1Collisions()
 {}
 
-bool j1Collisions::PreUpdate()
+bool j1Collisions::PreUpdate(float dt)
 {
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -71,18 +71,17 @@ bool j1Collisions::PreUpdate()
 // Called before render is available
 bool j1Collisions::Update(float dt)
 {
-	DebugDraw();
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		debug = !debug;
+
+	if (debug == true)
+		DebugDraw();
 	
 	return true;
 }
 
 void j1Collisions::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
-
-	if (debug == false)
-		return;
 
 	Uint8 alpha = 80;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)

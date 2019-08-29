@@ -11,7 +11,7 @@ public:
 	~j1FadetoBlack();
 
 	bool Start();
-	bool Update(float id);
+	bool Update(float id) override;
 	bool fadetoBlack(float time = 2.0f);
 	bool IsFading() const;
 

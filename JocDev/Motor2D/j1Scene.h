@@ -21,13 +21,13 @@ public:
 	bool Start();
 
 	// Called before all Updates
-	bool PreUpdate();
+	bool PreUpdate(float dt) override;
 
 	// Called each loop iteration
-	bool Update(float dt);
+	bool Update(float dt) override;
 
 	// Called before all Updates
-	bool PostUpdate();
+	bool PostUpdate(float dt) override;
 
 	// Called before quitting
 	bool CleanUp();
