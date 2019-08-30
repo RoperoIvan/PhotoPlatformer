@@ -3,6 +3,7 @@
 #include "j1Collisions.h"
 #include "j1Render.h"
 #include "Player.h"
+#include "Platform.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -15,6 +16,10 @@ j1EntityManager::~j1EntityManager()
 
 bool j1EntityManager::Start()
 {
+	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
+	{		
+		entityItem->data->Start();
+	}
 	return true;
 }
 
@@ -70,7 +75,10 @@ Entity* j1EntityManager::CreateEntity(const fPoint & position, ENTITY_TYPE type)
 	case ENTITY_TYPE::NO_ENTITY:
 		break;
 	case ENTITY_TYPE::PLAYER:
-		entity = new Player(position, { 0.08,-0.08 });
+		entity = new Player(position);
+		break;
+	case ENTITY_TYPE::PLATFORM:
+		entity = new Platform(position);
 		break;
 	default:
 		break;

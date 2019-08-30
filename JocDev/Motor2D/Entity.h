@@ -8,14 +8,15 @@
 enum class ENTITY_TYPE
 {
 	NO_ENTITY,
-	PLAYER
+	PLAYER,
+	PLATFORM
 };
 
 class Entity
 {
 public:
 
-	Entity(const fPoint &position, const fPoint &speed);
+	Entity(const fPoint &position);
 	~Entity();
 
 	virtual bool Start() = 0;

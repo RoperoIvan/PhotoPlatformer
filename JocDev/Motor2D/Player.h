@@ -14,7 +14,7 @@ enum class Player_States
 class Player : public Entity
 {
 public:
-	Player(const fPoint &position, const fPoint &speed);
+	Player(const fPoint &position);
 	~Player();
 
 	bool Start() override;
@@ -25,7 +25,7 @@ public:
 
 private:
 
-	void Jump();
+	void Flash();
 	void InPut();
 
 private:
@@ -35,10 +35,12 @@ private:
 	Animation jump;
 	
 	Player_States state = Player_States::fall_State;
-	float gravity = 0.2;
+	float gravity;
 	
 	j1Timer jumpTime;
 	fPoint initialJumpSpeed;
+
+	p2List<Entity*> platforms;
 
 };
 

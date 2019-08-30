@@ -52,6 +52,9 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -122,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
