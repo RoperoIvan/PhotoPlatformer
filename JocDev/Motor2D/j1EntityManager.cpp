@@ -102,6 +102,5 @@ void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 	{
 		dynamic_cast<Player*>(player)->OnCollision(col2);
 	}
-	else if(col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
-		dynamic_cast<Player*>(player)->OnCollision(col1);
+
 }

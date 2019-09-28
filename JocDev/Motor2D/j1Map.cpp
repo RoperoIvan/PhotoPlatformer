@@ -5,6 +5,8 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Window.h"
+#include "j1Collisions.h"
+#include "j1EntityManager.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -60,8 +62,6 @@ iPoint j1Map::MapToWorld(int column, int row) const
 {
 	iPoint retVec(0, 0);
 
-	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
-	// TODO 1: Add isometric map to world coordinates
 	switch (data.type) {
 	case MapTypes::MAPTYPE_ORTHOGONAL:
 		retVec.x = column * data.tile_width;
@@ -83,8 +83,7 @@ iPoint j1Map::MapToWorld(int column, int row) const
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint retVec(0, 0);
-	// TODO 2: Add orthographic world to map coordinates
-	// TODO 3: Add the case for isometric maps to WorldToMap
+	
 	switch (data.type) {
 	case MapTypes::MAPTYPE_ORTHOGONAL:
 		retVec.x = x / data.tile_width;
@@ -105,7 +104,7 @@ SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
 	SDL_Rect rect = { 0, 0, 0, 0 };
-	// TODO 7(old): Create a method that receives a tile id and returns it's Rect
+
 	rect.w = tile_width;
 	rect.h = tile_height;
 	rect.x = margin + ((rect.w + spacing) * (relative_id % columns));
@@ -196,6 +195,13 @@ bool j1Map::Load(const char* file_name)
 
 		if (ret == true)
 			data.mapLayers.add(lay);
+	}
+
+	pugi::xml_node object;
+	for (object = map_file.child("map").child("objectgroup"); object && ret; object = object.next_sibling("objectgroup"))
+	{
+		ret = LoadObjects(object);
+
 	}
 
 	if (ret == true)
@@ -384,6 +390,39 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 			layer->tileArray[i++] = tile.attribute("gid").as_int(0);
 		}
 	}
+
+	return ret;
+}
+
+bool j1Map::LoadObjects(pugi::xml_node & node)
+{
+	bool ret = true;
+	if (node == NULL)
+		LOG("Error");
+	std::string name(node.attribute("name").as_string());
+	
+	if (name.compare("Colliders") == 0)
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WALL);
+	}
+
+	else if (name.compare("CheckPoint") == 0)
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		{
+			pugi::xml_node properties = obj.child("properties").child("property");
+			
+			bool is_first = properties.attribute("value").as_bool();
+
+			if(!is_first)
+				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_CHECKPOINT);
+			else
+				App->entityManager->player = App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::PLAYER);
+		}
+	}
+
+
 
 	return ret;
 }

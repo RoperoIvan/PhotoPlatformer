@@ -41,6 +41,7 @@ private:
 	j1Timer jumpTime;
 	fPoint initialJumpSpeed;
 	fPoint initialSpeed;
+	fPoint respawn;
 
 	p2List<Entity*> platforms;
 
