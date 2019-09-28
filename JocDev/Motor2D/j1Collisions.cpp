@@ -147,3 +147,4 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.y < r.y + r.h &&
 		rect.h + rect.y > r.y);
 }
+

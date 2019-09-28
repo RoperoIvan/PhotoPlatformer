@@ -13,6 +13,15 @@ enum COLLIDER_TYPE
 	COLLIDER_MAX
 };
 
+enum class COLLIDER_DIRECTION
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	NO_COLLIDER
+};
+
 struct Collider
 {
 	SDL_Rect rect;
@@ -47,10 +56,12 @@ public:
 	bool Update(float dt) override;
 	bool CleanUp() override;
 
+
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 	Collider * colliders[MAX_COLLIDERS];
 	bool debug = true;
+
 private:
 
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];

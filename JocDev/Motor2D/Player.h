@@ -18,10 +18,11 @@ public:
 	~Player();
 
 	bool Start() override;
+	void PreUpdate(float dt)override;
 	void Move(float dt) override;
 	void Draw()override;
 
-	void OnCollision(Collider*) override;
+	void OnCollision(Collider* c1) override;
 
 private:
 
@@ -39,6 +40,7 @@ private:
 	
 	j1Timer jumpTime;
 	fPoint initialJumpSpeed;
+	fPoint initialSpeed;
 
 	p2List<Entity*> platforms;
 

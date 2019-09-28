@@ -26,7 +26,11 @@ bool j1EntityManager::Start()
 bool j1EntityManager::PreUpdate(float dt)
 {
 	bool ret = true;
-	
+	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
+	{
+		
+		entityItem->data->PreUpdate(dt);
+	}
 
 	return ret;
 }
@@ -94,8 +98,10 @@ void j1EntityManager::DeleteEntity(Entity * entity)
 
 void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 {
-	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER || col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER)
 	{
 		dynamic_cast<Player*>(player)->OnCollision(col2);
 	}
+	else if(col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+		dynamic_cast<Player*>(player)->OnCollision(col1);
 }

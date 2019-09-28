@@ -5,6 +5,8 @@
 #include "j1Textures.h"
 #include "Animation.h"
 
+enum class COLLIDER_DIRECTION;
+
 enum class ENTITY_TYPE
 {
 	NO_ENTITY,
@@ -20,6 +22,7 @@ public:
 	~Entity();
 
 	virtual bool Start() = 0;
+	virtual void PreUpdate(float dt) = 0;
 	virtual void Move(float dt) = 0;
 	virtual void Draw() = 0;
 	virtual void OnCollision(Collider*) = 0;
