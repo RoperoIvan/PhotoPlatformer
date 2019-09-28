@@ -9,6 +9,8 @@ Platform::Platform(const fPoint & position): Entity(position)
 
 Platform::~Platform()
 {
+	if(collider != nullptr)
+		collider->to_delete = true;
 }
 
 void Platform::Draw()

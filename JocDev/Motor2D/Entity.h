@@ -34,6 +34,7 @@ public:
 
 	fPoint position;
 	fPoint speed;
+	bool to_delete = false;
 };
 
 #endif

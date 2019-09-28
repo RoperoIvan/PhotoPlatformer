@@ -407,6 +407,12 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WALL);
 	}
 
+	else if (name.compare("MapDamage") == 0)
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_ENEMY);
+	}
+
 	else if (name.compare("CheckPoint") == 0)
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))

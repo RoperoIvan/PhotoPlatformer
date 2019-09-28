@@ -18,6 +18,10 @@ Player::Player(const fPoint &position) : Entity(position)
 
 Player::~Player()
 {
+	DeletePlatforms();
+	if(collider != nullptr)
+		collider->to_delete = true;
+
 }
 
 bool Player::Start()
@@ -64,6 +68,12 @@ void Player::Move(float dt)
 	{
 		state = Player_States::fall_State;
 	}
+
+	if (state == Player_States::die_state)
+	{
+		DeletePlatforms();
+		state = Player_States::fall_State;
+	}
 }
 
 void Player::Draw()
@@ -97,6 +107,19 @@ void Player::InPut()
 		Flash();
 		state = Player_States::fall_State;
 	}
+
+}
+
+void Player::DeletePlatforms()
+{
+	p2List_item<Entity*>* item = platforms.start;
+	while (item != NULL)
+	{
+		item->data->collider->to_delete = true;
+		item = item->next;
+	}
+	
+	platforms.clear();
 }
 
 void Player::OnCollision(Collider *col1)
@@ -133,11 +156,14 @@ void Player::OnCollision(Collider *col1)
 			}
 		}
 	}
-
-	if (col1->type == COLLIDER_TYPE::COLLIDER_CHECKPOINT)
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_CHECKPOINT)
 	{
 		respawn = position;
 		col1->to_delete = true;
 	}
-
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY)
+	{
+		position = respawn;
+		state = Player_States::die_state;
+	}
 }

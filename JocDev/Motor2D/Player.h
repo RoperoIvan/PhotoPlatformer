@@ -8,7 +8,8 @@ enum class Player_States
 {
 	jump_State,
 	fall_State,
-	idle_State
+	idle_State,
+	die_state
 };
 
 class Player : public Entity
@@ -28,6 +29,7 @@ private:
 
 	void Flash();
 	void InPut();
+	void DeletePlatforms();
 
 private:
 
