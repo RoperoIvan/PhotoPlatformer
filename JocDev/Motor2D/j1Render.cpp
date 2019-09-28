@@ -75,8 +75,8 @@ bool j1Render::PreUpdate(float dt)
 
 bool j1Render::Update(float dt)
 {
-	p2SString cameraPos("CameraPos: x=%d y=%d", -camera.x, -camera.y);
-	App->win->SetTitle(cameraPos.GetString());
+	/*p2SString cameraPos("CameraPos: x=%d y=%d", -camera.x, -camera.y);
+	App->win->SetTitle(cameraPos.GetString());*/
 	return true;
 }
 

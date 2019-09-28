@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -31,8 +32,6 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	// TODO 5(old): Prepare the loop to draw all tilesets + Blit
-
 	for (p2List_item<TileSet*>* tilesetIterator = data.tilesets.start; tilesetIterator != NULL; tilesetIterator = tilesetIterator->next) {
 		for (p2List_item<MapLayer*>* layerIterator = data.mapLayers.start; layerIterator != NULL; layerIterator = layerIterator->next) {
 			for (int column = 0; column < layerIterator->data->columns; ++column) {
@@ -40,7 +39,11 @@ void j1Map::Draw()
 					uint gid = layerIterator->data->tileArray[layerIterator->data->GetArrayPos(column, row)];
 					if (gid != 0) {
 						iPoint worldPos = MapToWorld(column, row);
-						App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid));
+						if (App->render->IsOnCamera(worldPos.x, worldPos.y, tilesetIterator->data->GetTileRect(gid).w, tilesetIterator->data->GetTileRect(gid).h))
+						{
+							++numTiles;
+							App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid));
+						}
 					}
 				}
 			}
@@ -48,7 +51,9 @@ void j1Map::Draw()
 		}
 	}
 
-	// TODO 10(old): Complete the draw function
+	p2SString title("num tiles: %d", numTiles);
+	App->win->SetTitle(title.GetString());
+	numTiles = 0u;
 }
 
 iPoint j1Map::MapToWorld(int column, int row) const

@@ -110,7 +110,7 @@ public:
 	MapData data;
 
 private:
-
+	uint				numTiles = 0u;
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

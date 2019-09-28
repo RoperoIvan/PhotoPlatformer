@@ -8,11 +8,11 @@
 
 Player::Player(const fPoint &position) : Entity(position)
 {
-	collider = App->collisions->AddCollider({ (int)position.x,(int)position.y, 30, 30 }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);
+	collider = App->collisions->AddCollider({ (int)position.x,(int)position.y, 10, 10 }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);
 	//put in config
 	gravity = 0.1F;
-	initialJumpSpeed = { 1,-0.2f };
-	speed = { 0.2f,-0.2f };
+	initialJumpSpeed = { 1,-0.5f };
+	speed = { 1.f,-0.2f };
 }
 
 Player::~Player()
@@ -35,7 +35,7 @@ void Player::Move(float dt)
 {
 	if (state == Player_States::fall_State)
 	{
-		gravity = 0.01F;
+		gravity = 0.25F;
 
 		if (speed.y == 0)
 			jumpTime.Start();
@@ -48,7 +48,7 @@ void Player::Move(float dt)
 	}
 	if (state == Player_States::jump_State)
 	{
-		gravity = 0.01F;
+		gravity = 0.25F;
 		speed.y += (gravity*jumpTime.Read()/1000) * (gravity*jumpTime.Read() / 1000);
 
 		if (speed.y == 0)
