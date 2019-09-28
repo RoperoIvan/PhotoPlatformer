@@ -59,10 +59,10 @@ bool j1Render::Start()
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
 
-	//camera position
-	uint width, height;
-	App->win->GetWindowSize(width, height);
-	camera.y = -App->map->data.height * App->map->data.tile_height + height;
+	////camera position
+	//uint width, height;
+	//App->win->GetWindowSize(width, height);
+	//camera.y = -App->map->data.rows * App->map->data.tile_height + height;
 	return true;
 }
 

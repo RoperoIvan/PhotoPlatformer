@@ -11,8 +11,8 @@ Player::Player(const fPoint &position) : Entity(position)
 	collider = App->collisions->AddCollider({ (int)position.x,(int)position.y, 30, 30 }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);
 	//put in config
 	gravity = 0.1F;
-	initialJumpSpeed = { 1,-0.2 };
-	speed = { 0.2,-0.2 };
+	initialJumpSpeed = { 1,-0.2f };
+	speed = { 0.2f,-0.2f };
 }
 
 Player::~Player()

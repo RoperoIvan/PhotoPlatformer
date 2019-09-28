@@ -6,23 +6,35 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-
-struct Layer
+// ----------------------------------------------------
+//INFO:
+//- Width & Height are always calculated in pixels
+//- Columns & Rows are always calculated in number of tiles
+struct MapLayer
 {
-	p2SString name = nullptr;
-	uint width = 0;
-	uint height = 0;
-	uint* data = nullptr;
+	p2SString name;
+	uint columns = 0u;
+	uint rows = 0u;
+	uint* tileArray = nullptr;
 
-	inline uint Get(int x, int y) const
+	MapLayer() : tileArray(NULL)
+	{}
+
+	~MapLayer()
 	{
-		return 0;
+		RELEASE(tileArray);
+	}
+
+	// TODO 6 (old): Short function to get the value of x,y
+	inline uint GetArrayPos(int column, int row) const
+	{
+		return(row * columns + column);
 	}
 };
 
+// ----------------------------------------------------
 struct TileSet
 {
-	// TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
 
 	p2SString			name;
@@ -34,13 +46,13 @@ struct TileSet
 	SDL_Texture*		texture;
 	int					tex_width;
 	int					tex_height;
-	int					num_tiles_width;
-	int					num_tiles_height;
+	int					columns;
+	int					rows;
 	int					offset_x;
 	int					offset_y;
 };
 
-enum MapTypes
+enum class MapTypes
 {
 	MAPTYPE_UNKNOWN = 0,
 	MAPTYPE_ORTHOGONAL,
@@ -50,15 +62,14 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
+	int					columns;
+	int					rows;
 	int					tile_width;
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
-	// TODO 2: Add a list/array of layers to the map!
-	p2List<Layer*>		layers;
+	p2List<MapLayer*>	mapLayers;
 };
 
 // ----------------------------------------------------
@@ -83,18 +94,16 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
-	inline uint GetArrayPos(int x, int y) const;
+	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
 
 private:
 
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	// TODO 3: Create a method that loads a single laye
-	bool LoadLayer(pugi::xml_node& node, Layer* layer);
-	bool LoadObject(pugi::xml_node& node);
+	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
 public:
 
