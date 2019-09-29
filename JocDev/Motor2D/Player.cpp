@@ -30,7 +30,7 @@ Player::~Player()
 bool Player::Start()
 {
 	current_animation = &anim_idle;
-
+	/*current_animation->speed = 2;*/
 	return true;
 }
 
@@ -42,6 +42,8 @@ void Player::PreUpdate(float dt)
 
 void Player::Move(float dt)
 {
+	Player_States checker = state;
+
 	if (state == Player_States::fall_State)
 	{
 		gravity = 0.25F;
@@ -78,12 +80,16 @@ void Player::Move(float dt)
 		DeletePlatforms();
 		state = Player_States::fall_State;
 	}
+
+	if (checker != state)
+		ChangeAnim();
+		
 }
 
 void Player::Draw()
 {
 	if (current_animation != nullptr)
-	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
+	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), flip, 1.0F);
 
 }
 
@@ -104,10 +110,16 @@ void Player::InPut()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{		
 		position.x += speed.x;
+		current_animation = &anim_walking;
+		if(flip != SDL_FLIP_HORIZONTAL)
+			flip = SDL_FLIP_HORIZONTAL;		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x += -speed.x;
+		current_animation = &anim_walking;
+		if(flip != SDL_FLIP_NONE)
+			flip = SDL_FLIP_NONE;	
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -180,7 +192,7 @@ void Player::PushBack()
 {
 	for (uint i = 0; i < data.num_animations; ++i) {
 		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-			switch (data.animations[i].id) {
+			switch ((EntityState)data.animations[i].id) {
 			case EntityState::IDLE:
 				anim_idle.PushBack(data.animations[i].frames[j]);
 				break;
@@ -192,9 +204,6 @@ void Player::PushBack()
 				break;
 			case EntityState::FALL:
 				anim_fall.PushBack(data.animations[i].frames[j]);
-				break;
-			case EntityState::LAND:
-				anim_land.PushBack(data.animations[i].frames[j]);
 				break;
 			case EntityState::DEAD:
 				anim_death.PushBack(data.animations[i].frames[j]);
@@ -218,17 +227,14 @@ void Player::IdAnimToEntityState()
 		case 0:
 			data.animations[i].states = EntityState::IDLE;
 			break;
-		/*case 16:
+		case 3:
 			data.animations[i].states = EntityState::WALKING;
 			break;
-		case 32:
+		/*case 32:
 			data.animations[i].states = EntityState::JUMP;
 			break;
 		case 35:
 			data.animations[i].states = EntityState::FALL;
-			break;
-		case 36:
-			data.animations[i].states = EntityState::LAND;
 			break;
 		case 64:
 			data.animations[i].states = EntityState::DEAD;
@@ -237,6 +243,33 @@ void Player::IdAnimToEntityState()
 			data.animations[i].states = EntityState::UNKNOWN;
 			break;
 		}
+	}
+}
+
+void Player::ChangeAnim()
+{
+	switch (state)
+	{
+	case Player_States::idle_State:
+		current_animation = &anim_idle;
+		break;
+	case Player_States::walking_state:
+		current_animation = &anim_walking;
+		current_animation->Reset();
+		break;
+	case Player_States::jump_State:
+		current_animation = &anim_jump;
+		current_animation->Reset();
+		break;
+	case Player_States::fall_State:
+		current_animation = &anim_idle;
+		break;
+	case Player_States::die_state:
+		current_animation = &anim_death;
+		current_animation->Reset();
+		break;
+	default:
+		break;
 	}
 }
 
