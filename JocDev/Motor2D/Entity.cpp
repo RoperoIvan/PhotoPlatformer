@@ -52,6 +52,7 @@ bool Entity::LoadData(const char* ent_data)
 		data.animations[i].FrameCount(node.child("animation").child("frame"));
 		data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
 		data.animations[i].id = node.attribute("id").as_uint();
+		data.animations[i].type.create(node.attribute("type").as_string());
 		node = node.next_sibling("tile");
 	}
 
@@ -67,7 +68,8 @@ bool Entity::LoadData(const char* ent_data)
 		node = node.next_sibling("tile");
 	}
 
-	LoadProperties(entity_data_file.child("tileset").child("properties").child("property"));
+	/*LoadProperties(entity_data_file.child("tileset").child("properties").child("property"));*/
+	IdAnimToEntityState();
 	PushBack();
 
 	for (uint i = 0; i < data.num_animations; ++i) {		
@@ -86,7 +88,7 @@ bool Entity::LoadData(const char* ent_data)
 void Entity::Draw()
 {
 	if (current_animation != nullptr)
-		App->render->Blit(data.tiled.texture, position.x, position.y, &current_animation->frames[current_animation->GetCurrentFrameNumber()], 1.0F, true, flip);
+		App->render->Blit(data.tiled.texture, position.x, position.y, &current_animation->frames[current_animation->GetCurrentFrameNumber()], flip, 1.0F, true);
 	else
 		App->render->Blit(data.tiled.texture, position.x, position.y);
 }

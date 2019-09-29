@@ -9,7 +9,8 @@ enum class Player_States
 	jump_State,
 	fall_State,
 	idle_State,
-	die_state
+	die_state,
+	walking_state,
 };
 
 class Player : public Entity
@@ -33,7 +34,7 @@ private:
 	void IdAnimToEntityState();
 	//void LoadProperties(pugi::xml_node&);
 	void DeletePlatforms();
-
+	void ChangeAnim();
 private:
 
 	Animation anim_walking;

@@ -37,6 +37,7 @@ enum class EntityState {
 
 struct EntitiesAnim {
 	int id = 0;
+	p2SString type;
 	uint num_frames = 0;
 	SDL_Rect* frames = nullptr;
 	EntityState states;
@@ -76,7 +77,6 @@ public:
 public:
 	Collider* collider = nullptr;
 	SDL_Texture* texture = nullptr;
-	Animation* currentAnimation = nullptr;
 	pugi::xml_document	entity_data_file;
 	fPoint position;
 	fPoint speed;
