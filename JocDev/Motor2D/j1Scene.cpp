@@ -36,7 +36,6 @@ bool j1Scene::Start()
 {
 	App->map->Load("hehe.tmx");
 	
-	App->entityManager->player = App->entityManager->CreateEntity({ 100,-500 }, ENTITY_TYPE::PLAYER);
 	App->entityManager->player->data.tiled.texture = App->tex->Load(App->entityManager->player->data.tiled.image_path.GetString());
 
 	return true;

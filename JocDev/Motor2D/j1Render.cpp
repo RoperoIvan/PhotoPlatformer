@@ -4,8 +4,12 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "j1EntityManager.h"
+#include "j1Collisions.h"
 
 #define VSYNC true
+#define CAMERA_MARGE_L 150
+#define CAMERA_MARGE_XL 330
 
 j1Render::j1Render() : j1Module()
 {
@@ -70,6 +74,8 @@ bool j1Render::Start()
 bool j1Render::PreUpdate(float dt)
 {
 	SDL_RenderClear(renderer);
+		CameraPos();
+
 	return true;
 }
 
@@ -84,6 +90,7 @@ bool j1Render::PostUpdate(float dt)
 {
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
+
 	return true;
 }
 
@@ -127,6 +134,28 @@ bool j1Render::IsOnCamera(const int & x, const int & y, const int & w, const int
 	SDL_Rect cam = { -camera.x*scale ,-camera.y*scale ,camera.w*scale ,camera.h*scale };
 
 	return SDL_HasIntersection(&rect, &cam);
+}
+
+void j1Render::CameraPos()
+{
+	uint scale = App->win->GetScale();
+	SDL_Rect rect = { App->entityManager->player->collider->rect.x*scale ,App->entityManager->player->collider->rect.y*scale ,App->entityManager->player->collider->rect.w*scale ,App->entityManager->player->collider->rect.h*scale };
+	SDL_Rect cam = { -camera.x*scale ,-camera.y*scale ,camera.w*scale ,camera.h*scale };
+
+	if (cam.x + cam.w - (float)CAMERA_MARGE_XL < rect.x + rect.w)
+		cam.x = rect.x + rect.w + (float)CAMERA_MARGE_XL - cam.w;
+
+	else if (cam.x + (float)CAMERA_MARGE_L > rect.x)
+		cam.x = rect.x - (float)CAMERA_MARGE_L;
+
+	if (cam.y + cam.h - (float)CAMERA_MARGE_L < rect.y + rect.h)
+		cam.y = (rect.y + rect.h + (float)CAMERA_MARGE_L - cam.h);
+
+	else if (cam.y + (float)CAMERA_MARGE_XL > rect.y)
+		cam.y = (rect.y - (float)CAMERA_MARGE_XL);
+
+	camera.x = -cam.x;
+	camera.y = -cam.y;
 }
 
 void j1Render::SetViewPort(const SDL_Rect& rect)
