@@ -20,7 +20,7 @@ public:
 	bool Start() override;
 	void PreUpdate(float dt)override;
 	void Move(float dt) override;
-	void Draw()override;
+	void Draw();
 
 	void OnCollision(Collider* c1) override;
 
@@ -28,12 +28,17 @@ private:
 
 	void Flash();
 	void InPut();
-
+	void PushBack();
+	void IdAnimToEntityState();
+	//void LoadProperties(pugi::xml_node&);
 private:
 
-	Animation idle;
-	Animation run;
-	Animation jump;
+	Animation anim_walking;
+	Animation anim_jump;
+	Animation anim_fall;
+	Animation anim_land;
+	Animation anim_death;
+	Animation anim_default;
 	
 	Player_States state = Player_States::fall_State;
 	float gravity;

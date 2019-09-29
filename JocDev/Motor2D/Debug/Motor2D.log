@@ -1,3 +1,4 @@
-﻿  Player.cpp
-c:\users\isabel\desktop\class vec3\photoplatformer\jocdev\motor2d\animation.h(41): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
-  Motor2D.vcxproj -> C:\Users\Isabel\Desktop\class vec3\PhotoPlatformer\JocDev\Debug\Motor 2D.exe
+﻿  j1Scene.cpp
+c:\users\ivan_\onedrive\documentos\github\photoplatformer\jocdev\motor2d\animation.h(41): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
+  Motor2D.vcxproj -> C:\Users\ivan_\OneDrive\Documentos\GitHub\PhotoPlatformer\JocDev\Debug\Motor 2D.exe
+  Motor2D.vcxproj -> C:\Users\ivan_\OneDrive\Documentos\GitHub\PhotoPlatformer\JocDev\Debug\Motor 2D.pdb (Partial PDB)

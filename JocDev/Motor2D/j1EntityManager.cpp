@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "Player.h"
 #include "Platform.h"
+#include "p2Log.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -12,6 +13,21 @@ j1EntityManager::j1EntityManager()
 
 j1EntityManager::~j1EntityManager()
 {
+}
+
+bool j1EntityManager::Awake(pugi::xml_node& info)
+{
+	LOG("Loading TSX files");
+	bool ret = true;
+
+	// TSX of each enemy
+	pugi::xml_node node = info.child("entity");
+	for (int i = 0; node; node = node.next_sibling()) {
+		queue[i].tsx_file.create(node.attribute("file").as_string());
+		++i;
+	}
+
+	return ret;
 }
 
 bool j1EntityManager::Start()
@@ -52,7 +68,11 @@ bool j1EntityManager::Update(float dt)
 bool j1EntityManager::PostUpdate(float dt)
 {
 	bool ret = true;
-	
+	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next) {
+		if (entityItem != nullptr) {
+			entityItem->data->Draw();
+		}
+	}
 	interactive_entities.clear();
 	return ret;
 }

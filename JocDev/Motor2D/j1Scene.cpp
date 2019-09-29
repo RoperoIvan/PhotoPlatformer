@@ -39,6 +39,7 @@ bool j1Scene::Start()
 	Collider* col = App->collisions->AddCollider({ -App->render->camera.x,-30,1500,100 },COLLIDER_TYPE::COLLIDER_WALL);
 	
 	App->entityManager->player = App->entityManager->CreateEntity({ 100,-500 }, ENTITY_TYPE::PLAYER);
+	App->entityManager->player->data.tiled.texture = App->tex->Load(App->entityManager->player->data.tiled.image_path.GetString());
 	return true;
 }
 

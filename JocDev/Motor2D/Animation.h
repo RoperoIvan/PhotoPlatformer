@@ -62,6 +62,12 @@ public:
 	{
 		return loops > 0;
 	}
+
+	int GetCurrentFrameNumber()
+	{
+		return (int)current_frame;
+	}
+	
 };
 
 #endif

@@ -129,6 +129,9 @@
     <ClInclude Include="Platform.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
