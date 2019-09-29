@@ -44,8 +44,13 @@ bool j1EntityManager::PreUpdate(float dt)
 	bool ret = true;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		
-		entityItem->data->PreUpdate(dt);
+		if (entityItem->data->to_delete == true)
+		{
+			delete[] entityItem;
+			entityItem = nullptr;
+		}
+		else
+			entityItem->data->PreUpdate(dt);
 	}
 
 	return ret;
@@ -122,6 +127,9 @@ void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 	{
 		dynamic_cast<Player*>(player)->OnCollision(col2);
 	}
-	else if(col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+	if (col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+	{
 		dynamic_cast<Player*>(player)->OnCollision(col1);
+	}
+
 }

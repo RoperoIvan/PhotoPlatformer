@@ -8,7 +8,8 @@ enum class Player_States
 {
 	jump_State,
 	fall_State,
-	idle_State
+	idle_State,
+	die_state
 };
 
 class Player : public Entity
@@ -31,6 +32,8 @@ private:
 	void PushBack();
 	void IdAnimToEntityState();
 	//void LoadProperties(pugi::xml_node&);
+	void DeletePlatforms();
+
 private:
 
 	Animation anim_walking;
@@ -46,6 +49,7 @@ private:
 	j1Timer jumpTime;
 	fPoint initialJumpSpeed;
 	fPoint initialSpeed;
+	fPoint respawn;
 
 	p2List<Entity*> platforms;
 

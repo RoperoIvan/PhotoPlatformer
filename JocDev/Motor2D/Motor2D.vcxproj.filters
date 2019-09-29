@@ -155,5 +155,13 @@
     <Filter Include="Desenvolupament  ========\Modules\Entities">
       <UniqueIdentifier>{eb4490cf-4c6b-4c92-a43f-f9fa90c76fd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Maps">
+      <UniqueIdentifier>{b895c00d-7ecc-40cb-b7d6-6a695b2ea50e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Game\maps\hehe.tmx">
+      <Filter>Desenvolupament  ========\Modules\Maps</Filter>
+    </None>
   </ItemGroup>
 </Project>

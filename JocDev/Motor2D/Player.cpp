@@ -15,11 +15,16 @@ Player::Player(const fPoint &position) : Entity(position)
 	//put in config
 	gravity = 0.1F;
 	initialJumpSpeed = { 1,-0.5f };
-	speed = { 1.f,-0.2f };
+	speed = { 0.5f,-0.2f };
+	respawn = position;
 }
 
 Player::~Player()
 {
+	DeletePlatforms();
+	if(collider != nullptr)
+		collider->to_delete = true;
+
 }
 
 bool Player::Start()
@@ -67,6 +72,12 @@ void Player::Move(float dt)
 	{
 		state = Player_States::fall_State;
 	}
+
+	if (state == Player_States::die_state)
+	{
+		DeletePlatforms();
+		state = Player_States::fall_State;
+	}
 }
 
 void Player::Draw()
@@ -74,6 +85,48 @@ void Player::Draw()
 	if (current_animation != nullptr)
 	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
 
+}
+
+void Player::Flash()
+{
+	App->fade->fadetoBlack(2.F);
+	platforms.add(App->entityManager->CreateEntity(position, ENTITY_TYPE::PLATFORM));
+	position = respawn;
+}
+
+void Player::InPut()
+{
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		state = Player_States::jump_State;
+		position.y -= initialJumpSpeed.x;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{		
+		position.x += speed.x;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		position.x += -speed.x;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		Flash();
+		state = Player_States::fall_State;
+	}
+
+}
+
+void Player::DeletePlatforms()
+{
+	p2List_item<Entity*>* item = platforms.start;
+	while (item != NULL)
+	{
+		item->data->collider->to_delete = true;
+		item = item->next;
+	}
+	
+	platforms.clear();
 }
 
 void Player::OnCollision(Collider *col1)
@@ -110,36 +163,17 @@ void Player::OnCollision(Collider *col1)
 			}
 		}
 	}
-}
-
-
-void Player::Flash()
-{
-	App->fade->fadetoBlack(2.F);
-	platforms.add(App->entityManager->CreateEntity(position, ENTITY_TYPE::PLATFORM));
-}
-
-void Player::InPut()
-{
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_CHECKPOINT)
 	{
-		state = Player_States::jump_State;
-		position.y -= initialJumpSpeed.x;
+		respawn = position;
+		col1->to_delete = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{		
-		position.x += speed.x;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY)
 	{
-		position.x += -speed.x;
+		position = respawn;
+		state = Player_States::die_state;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		Flash();
-		position = { 100,-500 };
-		state = Player_States::fall_State;
-	}
+
 }
 
 void Player::PushBack()
@@ -227,3 +261,4 @@ void Player::IdAnimToEntityState()
 //		node = node.next_sibling();
 //	}
 //}
+

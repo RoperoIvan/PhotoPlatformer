@@ -85,6 +85,7 @@ public:
 	float anim_speed;
 	Animation anim_idle;
 	Animation* current_animation = nullptr;
+	bool to_delete = false;
 };
 
 #endif
