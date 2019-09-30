@@ -30,7 +30,7 @@ private:
 
 	void Flash();
 	void InPut();
-	void PushBack();
+	void PushBack() override;
 	void IdAnimToEntityState();
 	//void LoadProperties(pugi::xml_node&);
 	void DeletePlatforms();

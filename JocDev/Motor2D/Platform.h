@@ -14,6 +14,8 @@ public:
 	void PreUpdate(float dt)override {};
 	void Move(float dt) override {}
 	void OnCollision(Collider*) override{}
+	void PushBack() override {};
+
 	void Draw() override;
 
 private:

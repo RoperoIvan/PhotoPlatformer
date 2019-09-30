@@ -37,42 +37,60 @@ bool Entity::LoadData(const char* ent_data)
 	data.tiled.height = node.child("image").attribute("height").as_uint();
 
 	//Number of animations that has the entity
-	node = node.child("tile");
-	data.num_animations = 0;
+	
+	/*data.num_animations = 0;
 	while (node != NULL) {
 		data.num_animations++;
 		node = node.next_sibling("tile");
-	}
+	}*/
 
-	//Memory for the animations saved from the entity
-	data.animations = new EntitiesAnim[data.num_animations];
+	for(node = node.child("tile"); node; node = node.next_sibling("tile"))
+	{
+		pugi::xml_node anima = node.child("animation");
+		EntitiesAnim* anim = new EntitiesAnim();
+		
+		uint id = node.attribute("id").as_uint();
 
-	node = entity_data_file.child("tileset").child("tile");
-	for (uint i = 0; i < data.num_animations; ++i) {
-		data.animations[i].FrameCount(node.child("animation").child("frame"));
-		data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
-		data.animations[i].id = node.attribute("id").as_uint();
-		data.animations[i].type.create(node.attribute("type").as_string());
-		node = node.next_sibling("tile");
-	}
+		if (id == 0)
+			anim->states = EntityState::IDLE;
+		else if (id == 3)
+			anim->states = EntityState::WALKING;
 
-	//We take the info from the entities and we save it inside each frame of each animation
-	node = entity_data_file.child("tileset").child("tile");
-	pugi::xml_node node_frame;
-	for (uint i = 0; i < data.num_animations; ++i) {	
-		node_frame = node.child("animation").child("frame");
-		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-			data.animations[i].frames[j] = data.tiled.GetTileRect(node_frame.attribute("tileid").as_uint());
-			node_frame = node_frame.next_sibling("frame");
+		for (pugi::xml_node frame = anima.child("frame"); frame; frame = frame.next_sibling("frame"))
+		{
+			SDL_Rect *rect = new SDL_Rect(data.tiled.GetTileRect(frame.attribute("tileid").as_uint()));
+			anim->frames.add(rect);
 		}
-		node = node.next_sibling("tile");
+
+		data.animations.add(anim);
 	}
+
+
+	//node = entity_data_file.child("tileset").child("tile");
+	//for (uint i = 0; i < data.num_animations; ++i) {
+	//	
+	//	data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
+	//	data.animations[i].id = node.attribute("id").as_uint();
+	//	data.animations[i].type.create(node.attribute("type").as_string());
+	//	node = node.next_sibling("tile");
+	//}
+
+	////We take the info from the entities and we save it inside each frame of each animation
+	//node = entity_data_file.child("tileset").child("tile");
+	//pugi::xml_node node_frame;
+	//for (uint i = 0; i < data.num_animations; ++i) {	
+	//	node_frame = node.child("animation").child("frame");
+	//	for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+	//		data.animations[i].frames[j] = data.tiled.GetTileRect(node_frame.attribute("tileid").as_uint());
+	//		node_frame = node_frame.next_sibling("frame");
+	//	}
+	//	node = node.next_sibling("tile");
+	//}
 
 	/*LoadProperties(entity_data_file.child("tileset").child("properties").child("property"));*/
-	IdAnimToEntityState();
 	PushBack();
 
-	for (uint i = 0; i < data.num_animations; ++i) {		
+	/*for (uint i = 0; i < data.num_animations; ++i) {		
 		if (data.animations[i].frames != nullptr) {			
 			delete[] data.animations[i].frames;				
 			data.animations[i].frames = nullptr;
@@ -81,7 +99,7 @@ bool Entity::LoadData(const char* ent_data)
 	if (data.animations != nullptr) {
 		delete[] data.animations;
 		data.animations = nullptr;
-	}
+	}*/
 	return ret;
 }
 
@@ -107,7 +125,7 @@ void Entity::LoadProperties(pugi::xml_node & node)
 
 void Entity::IdAnimToEntityState()
 {
-	data.animations[0].states = EntityState::IDLE;
+	data.animations.start->data->states = EntityState::IDLE;
 }
 
 SDL_Rect TileEntity::GetTileRect(int id) const {

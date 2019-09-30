@@ -158,10 +158,21 @@
     <Filter Include="Desenvolupament  ========\Modules\Maps">
       <UniqueIdentifier>{b895c00d-7ecc-40cb-b7d6-6a695b2ea50e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Documents">
+      <UniqueIdentifier>{f8d6f444-6440-4b60-8fed-668a65e7cdca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\hehe.tmx">
       <Filter>Desenvolupament  ========\Modules\Maps</Filter>
     </None>
+    <None Include="..\Game\Player.tsx">
+      <Filter>Desenvolupament  ========\Modules\Documents</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========\Modules\Documents</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

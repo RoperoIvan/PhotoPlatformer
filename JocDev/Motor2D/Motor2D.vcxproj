@@ -124,6 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\hehe.tmx" />
+    <None Include="..\Game\Player.tsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

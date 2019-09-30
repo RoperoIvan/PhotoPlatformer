@@ -6,6 +6,8 @@
 #include "Animation.h"
 #include "SDL_image/include/SDL_image.h"
 
+#include "p2List.h"
+
 enum class COLLIDER_DIRECTION;
 
 struct TileEntity {
@@ -39,14 +41,14 @@ struct EntitiesAnim {
 	int id = 0;
 	p2SString type;
 	uint num_frames = 0;
-	SDL_Rect* frames = nullptr;
-	EntityState states;
+	p2List<SDL_Rect*> frames;
+	EntityState states = EntityState::UNKNOWN;
 	uint FrameCount(pugi::xml_node&);
 };
 
 struct EntityInfo {
 	TileEntity tiled;
-	EntitiesAnim* animations = nullptr;
+	p2List<EntitiesAnim*> animations;
 	uint num_animations = 0;
 };
 
@@ -71,7 +73,7 @@ public:
 	virtual void OnCollision(Collider*) = 0;
 	virtual void LoadProperties(pugi::xml_node&);
 	virtual void IdAnimToEntityState();
-	virtual void PushBack() {};
+	virtual void PushBack() = 0;
 	bool LoadData(const char*);
 
 public:
