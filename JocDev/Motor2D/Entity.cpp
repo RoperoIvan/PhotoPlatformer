@@ -55,6 +55,12 @@ bool Entity::LoadData(const char* ent_data)
 			anim->states = EntityState::IDLE;
 		else if (id == 3)
 			anim->states = EntityState::WALKING;
+		else if (id == 7)
+			anim->states = EntityState::JUMP;
+		else if (id == 10)
+			anim->states = EntityState::FALL;
+		else if (id == 12)
+			anim->states = EntityState::DEAD;
 
 		for (pugi::xml_node frame = anima.child("frame"); frame; frame = frame.next_sibling("frame"))
 		{
@@ -88,6 +94,7 @@ bool Entity::LoadData(const char* ent_data)
 	//}
 
 	/*LoadProperties(entity_data_file.child("tileset").child("properties").child("property"));*/
+	/*IdAnimToEntityState();*/
 	PushBack();
 
 	/*for (uint i = 0; i < data.num_animations; ++i) {		

@@ -32,7 +32,7 @@ Player::~Player()
 bool Player::Start()
 {
 	current_animation = &anim_idle;
-	/*current_animation->speed = 2;*/
+	current_animation->speed = 2;
 	return true;
 }
 
@@ -86,6 +86,10 @@ void Player::Move(float dt)
 		
 	collider->SetPos((int)position.x + 6, (int)position.y + 38);
 
+	if (checker == state)
+	{
+		ChangeAnim();
+	}
 }
 
 void Player::Draw()
@@ -225,7 +229,7 @@ void Player::PushBack()
 	}
 
 	anim_jump.loop = false;
-	anim_land.loop = false;
+	anim_fall.loop = false;
 	anim_death.loop = false;
 
 	//anim_idle.speed = 2.0F;
@@ -243,15 +247,15 @@ void Player::IdAnimToEntityState()
 		case 3:
 			anim->data->states = EntityState::WALKING;
 			break;
-		/*case 32:
-			data.animations[i].states = EntityState::JUMP;
+		case 7:
+			anim->data->states = EntityState::JUMP;
 			break;
-		case 35:
-			data.animations[i].states = EntityState::FALL;
+		case 10:
+			anim->data->states = EntityState::FALL;
 			break;
-		case 64:
-			data.animations[i].states = EntityState::DEAD;
-			break;*/
+		case 12:
+			anim->data->states = EntityState::DEAD;
+			break;
 		default:
 			anim->data->states = EntityState::UNKNOWN;
 			break;
@@ -266,19 +270,12 @@ void Player::ChangeAnim()
 	case Player_States::idle_State:
 		current_animation = &anim_idle;
 		break;
-	case Player_States::walking_state:
-		if (current_animation == &anim_idle)
-		{
-			current_animation = &anim_walking;
-			anim_walking.Reset();
-		}
-		break;
 	case Player_States::jump_State:
 		current_animation = &anim_jump;
 		current_animation->Reset();
 		break;
 	case Player_States::fall_State:
-		current_animation = &anim_idle;
+		current_animation = &anim_fall;
 		break;
 	case Player_States::die_state:
 		current_animation = &anim_death;

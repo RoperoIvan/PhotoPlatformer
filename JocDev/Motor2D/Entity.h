@@ -30,10 +30,9 @@ struct TileEntity {
 enum class EntityState {
 	IDLE,
 	WALKING,
-	DEAD,
 	JUMP,
 	FALL,
-	LAND,
+	DEAD,
 	UNKNOWN
 };
 
