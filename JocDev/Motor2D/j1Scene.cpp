@@ -34,7 +34,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("hehe.tmx");
+	App->map->Load("Level1.tmx");
 	
 	App->entityManager->player->data.tiled.texture = App->tex->Load(App->entityManager->player->data.tiled.image_path.GetString());
 
