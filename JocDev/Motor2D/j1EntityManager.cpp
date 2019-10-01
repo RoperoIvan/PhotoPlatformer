@@ -6,7 +6,7 @@
 #include "Platform.h"
 #include "p2Log.h"
 
-j1EntityManager::j1EntityManager()
+j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.create("entities");
 }
@@ -132,4 +132,31 @@ void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 		dynamic_cast<Player*>(player)->OnCollision(col1);
 	}
 
+}
+
+bool j1EntityManager::Load(pugi::xml_node& file)
+{
+	bool ret = true;
+
+	p2List_item<Entity*> *item = entities.start;
+	for (; item != nullptr; item = item->next)
+	{
+		if (item != nullptr)
+			item->data->Load(file);
+	}
+
+	return ret;
+}
+
+bool j1EntityManager::Save(pugi::xml_node& file) const
+{
+	bool ret = true;
+	p2List_item<Entity*> *item = entities.start;
+	for (; item != nullptr; item = item->next)
+	{
+		if(item != nullptr)
+			item->data->Save(file);		
+	}
+
+	return ret;
 }

@@ -35,6 +35,8 @@ private:
 	//void LoadProperties(pugi::xml_node&);
 	void DeletePlatforms();
 	void ChangeAnim();
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&)const;
 private:
 
 	Animation anim_walking;
