@@ -116,7 +116,7 @@ void Entity::LoadProperties(pugi::xml_node & node)
 	speed.y = node.child("speed").attribute("y").as_float();
 	size.x = node.child("size").attribute("x").as_int();
 	size.y = node.child("size").attribute("y").as_int();
-	offset.x = node.child("offset").attribute("y").as_int();
+	offset.x = node.child("offset").attribute("x").as_int();
 	offset.y = node.child("offset").attribute("y").as_int();
 }
 

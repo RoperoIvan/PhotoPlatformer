@@ -83,7 +83,7 @@ void Player::Move(float dt)
 		state = Player_States::fall_State;
 	}		
 		
-	collider->SetPos((int)position.x + 6, (int)position.y + 38);
+	collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
 
 	if (checker == state)
 	{
