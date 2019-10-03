@@ -98,6 +98,30 @@ void Player::Draw()
 
 }
 
+bool Player::Load(pugi::xml_node& node)
+{
+	bool ret = true;
+
+	pugi::xml_node p_stats = node.child("stats");
+	gravity = p_stats.attribute("gravity").as_float();
+	position.x = p_stats.attribute("position_x").as_int();
+	position.y = p_stats.attribute("position_y").as_int();
+
+	return ret;
+}
+
+bool Player::Save(pugi::xml_node& node) const
+{
+	bool ret = true;
+
+	pugi::xml_node p_stats = node.append_child("stats");
+	p_stats.append_attribute("gravity") = (float)gravity;
+	p_stats.append_attribute("position_x") = (int)position.x;
+	p_stats.append_attribute("position_y") = (int)position.y;
+
+	return ret;
+}
+
 void Player::Flash()
 {
 	App->fade->fadetoBlack(2.F);

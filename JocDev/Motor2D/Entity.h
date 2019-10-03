@@ -73,6 +73,8 @@ public:
 	virtual void LoadProperties(pugi::xml_node&);
 	virtual void IdAnimToEntityState();
 	virtual void PushBack() = 0;
+	virtual bool Load(pugi::xml_node&) { return true; };
+	virtual bool Save(pugi::xml_node&) const { return true; };
 	bool LoadData(const char*);
 
 public:

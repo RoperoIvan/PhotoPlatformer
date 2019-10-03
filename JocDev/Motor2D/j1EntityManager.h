@@ -27,7 +27,8 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp();
-
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&)const;
 public:
 
 	Entity* CreateEntity(const fPoint &position, ENTITY_TYPE type);
