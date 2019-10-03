@@ -9,15 +9,14 @@
 
 #include "SDL/include/SDL_scancode.h"
 
-Player::Player(const fPoint &position) : Entity(position)
+Player::Player(const fPoint &position) : Entity(position,"player")
 {
 	LoadData("Player.tsx");
-
-	collider = App->collisions->AddCollider({ (int)position.x+ 2,(int)position.y + 38, 25, 26 }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);
+	collider = App->collisions->AddCollider({ (int)position.x+ offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);
 	//put in config
-	gravity = 0.1F;
-	initialJumpSpeed = { 1,-0.5f };
-	speed = { 0.5f,-0.2f };
+
+	initialJumpSpeed = { 1,-speed.y };
+
 	respawn = position;
 }
 
@@ -50,7 +49,7 @@ void Player::Move(float dt)
 
 	if (state == Player_States::fall_State)
 	{
-		gravity = 0.25F;
+		gravity = 0.5F;
 
 		if (speed.y == 0)
 			jumpTime.Start();
@@ -63,7 +62,7 @@ void Player::Move(float dt)
 	}
 	if (state == Player_States::jump_State)
 	{
-		gravity = 0.25F;
+		gravity = 0.5F;
 		speed.y += (gravity*jumpTime.Read()/1000) * (gravity*jumpTime.Read() / 1000);
 
 		if (speed.y == 0)

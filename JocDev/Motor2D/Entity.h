@@ -62,7 +62,7 @@ class Entity
 {
 public:
 
-	Entity(const fPoint &position);
+	Entity(const fPoint &position, const char* name);
 	~Entity();
 
 	virtual bool Start() = 0;
@@ -76,11 +76,14 @@ public:
 	bool LoadData(const char*);
 
 public:
+	p2SString name;
 	Collider* collider = nullptr;
 	SDL_Texture* texture = nullptr;
 	pugi::xml_document	entity_data_file;
 	fPoint position;
 	fPoint speed;
+	iPoint size;
+	iPoint offset;
 	EntityInfo data;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float anim_speed;

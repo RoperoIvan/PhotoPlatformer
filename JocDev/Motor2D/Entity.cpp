@@ -3,8 +3,19 @@
 #include "j1App.h"
 #include "j1Render.h"
 
-Entity::Entity(const fPoint &position):position(position)
+Entity::Entity(const fPoint &position, const char* name):position(position),name(name)
 {
+	pugi::xml_document config_file;
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = config_file.load_file("config.xml");
+
+	if (result == NULL)
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	else
+		ret = config_file.child("config").child("entities");
+
+	LoadProperties(ret.child(name));
 }
 
 Entity::~Entity()
@@ -72,41 +83,22 @@ bool Entity::LoadData(const char* ent_data)
 	}
 
 
-	//node = entity_data_file.child("tileset").child("tile");
-	//for (uint i = 0; i < data.num_animations; ++i) {
-	//	
-	//	data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
-	//	data.animations[i].id = node.attribute("id").as_uint();
-	//	data.animations[i].type.create(node.attribute("type").as_string());
-	//	node = node.next_sibling("tile");
-	//}
 
-	////We take the info from the entities and we save it inside each frame of each animation
-	//node = entity_data_file.child("tileset").child("tile");
-	//pugi::xml_node node_frame;
-	//for (uint i = 0; i < data.num_animations; ++i) {	
-	//	node_frame = node.child("animation").child("frame");
-	//	for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-	//		data.animations[i].frames[j] = data.tiled.GetTileRect(node_frame.attribute("tileid").as_uint());
-	//		node_frame = node_frame.next_sibling("frame");
-	//	}
-	//	node = node.next_sibling("tile");
-	//}
-
-	/*LoadProperties(entity_data_file.child("tileset").child("properties").child("property"));*/
-	/*IdAnimToEntityState();*/
 	PushBack();
 
-	/*for (uint i = 0; i < data.num_animations; ++i) {		
-		if (data.animations[i].frames != nullptr) {			
-			delete[] data.animations[i].frames;				
-			data.animations[i].frames = nullptr;
+	p2List_item<EntitiesAnim*>* anim_iterator = data.animations.start;
+	while (anim_iterator != nullptr)
+	{
+		p2List_item<SDL_Rect*>* rect_iterator = anim_iterator->data->frames.start;
+		while (rect_iterator != nullptr )
+		{
+			RELEASE(rect_iterator->data);
+			rect_iterator = rect_iterator->next;
 		}
+		RELEASE(anim_iterator->data);
+		anim_iterator = anim_iterator->next;
 	}
-	if (data.animations != nullptr) {
-		delete[] data.animations;
-		data.animations = nullptr;
-	}*/
+	
 	return ret;
 }
 
@@ -120,14 +112,12 @@ void Entity::Draw()
 
 void Entity::LoadProperties(pugi::xml_node & node)
 {
-	p2SString nameIdentificator;
-	while (node) {
-		nameIdentificator = node.attribute("name").as_string();
-
-		if (nameIdentificator == "AnimationSpeed")
-			anim_speed = node.attribute("value").as_float();
-
-	}
+	speed.x = node.child("speed").attribute("x").as_float();
+	speed.y = node.child("speed").attribute("y").as_float();
+	size.x = node.child("size").attribute("x").as_int();
+	size.y = node.child("size").attribute("y").as_int();
+	offset.x = node.child("offset").attribute("y").as_int();
+	offset.y = node.child("offset").attribute("y").as_int();
 }
 
 void Entity::IdAnimToEntityState()

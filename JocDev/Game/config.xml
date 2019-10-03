@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -26,7 +26,13 @@
     <folder>maps/</folder>
   </map>
 
-  <player>
-	  <speed x = "2" y = "2"/>
-  </player>
+  <entities>
+    <player>
+	    <speed x = "2" y = "2"/>
+      <size x ="25" y ="26"/>
+      <offset x ="2" y ="38"/>
+      <gravity graxity ="0.5"/>
+      
+    </player>
+  </entities>
 </config>
