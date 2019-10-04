@@ -60,17 +60,14 @@ bool Entity::LoadData(const char* ent_data)
 		pugi::xml_node anima = node.child("animation");
 		EntitiesAnim* anim = new EntitiesAnim();
 		
-		uint id = node.attribute("id").as_uint();
-
-		if (id == 0)
+		p2SString anim_name = node.attribute("type").as_string();
+		if (strcmp(anim_name.GetString(),"idle") == 0)
 			anim->states = EntityState::IDLE;
-		else if (id == 3)
+		else if (strcmp(anim_name.GetString(), "walking") == 0)
 			anim->states = EntityState::WALKING;
-		else if (id == 7)
+		else if (strcmp(anim_name.GetString(), "jump") == 0)
 			anim->states = EntityState::JUMP;
-		else if (id == 10)
-			anim->states = EntityState::FALL;
-		else if (id == 12)
+		else if (strcmp(anim_name.GetString(), "death") == 0)
 			anim->states = EntityState::DEAD;
 
 		for (pugi::xml_node frame = anima.child("frame"); frame; frame = frame.next_sibling("frame"))
@@ -78,6 +75,8 @@ bool Entity::LoadData(const char* ent_data)
 			SDL_Rect *rect = new SDL_Rect(data.tiled.GetTileRect(frame.attribute("tileid").as_uint()));
 			anim->frames.add(rect);
 		}
+
+		anim->speed = node.child("properties").child("property").attribute("value").as_float();
 
 		data.animations.add(anim);
 	}
@@ -118,6 +117,7 @@ void Entity::LoadProperties(pugi::xml_node & node)
 	size.y = node.child("size").attribute("y").as_int();
 	offset.x = node.child("offset").attribute("x").as_int();
 	offset.y = node.child("offset").attribute("y").as_int();
+	gravity = node.child("gravity").attribute("gravity").as_float();
 }
 
 void Entity::IdAnimToEntityState()

@@ -43,6 +43,7 @@ struct EntitiesAnim {
 	p2List<SDL_Rect*> frames;
 	EntityState states = EntityState::UNKNOWN;
 	uint FrameCount(pugi::xml_node&);
+	float speed = 0.F;
 };
 
 struct EntityInfo {
@@ -82,10 +83,13 @@ public:
 	Collider* collider = nullptr;
 	SDL_Texture* texture = nullptr;
 	pugi::xml_document	entity_data_file;
+	
 	fPoint position;
 	fPoint speed;
 	iPoint size;
 	iPoint offset;
+	float gravity;
+
 	EntityInfo data;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float anim_speed;

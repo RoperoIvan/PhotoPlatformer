@@ -8,9 +8,9 @@
 	<scene />
 	<:anonymous />
 	<entities>
-		<stats gravity="0" position_x="225" position_y="1474" />
+		<stats gravity="0" position_x="172" position_y="1474" />
 	</entities>
 	<renderer>
-		<camera x="112" y="-920" />
+		<camera x="112" y="-924" />
 	</renderer>
 </game_state>

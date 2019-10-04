@@ -4,13 +4,16 @@
 #include "Entity.h"
 #include "j1Timer.h"
 
+
+
+
 enum class Player_States
 {
 	jump_State,
 	fall_State,
 	idle_State,
 	die_state,
-	walking_state,
+	walking_state
 };
 
 class Player : public Entity
@@ -25,6 +28,8 @@ public:
 	void Draw();
 
 	void OnCollision(Collider* c1) override;
+
+	void Fall();
 
 private:
 
@@ -47,12 +52,12 @@ private:
 	Animation anim_default;
 	
 	Player_States state = Player_States::fall_State;
-	float gravity;
-	
+	Player_States check_state;
 	j1Timer jumpTime;
-	fPoint initialJumpSpeed;
+	float initialJumpSpeed;
 	fPoint initialSpeed;
 	fPoint respawn;
+	float grav;
 
 	p2List<Entity*> platforms;
 
