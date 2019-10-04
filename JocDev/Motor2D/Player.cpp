@@ -75,6 +75,7 @@ void Player::Move(float dt)
 
 	if (state == Player_States::die_state && anim_death.Done())
 	{
+		position = respawn;
 		state = Player_States::fall_State;
 	}		
 
