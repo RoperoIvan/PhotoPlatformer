@@ -28,10 +28,10 @@
 
   <entities>
     <player>
-	    <speed x = "2" y = "2"/>
+	    <speed x = "2" y = "1.5"/>
       <size x ="25" y ="26"/>
       <offset x ="2" y ="38"/>
-      <gravity gravity ="0.5"/>
+      <gravity gravity ="0.8"/>
       
     </player>
   </entities>

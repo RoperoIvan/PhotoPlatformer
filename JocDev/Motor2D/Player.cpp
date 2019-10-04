@@ -43,15 +43,16 @@ bool Player::Start()
 
 void Player::PreUpdate(float dt)
 {
+	
 	InPut();
 }
 
 void Player::Move(float dt)
 {
+	
 	if (state == Player_States::fall_State)
 	{
 		gravity = grav;
-
 		if (speed.y == 0)
 			jumpTime.Start();
 
@@ -74,7 +75,6 @@ void Player::Move(float dt)
 
 	if (state == Player_States::die_state && anim_death.Done())
 	{
-		position = respawn;
 		state = Player_States::fall_State;
 	}		
 
@@ -85,7 +85,11 @@ void Player::Move(float dt)
 	}
 	
 	collider->SetPos(position.x + offset.x, position.y + offset.y);
-
+	//for next iteration
+	if (state == Player_States::idle_State || state == Player_States::walking_state)
+	{
+		state = Player_States::fall_State;
+	}
 }
 
 void Player::Draw()
@@ -93,6 +97,7 @@ void Player::Draw()
 	if (current_animation != nullptr)
 	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), flip, 1.0F);
 
+	
 }
 
 bool Player::Load(pugi::xml_node& node)
@@ -154,6 +159,7 @@ void Player::InPut()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		Flash();
+		position = respawn;
 		state = Player_States::fall_State;
 	}
 
@@ -180,7 +186,6 @@ void Player::OnCollision(Collider *col1)
 		{
 			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y)
 			{
-				gravity = 0;
 				speed.y = initialJumpSpeed;
 				state = Player_States::idle_State;
 				jumpTime.Start();
@@ -193,7 +198,7 @@ void Player::OnCollision(Collider *col1)
 		}
 		
 		//horitzontal collisions
-		else if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5)
+		if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5)
 		{
 			if (collider->rect.x < col1->rect.x + col1->rect.w && collider->rect.x + collider->rect.w > col1->rect.x + col1->rect.w)
 			{
@@ -205,11 +210,9 @@ void Player::OnCollision(Collider *col1)
 				position.x -= speed.x;
 			}
 		}
-		else
-		{
-			state = Player_States::fall_State;
-		}
+		
 	}
+	
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_CHECKPOINT)
 	{
 		respawn = position;
@@ -219,12 +222,6 @@ void Player::OnCollision(Collider *col1)
 	{
 		state = Player_States::die_state;
 	}
-
-}
-
-void Player::Fall()
-{
-	state = Player_States::fall_State;
 }
 
 void Player::PushBack()

@@ -131,8 +131,7 @@ void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 	{
 		dynamic_cast<Player*>(player)->OnCollision(col1);
 	}
-	else
-		dynamic_cast<Player*>(player)->Fall();
+
 }
 
 bool j1EntityManager::Load(pugi::xml_node& file)

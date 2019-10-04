@@ -29,8 +29,6 @@ public:
 
 	void OnCollision(Collider* c1) override;
 
-	void Fall();
-
 private:
 
 	void Flash();
