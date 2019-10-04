@@ -44,7 +44,10 @@ void j1Map::Draw()
 						if (App->render->IsOnCamera(worldPos.x, worldPos.y, tilesetIterator->data->GetTileRect(gid).w, tilesetIterator->data->GetTileRect(gid).h))
 						{
 							++numTiles;
-							App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid));
+							if(strcmp(layerIterator->data->name.GetString(),"Background") == 0)
+								App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid),SDL_RendererFlip::SDL_FLIP_HORIZONTAL,1.5F);
+							else
+								App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid));
 						}
 					}
 				}

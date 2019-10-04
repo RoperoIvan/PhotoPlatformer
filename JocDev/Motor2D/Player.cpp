@@ -138,23 +138,26 @@ void Player::InPut()
 		state = Player_States::jump_State;
 		position.y -= 1;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{		
-		position.x += speed.x;
-		if(flip != SDL_FLIP_HORIZONTAL)
-			flip = SDL_FLIP_HORIZONTAL;	
-
-		if (state == Player_States::idle_State)
-			state = Player_States::walking_state;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (state != Player_States::die_state)
 	{
-		position.x += -speed.x;
-		if(flip != SDL_FLIP_NONE)
-			flip = SDL_FLIP_NONE;	
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			position.x += speed.x;
+			if (flip != SDL_FLIP_HORIZONTAL)
+				flip = SDL_FLIP_HORIZONTAL;
 
-		if (state == Player_States::idle_State)
-			state = Player_States::walking_state;
+			if (state == Player_States::idle_State)
+				state = Player_States::walking_state;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			position.x += -speed.x;
+			if (flip != SDL_FLIP_NONE)
+				flip = SDL_FLIP_NONE;
+
+			if (state == Player_States::idle_State)
+				state = Player_States::walking_state;
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{

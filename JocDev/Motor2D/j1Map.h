@@ -16,7 +16,6 @@ struct MapLayer
 	uint columns = 0u;
 	uint rows = 0u;
 	uint* tileArray = nullptr;
-
 	MapLayer() : tileArray(NULL)
 	{}
 

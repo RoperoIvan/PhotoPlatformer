@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\hehe.tmx" />
+    <None Include="..\Game\maps\Level1.tmx" />
     <None Include="..\Game\Player.tsx" />
   </ItemGroup>
   <ItemGroup>

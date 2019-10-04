@@ -169,6 +169,9 @@
     <None Include="..\Game\Player.tsx">
       <Filter>Desenvolupament  ========\Modules\Documents</Filter>
     </None>
+    <None Include="..\Game\maps\Level1.tmx">
+      <Filter>Desenvolupament  ========\Modules\Maps</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">
