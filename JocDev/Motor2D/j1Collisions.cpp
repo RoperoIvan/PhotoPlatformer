@@ -85,9 +85,6 @@ bool j1Collisions::PreUpdate(float dt)
 // Called before render is available
 bool j1Collisions::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
-
 	if (debug == true)
 		DebugDraw();
 	
@@ -168,3 +165,9 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.h + rect.y > r.y);
 }
 
+void j1Collisions::GodMode()
+{
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = god_mode;
+	god_mode = !god_mode;
+}

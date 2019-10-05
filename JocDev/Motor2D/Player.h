@@ -13,7 +13,8 @@ enum class Player_States
 	fall_State,
 	idle_State,
 	die_state,
-	walking_state
+	walking_state,
+	god_mode_state,
 };
 
 class Player : public Entity

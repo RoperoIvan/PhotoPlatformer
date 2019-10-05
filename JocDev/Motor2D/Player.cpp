@@ -79,6 +79,12 @@ void Player::Move(float dt)
 		state = Player_States::fall_State;
 	}		
 
+	if (state == Player_States::god_mode_state)
+	{
+		if (!App->collisions->god_mode)
+			state = Player_States::fall_State;
+	}
+
 	if (state != check_state)
 	{
 		ChangeAnim();
@@ -134,11 +140,22 @@ void Player::Flash()
 
 void Player::InPut()
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !App->collisions->god_mode)
 	{
 		state = Player_States::jump_State;
 		position.y -= 1;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->collisions->god_mode)
+	{
+		position.y -= 5;
+		state = Player_States::god_mode_state;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && App->collisions->god_mode)
+	{
+		position.y += 5;
+	}
+
 	if (state != Player_States::die_state)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
