@@ -57,9 +57,11 @@ private:
 	fPoint initialSpeed;
 	fPoint respawn;
 	float grav;
-
 	p2List<Entity*> platforms;
 
+	//SFX
+	int jump_sfx;
+	int copy_sfx;
 };
 
 #endif

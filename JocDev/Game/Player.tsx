@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.0" name="Player" tilewidth="34" tileheight="64" tilecount="25" columns="25">
+<tileset version="1.2" tiledversion="1.2.3" name="Player" tilewidth="34" tileheight="64" tilecount="25" columns="25">
  <image source="textures/Player2.png" width="850" height="64"/>
  <tile id="0" type="idle">
   <properties>
-   <property name="speed" type="float" value="0.07"/>
+   <property name="speed" type="float" value="0.1"/>
   </properties>
   <animation>
    <frame tileid="0" duration="2000"/>
@@ -13,7 +13,7 @@
  </tile>
  <tile id="3" type="walking">
   <properties>
-   <property name="speed" type="float" value="0.1"/>
+   <property name="speed" type="float" value="0.2"/>
   </properties>
   <animation>
    <frame tileid="3" duration="200"/>

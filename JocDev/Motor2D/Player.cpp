@@ -5,6 +5,7 @@
 #include "j1Input.h"
 #include "j1FadetoBlack.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 #include "Entity.h"
 
 #include "SDL/include/SDL_scancode.h"
@@ -33,6 +34,9 @@ bool Player::Start()
 {
 	data.tiled.texture = App->tex->Load(data.tiled.image_path.GetString());
 	current_animation = &anim_jump;
+	jump_sfx = App->audio->LoadFx("audio/fx/jump_fx.wav");
+	copy_sfx = App->audio->LoadFx("audio/fx/copy_fx.wav");
+
 	return true;
 }
 
@@ -138,6 +142,9 @@ void Player::InPut()
 {
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !App->collisions->god_mode)
 	{
+		if (state == Player_States::idle_State)
+			App->audio->PlayFx(jump_sfx);
+
 		state = Player_States::jump_State;
 		position.y -= 1;
 	}
@@ -178,6 +185,7 @@ void Player::InPut()
 		Flash();
 		position = respawn;
 		state = Player_States::fall_State;
+		App->audio->PlayFx(copy_sfx);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
