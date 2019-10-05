@@ -42,13 +42,10 @@ void j1Map::Draw()
 					uint gid = layerIterator->data->tileArray[layerIterator->data->GetArrayPos(column, row)];
 					if (gid != 0) {
 						iPoint worldPos = MapToWorld(column, row);
-						if (App->render->IsOnCamera(worldPos.x, worldPos.y, tilesetIterator->data->GetTileRect(gid).w, tilesetIterator->data->GetTileRect(gid).h))
+						if (App->render->IsOnCamera(worldPos.x, worldPos.y, tilesetIterator->data->GetTileRect(gid).w, tilesetIterator->data->GetTileRect(gid).h,layerIterator->data->speed))
 						{
 							++numTiles;
-							if(strcmp(layerIterator->data->name.GetString(),"Background") == 0)
-								App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid),SDL_RendererFlip::SDL_FLIP_HORIZONTAL,1.5F);
-							else
-								App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid));
+							App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), SDL_RendererFlip::SDL_FLIP_HORIZONTAL, layerIterator->data->speed);
 						}
 					}
 				}
@@ -376,6 +373,10 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->columns = node.attribute("width").as_int();
 	layer->rows = node.attribute("height").as_int();
 	pugi::xml_node layer_data = node.child("data");
+
+	pugi::xml_node layer_properties = node.child("properties");
+
+	layer->speed = layer_properties.child("property").attribute("value").as_float();
 
 	if (layer_data == NULL)
 	{

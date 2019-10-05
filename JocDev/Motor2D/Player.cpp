@@ -130,7 +130,7 @@ bool Player::Save(pugi::xml_node& node) const
 void Player::Flash()
 {
 	App->fade->fadetoBlack(2.F);
-	platforms.add(App->entityManager->CreateEntity(fPoint(collider->rect.x,collider->rect.y), ENTITY_TYPE::PLATFORM));
+	platforms.add(App->entityManager->CreateEntity(position, ENTITY_TYPE::PLATFORM));
 	position = respawn;
 }
 

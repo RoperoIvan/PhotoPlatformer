@@ -127,11 +127,11 @@ void j1Render::SetBackgroundColor(SDL_Color color)
 	background = color;
 }
 
-bool j1Render::IsOnCamera(const int & x, const int & y, const int & w, const int & h) const
+bool j1Render::IsOnCamera(const int & x, const int & y, const int & w, const int & h, const float &speed) const
 {
 	uint scale = App->win->GetScale();
-	SDL_Rect rect = { x*scale ,y*scale ,w*scale ,h*scale };
-	SDL_Rect cam = { -camera.x*scale ,-camera.y*scale ,camera.w*scale ,camera.h*scale };
+	SDL_Rect rect = {x*scale/speed,y*scale,w*scale/speed,h* scale};
+	SDL_Rect cam = { -camera.x*scale,-camera.y*scale,camera.w*scale/speed,camera.h*scale};
 
 	return SDL_HasIntersection(&rect, &cam);
 }
@@ -176,7 +176,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.y = (int)(camera.y) + y * scale;
 
 	if(section != NULL)
 	{

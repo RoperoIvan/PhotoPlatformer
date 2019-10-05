@@ -35,8 +35,7 @@
     </player>
     <platform>
       <size x ="34" y ="4"/> 
-      <offset x ="0" y ="-2"/>
-      <idle x="612" y="60" w="34" h="4"/>
+      <offset x ="0" y ="56"/>
     </platform>
   </entities>
 </config>

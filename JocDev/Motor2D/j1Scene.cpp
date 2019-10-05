@@ -34,6 +34,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
 	App->map->Load("Level1.tmx");
 
 	return true;
@@ -121,6 +122,7 @@ void j1Scene::LevelChange(int lvl)
 	{
 	case 1:
 		App->map->Load("Level1.tmx");
+		
 		break;
 	case 2:
 		App->map->Load("Level2.tmx");

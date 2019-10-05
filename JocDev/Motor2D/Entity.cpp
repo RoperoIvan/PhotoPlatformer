@@ -118,11 +118,6 @@ void Entity::LoadProperties(pugi::xml_node & node)
 	speed.x = node.child("speed").attribute("x").as_float();
 	speed.y = node.child("speed").attribute("y").as_float();
 	gravity = node.child("gravity").attribute("gravity").as_float();
-
-	if (strcmp(name.GetString(),"platform") == 0)
-	{
-		anim_idle.PushBack({ node.child("idle").attribute("x").as_int(),node.child("idle").attribute("y").as_int() ,node.child("idle").attribute("w").as_int() ,node.child("idle").attribute("h").as_int() });
-	}
 }
 
 void Entity::IdAnimToEntityState()
