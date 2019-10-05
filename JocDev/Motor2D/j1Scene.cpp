@@ -36,7 +36,7 @@ bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
 	App->map->Load("Level1.tmx");
-
+	current_level = 1;
 	return true;
 }
 
@@ -115,6 +115,7 @@ void j1Scene::DebugKeys()
 
 void j1Scene::LevelChange(int lvl)
 {
+	current_level = lvl;
 	App->entityManager->CleanUp();
 	App->collisions->CleanUp();
 	App->map->CleanUp();
@@ -122,7 +123,6 @@ void j1Scene::LevelChange(int lvl)
 	{
 	case 1:
 		App->map->Load("Level1.tmx");
-		
 		break;
 	case 2:
 		App->map->Load("Level2.tmx");

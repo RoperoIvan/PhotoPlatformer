@@ -6,6 +6,7 @@
 #include "j1FadetoBlack.h"
 #include "j1Render.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
 #include "Entity.h"
 
 #include "SDL/include/SDL_scancode.h"
@@ -250,6 +251,11 @@ void Player::OnCollision(Collider *col1)
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY)
 	{
 		state = Player_States::die_state;
+	}
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
+	{
+		int lvl = App->scene->current_level +1 ;
+		App->scene->LevelChange(lvl);
 	}
 }
 
