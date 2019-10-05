@@ -35,8 +35,6 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("Level1.tmx");
-	
-	App->entityManager->player->data.tiled.texture = App->tex->Load(App->entityManager->player->data.tiled.image_path.GetString());
 
 	return true;
 }
@@ -91,7 +89,7 @@ bool j1Scene::CleanUp()
 void j1Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->map->Load("Level1.tmx");
+		LevelChange(1);
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->map->Load("Level2.tmx");
@@ -112,4 +110,24 @@ void j1Scene::DebugKeys()
 	{
 		App->collisions->GodMode();
 	}
+}
+
+void j1Scene::LevelChange(int lvl)
+{
+	App->entityManager->CleanUp();
+	App->collisions->CleanUp();
+	App->map->CleanUp();
+	switch (lvl)
+	{
+	case 1:
+		App->map->Load("Level1.tmx");
+		break;
+	case 2:
+		App->map->Load("Level2.tmx");
+		break;
+	default:
+		LOG("Error, that level doesn't exist.");
+	}
+	App->collisions->Start();
+	App->entityManager->Start();
 }

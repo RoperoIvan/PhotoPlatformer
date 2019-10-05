@@ -37,6 +37,7 @@ Player::~Player()
 
 bool Player::Start()
 {
+	data.tiled.texture = App->tex->Load(data.tiled.image_path.GetString());
 	current_animation = &anim_jump;
 	return true;
 }

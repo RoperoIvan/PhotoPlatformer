@@ -34,6 +34,7 @@ public:
 
 	void DebugKeys();  // Manage all the debug functionalities
 
+	void LevelChange(int lvl); // Change between levels
 public:
 
 	iPoint	respawn;
