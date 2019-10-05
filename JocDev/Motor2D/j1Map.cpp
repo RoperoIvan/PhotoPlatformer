@@ -7,6 +7,7 @@
 #include "j1Window.h"
 #include "j1Collisions.h"
 #include "j1EntityManager.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -427,7 +428,10 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 			if(!is_first)
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_CHECKPOINT);
 			else
+			{
 				App->entityManager->player = App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::PLAYER);
+				App->scene->scene_spawn = { obj.attribute("x").as_float(),obj.attribute("y").as_float() };
+			}			
 		}
 	}
 

@@ -48,18 +48,16 @@ public:
 	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
-
+	void GodMode();
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	void DebugDraw();
 	Collider * colliders[MAX_COLLIDERS];
 	bool debug = true;
-
+	bool god_mode = false;
 private:
 
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
-	bool god_mode = false;
-
 };
 
 #endif

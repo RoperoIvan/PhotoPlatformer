@@ -32,9 +32,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void DebugKeys();  // Manage all the debug functionalities
+
+	void LevelChange(int lvl); // Change between levels
 public:
 
 	iPoint	respawn;
+	fPoint scene_spawn;
 };
 
 #endif // __j1SCENE_H__
