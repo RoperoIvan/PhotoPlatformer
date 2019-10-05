@@ -93,7 +93,7 @@ void j1Scene::DebugKeys()
 		LevelChange(1);
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		App->map->Load("Level2.tmx");
+		LevelChange(2);
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->entityManager->player->position = scene_spawn;

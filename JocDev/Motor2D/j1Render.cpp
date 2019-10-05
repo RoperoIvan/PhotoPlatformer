@@ -138,24 +138,25 @@ bool j1Render::IsOnCamera(const int & x, const int & y, const int & w, const int
 
 void j1Render::CameraPos()
 {
-	uint scale = App->win->GetScale();
-	SDL_Rect rect = { App->entityManager->player->collider->rect.x*scale ,App->entityManager->player->collider->rect.y*scale ,App->entityManager->player->collider->rect.w*scale ,App->entityManager->player->collider->rect.h*scale };
-	SDL_Rect cam = { -camera.x*scale ,-camera.y*scale ,camera.w*scale ,camera.h*scale };
+		uint scale = App->win->GetScale();
+		SDL_Rect rect = { App->entityManager->player->collider->rect.x*scale ,App->entityManager->player->collider->rect.y*scale ,App->entityManager->player->collider->rect.w*scale ,App->entityManager->player->collider->rect.h*scale };
+		SDL_Rect cam = { -camera.x*scale ,-camera.y*scale ,camera.w*scale ,camera.h*scale };
 
-	if (cam.x + cam.w - (float)CAMERA_MARGE_XL < rect.x + rect.w)
-		cam.x = rect.x + rect.w + (float)CAMERA_MARGE_XL - cam.w;
+		if (cam.x + cam.w - (float)CAMERA_MARGE_XL < rect.x + rect.w)
+			cam.x = rect.x + rect.w + (float)CAMERA_MARGE_XL - cam.w;
 
-	else if (cam.x + (float)CAMERA_MARGE_L > rect.x)
-		cam.x = rect.x - (float)CAMERA_MARGE_L;
+		else if (cam.x + (float)CAMERA_MARGE_L > rect.x)
+			cam.x = rect.x - (float)CAMERA_MARGE_L;
 
-	if (cam.y + cam.h - (float)CAMERA_MARGE_L < rect.y + rect.h)
-		cam.y = (rect.y + rect.h + (float)CAMERA_MARGE_L - cam.h);
+		if (cam.y + cam.h - (float)CAMERA_MARGE_L < rect.y + rect.h)
+			cam.y = (rect.y + rect.h + (float)CAMERA_MARGE_L - cam.h);
 
-	else if (cam.y + (float)CAMERA_MARGE_XL > rect.y)
-		cam.y = (rect.y - (float)CAMERA_MARGE_XL);
+		else if (cam.y + (float)CAMERA_MARGE_XL > rect.y)
+			cam.y = (rect.y - (float)CAMERA_MARGE_XL);
 
-	camera.x = -cam.x;
-	camera.y = -cam.y;
+		camera.x = -cam.x;
+		camera.y = -cam.y;
+
 }
 
 void j1Render::SetViewPort(const SDL_Rect& rect)
