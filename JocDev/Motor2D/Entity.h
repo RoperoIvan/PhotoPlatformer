@@ -81,7 +81,6 @@ public:
 public:
 	p2SString name;
 	Collider* collider = nullptr;
-	SDL_Texture* texture = nullptr;
 	pugi::xml_document	entity_data_file;
 	
 	fPoint position;

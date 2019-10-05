@@ -42,15 +42,17 @@ bool j1EntityManager::Start()
 bool j1EntityManager::PreUpdate(float dt)
 {
 	bool ret = true;
-	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
+	p2List_item<Entity*> *entityItem = entities.start;
+	while ( entityItem != nullptr)
 	{
 		if (entityItem->data->to_delete == true)
-		{
-			delete[] entityItem;
-			entityItem = nullptr;
-		}
+
+			entities.del(entityItem);
 		else
 			entityItem->data->PreUpdate(dt);
+		
+		entityItem = entityItem->next;
+	
 	}
 
 	return ret;

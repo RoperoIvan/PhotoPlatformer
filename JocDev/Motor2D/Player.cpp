@@ -19,12 +19,6 @@ Player::Player(const fPoint &position) : Entity(position,"player")
 
 	grav = gravity;
 	respawn = position;
-
-	anim_jump.speed = 0.1F;
-	anim_death.speed = 0.2F;
-	anim_fall.speed = 0.1F;
-	anim_idle.speed = 0.07F;
-	anim_walking.speed = 0.1F;
 }
 
 Player::~Player()
@@ -76,6 +70,7 @@ void Player::Move(float dt)
 	if (state == Player_States::die_state && anim_death.Done())
 	{
 		position = respawn;
+		anim_death.Reset();
 		state = Player_States::fall_State;
 	}		
 
@@ -166,7 +161,10 @@ void Player::InPut()
 		position = respawn;
 		state = Player_States::fall_State;
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		DeletePlatforms();
+	}
 }
 
 void Player::DeletePlatforms()
@@ -175,6 +173,7 @@ void Player::DeletePlatforms()
 	while (item != NULL)
 	{
 		item->data->collider->to_delete = true;
+		item->data->to_delete = true;
 		item = item->next;
 	}
 	
@@ -312,7 +311,6 @@ void Player::ChangeAnim()
 		current_animation = &anim_jump;
 		break;
 	case Player_States::die_state:
-		anim_death.Reset();
 		current_animation = &anim_death;
 		break;
 	case Player_States::walking_state:
