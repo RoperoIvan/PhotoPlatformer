@@ -45,7 +45,7 @@ void j1Map::Draw()
 						if (App->render->IsOnCamera(worldPos.x, worldPos.y, tilesetIterator->data->GetTileRect(gid).w, tilesetIterator->data->GetTileRect(gid).h,layerIterator->data->speed))
 						{
 							++numTiles;
-							App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), SDL_RendererFlip::SDL_FLIP_HORIZONTAL, layerIterator->data->speed);
+							App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), SDL_RendererFlip::SDL_FLIP_NONE, layerIterator->data->speed);
 						}
 					}
 				}
