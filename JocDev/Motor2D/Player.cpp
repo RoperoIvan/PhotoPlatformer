@@ -98,14 +98,14 @@ void Player::Move(float dt)
 	{
 		state = Player_States::fall_State;
 	}
+
+	RestartAlpha(restart_alpha);
 }
 
 void Player::Draw()
 {
 	if (current_animation != nullptr)
-	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), flip, 1.0F);
-
-	
+	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), flip, 1.0F,alpha);
 }
 
 bool Player::Load(pugi::xml_node& node)
@@ -130,6 +130,17 @@ bool Player::Save(pugi::xml_node& node) const
 	p_stats.append_attribute("position_y") = (int)position.y;
 
 	return ret;
+}
+
+void Player::RestartAlpha(bool& reset_alpha)
+{
+	if (alpha >= 255)
+	{
+		alpha = 255;
+		reset_alpha = !reset_alpha;
+	}
+	else if(reset_alpha == true)
+		alpha += 10;
 }
 
 void Player::Flash()
@@ -181,8 +192,9 @@ void Player::InPut()
 				state = Player_States::walking_state;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && alpha >100)
 	{
+		alpha -= 20;
 		Flash();
 		position = respawn;
 		state = Player_States::fall_State;
@@ -190,6 +202,7 @@ void Player::InPut()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
+		restart_alpha = true;
 		DeletePlatforms();
 	}
 }

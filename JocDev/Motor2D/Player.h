@@ -41,6 +41,8 @@ private:
 	void ChangeAnim();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
+
+	void RestartAlpha(bool&);
 private:
 
 	Animation anim_walking;
@@ -62,6 +64,11 @@ private:
 	//SFX
 	int jump_sfx;
 	int copy_sfx;
+
+	bool restart_alpha = false;
+
+public:
+	Uint8 alpha = 255;
 };
 
 #endif

@@ -35,7 +35,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
-	App->map->Load("Level2.tmx");
+	App->map->Load("Level1.tmx");
 	current_level = 1;
 	return true;
 }

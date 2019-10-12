@@ -441,6 +441,8 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 			{
 				App->entityManager->player = App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::PLAYER);
 				App->scene->scene_spawn = { obj.attribute("x").as_float(),obj.attribute("y").as_float() };
+				App->render->camera.x = -App->entityManager->player->position.x;
+				App->render->camera.y = -App->entityManager->player->position.y + App->render->camera.h;
 			}			
 		}
 	}

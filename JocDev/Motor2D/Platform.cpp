@@ -3,6 +3,7 @@
 #include "j1Collisions.h"
 #include "j1EntityManager.h"
 #include "j1Render.h"
+#include "Player.h"
 
 Platform::Platform(const fPoint & position): Entity(position,"platform")
 {
@@ -11,6 +12,7 @@ Platform::Platform(const fPoint & position): Entity(position,"platform")
 	data.tiled.texture = App->entityManager->player->data.tiled.texture;
 	collider = App->collisions->AddCollider({ (int)position.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_WALL, (j1Module*)App->entityManager);
 	current_animation = &anim_idle;
+	alpha = dynamic_cast<Player*>(App->entityManager->player)->alpha;
 }
 
 Platform::~Platform()
@@ -53,5 +55,5 @@ void Platform::PushBack()
 void Platform::Draw()
 {
 	if (current_animation != nullptr)
-		App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame());
+		App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(),SDL_FLIP_NONE,1.F,alpha);
 }

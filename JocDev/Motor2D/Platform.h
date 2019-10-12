@@ -20,6 +20,7 @@ public:
 
 private:
 	Animation idle;
+	uint alpha = 80;
 };
 
 #endif
