@@ -55,7 +55,6 @@ bool j1Collisions::PreUpdate(float dt)
 			colliders[i] = nullptr;
 		}
 	}
-
 	// Calculate collisions
 	Collider* c1;
 	Collider* c2;
@@ -146,7 +145,7 @@ bool j1Collisions::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
-	
+	*colliders = nullptr;
 
 	return true;
 }

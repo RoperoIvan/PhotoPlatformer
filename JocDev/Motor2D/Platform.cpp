@@ -57,6 +57,30 @@ void Platform::PushBack()
 	anim_idle.loop = false;
 }
 
+bool Platform::Load(pugi::xml_node& node)
+{
+	bool ret = true;
+
+	
+	return ret;
+}
+
+bool Platform::Save(pugi::xml_node& node) const
+{
+	bool ret = true;
+
+	
+	return ret;
+}
+
+void Platform::SaveDataXML(pugi::xml_node&node) const
+{
+	pugi::xml_node p_stats = node.append_child("platform_stats");
+	p_stats.append_attribute("position_x") = (int)position.x;
+	p_stats.append_attribute("position_y") = (int)position.y;
+	p_stats.append_attribute("alpha") = (int)alpha;
+}
+
 void Platform::Draw()
 {
 	if (current_animation != nullptr)

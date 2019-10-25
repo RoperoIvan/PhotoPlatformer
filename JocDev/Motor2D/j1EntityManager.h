@@ -39,7 +39,6 @@ public:
 private:
 
 	p2List<Entity*> entities;
-	p2List<Entity*> interactive_entities;
 
 public:
 	EntityData queue[15];

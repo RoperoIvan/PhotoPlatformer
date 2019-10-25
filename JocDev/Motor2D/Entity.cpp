@@ -48,12 +48,6 @@ bool Entity::LoadData(const char* ent_data)
 	data.tiled.height = node.child("image").attribute("height").as_uint();
 
 	//Number of animations that has the entity
-	
-	/*data.num_animations = 0;
-	while (node != NULL) {
-		data.num_animations++;
-		node = node.next_sibling("tile");
-	}*/
 
 	for(node = node.child("tile"); node; node = node.next_sibling("tile"))
 	{

@@ -8,6 +8,7 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 #include "Entity.h"
+#include "Platform.h"
 
 #include "SDL/include/SDL_scancode.h"
 
@@ -92,7 +93,7 @@ void Player::Move(float dt)
 		check_state = state;
 	}
 
-	if (state == Player_States::walking_state)
+	if (state == Player_States::walking_state || state == Player_States::idle_State)
 	{
 		state = Player_States::fall_State;
 	}
@@ -119,10 +120,19 @@ bool Player::Load(pugi::xml_node& node)
 {
 	bool ret = true;
 
-	pugi::xml_node p_stats = node.child("stats");
+	pugi::xml_node p_stats = node.child("player_stats");
 	gravity = p_stats.attribute("gravity").as_float();
 	position.x = p_stats.attribute("position_x").as_int();
 	position.y = p_stats.attribute("position_y").as_int();
+	alpha = p_stats.attribute("alpha").as_int();
+	int num_platforms = p_stats.attribute("num_platforms").as_int();
+
+	DeletePlatforms();
+	pugi::xml_node platform_stats = p_stats.child("platform_stats");
+	for (platform_stats; platform_stats != nullptr; platform_stats = platform_stats.next_sibling("platform_stats"))
+	{
+		platforms.add(App->entityManager->CreateEntity({ platform_stats.attribute("position_x").as_float(),platform_stats.attribute("position_y").as_float() }, ENTITY_TYPE::PLATFORM));
+	}
 
 	return ret;
 }
@@ -131,11 +141,17 @@ bool Player::Save(pugi::xml_node& node) const
 {
 	bool ret = true;
 
-	pugi::xml_node p_stats = node.append_child("stats");
+	pugi::xml_node p_stats = node.append_child("player_stats");
 	p_stats.append_attribute("gravity") = (float)gravity;
 	p_stats.append_attribute("position_x") = (int)position.x;
 	p_stats.append_attribute("position_y") = (int)position.y;
+	p_stats.append_attribute("num_platforms") = (int)platforms.count();
+	p_stats.append_attribute("alpha") = (int)alpha;
 
+	for (p2List_item<Entity*>* iter = platforms.start; iter != NULL; iter = iter->next)
+	{
+		dynamic_cast<Platform*>(iter->data)->SaveDataXML(p_stats);
+	}
 	return ret;
 }
 
