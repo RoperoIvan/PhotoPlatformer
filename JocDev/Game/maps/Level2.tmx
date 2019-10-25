@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="159" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="94">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="159" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="96">
  <tileset firstgid="1" name="Background" tilewidth="16" tileheight="16" tilecount="64" columns="8">
   <image source="Background.png" width="128" height="128"/>
  </tileset>
@@ -66526,8 +66526,8 @@
    <tile gid="258"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="213"/>
+   <tile gid="214"/>
    <tile/>
    <tile/>
    <tile/>
@@ -66685,8 +66685,8 @@
    <tile gid="258"/>
    <tile gid="2684354773"/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="229"/>
+   <tile gid="230"/>
    <tile/>
    <tile/>
    <tile/>
@@ -68437,8 +68437,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="213"/>
+   <tile gid="214"/>
    <tile/>
    <tile/>
    <tile/>
@@ -68596,8 +68596,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="229"/>
+   <tile gid="230"/>
    <tile/>
    <tile/>
    <tile/>
@@ -68758,8 +68758,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="213"/>
-   <tile gid="214"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -68917,8 +68917,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="229"/>
-   <tile gid="230"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -71667,9 +71667,9 @@
     <property name="first" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="81" x="276.5" y="799.833" width="14.5" height="15.5">
+  <object id="81" x="276.5" y="786.5" width="29.8333" height="28.8333">
    <properties>
-    <property name="Finish" type="bool" value="true"/>
+    <property name="win" type="bool" value="true"/>
    </properties>
   </object>
   <object id="82" x="448" y="1264.67" width="33.3333" height="30.6667"/>
@@ -71683,11 +71683,8 @@
   <object id="55" x="494.667" y="1385.33" width="1745.33" height="6.66667"/>
   <object id="59" x="814" y="663" width="227" height="9"/>
   <object id="78" x="1120.5" y="616.5" width="32" height="7"/>
-  <object id="88" x="402.667" y="1164" width="26.6667" height="5.33333"/>
-  <object id="89" x="273.333" y="1092" width="6.66667" height="22.6667"/>
-  <object id="90" x="273.333" y="948" width="6.66667" height="25.3333"/>
+  <object id="88" x="354.667" y="1132" width="26.6667" height="5.33333"/>
   <object id="91" x="398.667" y="1036" width="32" height="4"/>
-  <object id="92" x="489.333" y="865.333" width="5.33333" height="26.6667"/>
-  <object id="93" x="464" y="762.667" width="29.3333" height="8"/>
+  <object id="94" x="306.667" y="940" width="26.6667" height="5.33333"/>
  </objectgroup>
 </map>
