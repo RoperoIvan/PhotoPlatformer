@@ -273,7 +273,7 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
 	{
-		int lvl = App->scene->current_level +1 ;
+		int lvl = App->scene->current_level +1;
 		App->scene->LevelChange(lvl);
 	}
 }

@@ -405,9 +405,9 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 	bool ret = true;
 	if (node == NULL)
 		LOG("Error");
-	std::string name(node.attribute("name").as_string());
+	p2SString name(node.attribute("name").as_string());
 	
-	if (name.compare("Colliders") == 0)
+	if (name == "Colliders")
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
@@ -422,28 +422,36 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 			
 	}
 
-	else if (name.compare("MapDamage") == 0)
+	else if (name == "MapDamage")
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_ENEMY);
 	}
 
-	else if (name.compare("CheckPoint") == 0)
+	else if (name == "CheckPoint")
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
 			pugi::xml_node properties = obj.child("properties").child("property");
 			
-			bool is_first = properties.attribute("value").as_bool();
+			p2SString check_point_type = properties.attribute("name").as_string();
 
-			if(!is_first)
-				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_CHECKPOINT);
-			else
+			bool value = properties.attribute("value").as_bool();
+			
+			if (check_point_type == "Finish" && value)
+				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WIN);
+			else if (check_point_type == "first" && value)
 			{
 				App->entityManager->player = App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::PLAYER);
 				App->scene->scene_spawn = { obj.attribute("x").as_float(),obj.attribute("y").as_float() };
 				App->render->camera.x = -App->entityManager->player->position.x;
 				App->render->camera.y = -App->entityManager->player->position.y + App->render->camera.h;
+			}
+			else
+			{
+
+				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_CHECKPOINT);
+
 			}			
 		}
 	}

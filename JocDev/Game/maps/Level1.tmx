@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="187">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="188">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="60" columns="6">
   <image source="tileset.png" width="96" height="160"/>
  </tileset>
@@ -115674,11 +115674,7 @@
     <property name="first" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="29" x="2087.64" y="1632.73" width="51.5152" height="54.5455">
-   <properties>
-    <property name="first" type="bool" value="false"/>
-   </properties>
-  </object>
+  <object id="29" x="2087.64" y="1632.73" width="51.5152" height="54.5455"/>
   <object id="167" x="3227.27" y="1254.55" width="36.3636" height="30.303">
    <properties>
     <property name="first" type="bool" value="false"/>
@@ -115694,7 +115690,11 @@
     <property name="first" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="177" x="2551.52" y="263.636" width="45.4545" height="45.4545"/>
+  <object id="177" x="2551.52" y="263.636" width="45.4545" height="45.4545">
+   <properties>
+    <property name="Finish" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#ff0000" id="7" name="MapDamage">
   <object id="34" x="2192" y="1702.25" width="1614.5" height="10.75"/>
