@@ -1,6 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
+#include "j1App.h"
 #include "p2Point.h"
 #include "j1Textures.h"
 #include "Animation.h"
@@ -44,12 +45,35 @@ struct EntitiesAnim {
 	EntityState states = EntityState::UNKNOWN;
 	uint FrameCount(pugi::xml_node&);
 	float speed = 0.F;
+
+	~EntitiesAnim()
+	{
+		p2List_item<SDL_Rect*>* iter = frames.start;
+		while (iter != frames.end)
+		{
+			RELEASE(iter->data);
+			iter = iter->next;
+		}
+	}
 };
 
 struct EntityInfo {
 	TileEntity tiled;
 	p2List<EntitiesAnim*> animations;
 	uint num_animations = 0;
+
+	~EntityInfo()
+	{
+		p2List_item<EntitiesAnim*>* iter = animations.start;
+		while (iter != animations.end)
+		{
+			RELEASE(iter->data);
+			iter = iter->next;
+		}
+
+		App->tex->UnLoad(tiled.texture);
+		tiled.texture = nullptr;
+	}
 };
 
 enum class ENTITY_TYPE

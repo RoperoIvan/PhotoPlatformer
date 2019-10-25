@@ -124,7 +124,7 @@ void j1Scene::LevelChange(int lvl)
 	switch (lvl)
 	{
 	case 1:
-		App->fade->StartfadetoBlack(10);
+		//App->fade->StartfadetoBlack(10);
 		App->map->Load("Level1.tmx");
 		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;

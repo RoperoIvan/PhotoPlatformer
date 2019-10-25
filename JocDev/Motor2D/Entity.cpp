@@ -1,6 +1,5 @@
 #include "Entity.h"
 #include "p2Log.h"
-#include "j1App.h"
 #include "j1Render.h"
 
 Entity::Entity(const fPoint &position, const char* name):position(position),name(name)
@@ -20,6 +19,7 @@ Entity::Entity(const fPoint &position, const char* name):position(position),name
 
 Entity::~Entity()
 {
+	
 }
 
 bool Entity::LoadData(const char* ent_data)
