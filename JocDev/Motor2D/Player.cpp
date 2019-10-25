@@ -152,7 +152,6 @@ void Player::RestartAlpha(bool& reset_alpha)
 
 void Player::Flash()
 {
-	App->fade->StartfadetoBlack(2.F);
 	platforms.add(App->entityManager->CreateEntity(position, ENTITY_TYPE::PLATFORM));
 	position = respawn;
 }
@@ -274,8 +273,8 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
 	{
-		int lvl = App->scene->current_level +1;
-		App->scene->LevelChange(lvl);
+		App->current_level++;
+		App->fade->StartfadetoBlack();
 	}
 }
 

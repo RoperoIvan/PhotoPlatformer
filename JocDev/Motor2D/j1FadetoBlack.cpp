@@ -3,6 +3,11 @@
 #include "j1FadetoBlack.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Collisions.h"
+#include "j1EntityManager.h"
+#include "j1Audio.h"
+#include "j1Map.h"
+#include "p2Log.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -37,6 +42,26 @@ bool j1FadetoBlack::Update(float id)
 		normalized = MIN(1.0f, ((float)now*2.0F) / (float)total_time);
 		if (now >= total_time*0.5F)
 		{
+			App->entityManager->CleanUp();
+			App->collisions->CleanUp();
+			App->map->CleanUp();
+			App->audio->UnLoadFx();
+			switch (App->current_level)
+			{
+			case 1:
+
+				App->map->Load("Level1.tmx");
+				App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
+				break;
+			case 2:
+				App->map->Load("Level2.tmx");
+				App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
+				break;
+			default:
+				LOG("Error, that level doesn't exist.");
+			}
+			App->entityManager->Start();
+
 			current_step = fade_step::FADE_FROM_BLACK;
 		}
 	}

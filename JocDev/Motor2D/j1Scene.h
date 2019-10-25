@@ -39,7 +39,6 @@ public:
 
 	iPoint	respawn;
 	fPoint scene_spawn;
-	int current_level;
 };
 
 #endif // __j1SCENE_H__

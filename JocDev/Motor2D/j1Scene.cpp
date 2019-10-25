@@ -36,7 +36,7 @@ bool j1Scene::Start()
 {
 	//App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
 	App->map->Load("Level1.tmx");
-	current_level = 1;
+	/*current_level = 1;*/
 	return true;
 }
 
@@ -90,10 +90,16 @@ bool j1Scene::CleanUp()
 void j1Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		LevelChange(1);
+	{
+		App->current_level = 1;
+		App->fade->StartfadetoBlack();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		LevelChange(2);
+	{
+		App->current_level = 2;
+		App->fade->StartfadetoBlack();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->entityManager->player->position = scene_spawn;
@@ -115,25 +121,7 @@ void j1Scene::DebugKeys()
 
 void j1Scene::LevelChange(int lvl)
 {
-	current_level = lvl;
-	App->entityManager->CleanUp();
-	App->collisions->CleanUp();
-	App->map->CleanUp();
-	App->audio->UnLoadFx();
-	App->fade->StartfadetoBlack(2);
-	switch (lvl)
-	{
-	case 1:
-		
-		App->map->Load("Level1.tmx");
-		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
-		break;
-	case 2:
-		App->map->Load("Level2.tmx");
-		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
-		break;
-	default:
-		LOG("Error, that level doesn't exist.");
-	}
-	App->entityManager->Start();
+	//current_level = lvl;
+	//App->fade->StartfadetoBlack(2);
+	//
 }
