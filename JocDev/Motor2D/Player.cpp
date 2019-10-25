@@ -40,13 +40,12 @@ bool Player::Start()
 
 void Player::PreUpdate(float dt)
 {
-	
-	InPut();
 }
 
 void Player::Move(float dt)
 {
-	
+	InPut();
+
 	if (state == Player_States::fall_State)
 	{
 		gravity = grav;
@@ -82,16 +81,17 @@ void Player::Move(float dt)
 		if (!App->collisions->god_mode)
 			state = Player_States::fall_State;
 	}
+	
+	collider->SetPos(position.x + offset.x, position.y + offset.y);
+	//for next iteration
 
 	if (state != check_state)
 	{
 		ChangeAnim();
 		check_state = state;
 	}
-	
-	collider->SetPos(position.x + offset.x, position.y + offset.y);
-	//for next iteration
-	if (state == Player_States::idle_State || state == Player_States::walking_state)
+
+	if (state == Player_States::walking_state)
 	{
 		state = Player_States::fall_State;
 	}
@@ -233,7 +233,7 @@ void Player::OnCollision(Collider *col1)
 		//vertical collisions
 		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
 		{
-			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y)
+			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != Player_States::jump_State && state != Player_States::walking_state)
 			{
 				speed.y = initialJumpSpeed;
 				state = Player_States::idle_State;

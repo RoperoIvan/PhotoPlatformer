@@ -413,10 +413,7 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 		{
 			pugi::xml_node properties = obj.child("properties").child("property");
 			bool is_win = properties.attribute("value").as_bool();
-			if(!is_win)
-				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WALL);
-			else
-				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WIN);
+			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WALL);
 
 		}
 			
@@ -438,7 +435,7 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 
 			bool value = properties.attribute("value").as_bool();
 			
-			if (check_point_type == "Finish" && value)
+			if (check_point_type == "win" && value)
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WIN);
 			else if (check_point_type == "first" && value)
 			{

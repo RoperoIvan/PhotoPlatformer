@@ -115692,7 +115692,7 @@
   </object>
   <object id="177" x="2551.52" y="263.636" width="45.4545" height="45.4545">
    <properties>
-    <property name="Finish" type="bool" value="true"/>
+    <property name="win" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
