@@ -44,7 +44,8 @@ void Player::PreUpdate(float dt)
 
 void Player::Move(float dt)
 {
-	InPut();
+	if(state != Player_States::die_state)
+		InPut();
 
 	if (state == Player_States::fall_State)
 	{
