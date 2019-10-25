@@ -29,6 +29,7 @@ private:
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;
 	SDL_Rect screen;
+	float normalized = 0.0F;
 };
 
 #endif  

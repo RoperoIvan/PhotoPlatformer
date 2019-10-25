@@ -34,7 +34,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
+	//App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
 	App->map->Load("Level1.tmx");
 	current_level = 1;
 	return true;
@@ -120,11 +120,11 @@ void j1Scene::LevelChange(int lvl)
 	App->collisions->CleanUp();
 	App->map->CleanUp();
 	App->audio->UnLoadFx();
-	
+	App->fade->StartfadetoBlack(2);
 	switch (lvl)
 	{
 	case 1:
-		//App->fade->StartfadetoBlack(10);
+		
 		App->map->Load("Level1.tmx");
 		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;

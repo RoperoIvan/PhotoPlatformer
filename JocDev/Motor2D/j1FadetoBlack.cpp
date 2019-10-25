@@ -6,20 +6,20 @@
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
-j1FadetoBlack::j1FadetoBlack(): j1Module()
+j1FadetoBlack::j1FadetoBlack() : j1Module()
 {
 	name.create("fade");
 }
 
-j1FadetoBlack::~j1FadetoBlack(){}
+j1FadetoBlack::~j1FadetoBlack() {}
 
 bool  j1FadetoBlack::Start()
 {
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
-	return true;
 	uint width, height;
 	App->win->GetWindowSize(width, height);
-	screen = { 0,0,(int)width,(int)height};
+	screen = { 0,0,(int)width,(int)height };
+	return true;
 }
 
 // Actualización: dibujar fondo
@@ -29,29 +29,29 @@ bool j1FadetoBlack::Update(float id)
 		return true;
 
 	Uint32 now = SDL_GetTicks() - start_time;
-	float normalized = MIN(1.0f, (float)now / (float)total_time);
 
-	switch(current_step)
+	switch (current_step)
 	{
-		case fade_step::FADE_TO_BLACK:
+	case fade_step::FADE_TO_BLACK:
+	{
+		normalized = MIN(1.0f, ((float)now*2.0F) / (float)total_time);
+		if (now >= total_time*0.5F)
 		{
-			if (now >= total_time)
-			{
-				total_time += total_time;
-				start_time = SDL_GetTicks();
-				current_step = fade_step::FADE_FROM_BLACK;
-			}
-		} 
-		break;
+			current_step = fade_step::FADE_FROM_BLACK;
+		}
+	}
+	break;
 
-		case fade_step::FADE_FROM_BLACK:
+	case fade_step::FADE_FROM_BLACK:
+	{
+		normalized = MAX(0.0F, 2.0F - ((float)now * 2.0F) / (float)total_time);
+		if (now >= total_time)
 		{
-			normalized = 1.0f - normalized;
-
-			if (now >= total_time)
-				current_step = fade_step::NONE;
-		} 
-		break;
+			current_step = fade_step::NONE;
+			normalized = 0.0F;
+		}
+	}
+	break;
 	}
 
 	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
@@ -66,11 +66,11 @@ bool j1FadetoBlack::StartfadetoBlack(float time)
 	if (current_step == fade_step::NONE)
 	{
 		current_step = fade_step::FADE_TO_BLACK;
+		total_time = (Uint32)(time * 1000.0F);
 		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 10000.0f);
-
 		ret = true;
 	}
+
 
 	return ret;
 }
