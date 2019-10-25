@@ -5,13 +5,19 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<scene>
+		<lvl_stats level="1" />
+	</scene>
 	<entities>
-		<player_stats gravity="1.20000005" position_x="786" position_y="1518" num_platforms="0" alpha="255" />
+		<player_stats gravity="1.20000005" position_x="660" position_y="1635" num_platforms="3" alpha="255">
+			<platform_stats position_x="792" position_y="1558" alpha="235" />
+			<platform_stats position_x="736" position_y="1591" alpha="235" />
+			<platform_stats position_x="796" position_y="1609" alpha="235" />
+		</player_stats>
 	</entities>
 	<:anonymous />
 	<fade />
 	<renderer>
-		<camera x="-498" y="-1082" />
+		<camera x="-512" y="-1082" />
 	</renderer>
 </game_state>

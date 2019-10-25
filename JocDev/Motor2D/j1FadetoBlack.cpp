@@ -7,6 +7,7 @@
 #include "j1EntityManager.h"
 #include "j1Audio.h"
 #include "j1Map.h"
+#include "j1Scene.h"
 #include "p2Log.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
@@ -39,30 +40,11 @@ bool j1FadetoBlack::PostUpdate(float id)
 	case fade_step::FADE_TO_BLACK:
 	{
 		normalized = MIN(1.0f, ((float)now*2.0F) / (float)total_time);
-		if (now >= total_time*0.5F)
+		if (now >= total_time * 0.5F)
 		{
-			App->collisions->CleanUp();
-			App->entityManager->CleanUp();
-			App->map->CleanUp();
-			App->audio->UnLoadFx();
-			switch (App->current_level)
-			{
-			case 1:
-
-				App->map->Load("Level1.tmx");
-				App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
-				break;
-			case 2:
-				App->map->Load("Level2.tmx");
-				App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
-				break;
-			default:
-				LOG("Error, that level doesn't exist.");
-			}
-
+			NewLevel();
 			current_step = fade_step::FADE_FROM_BLACK;
 		}
-		App->entityManager->Start();
 	}
 	break;
 
@@ -81,6 +63,29 @@ bool j1FadetoBlack::PostUpdate(float id)
 	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
 	SDL_RenderFillRect(App->render->renderer, &screen);
 	return true;
+}
+
+void j1FadetoBlack::NewLevel()
+{
+	App->collisions->CleanUp();
+	App->entityManager->CleanUp();
+	App->map->CleanUp();
+	App->audio->UnLoadFx();
+	switch (App->scene->current_level)
+	{
+	case 1:
+
+		App->map->Load("Level1.tmx");
+		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
+		break;
+	case 2:
+		App->map->Load("Level2.tmx");
+		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
+		break;
+	default:
+		LOG("Error, that level doesn't exist.");
+	}
+	App->entityManager->Start();
 }
 
 bool j1FadetoBlack::StartfadetoBlack(float time)

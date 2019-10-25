@@ -91,13 +91,13 @@ void j1Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->current_level = 1;
+		current_level = 1;
 		App->fade->StartfadetoBlack();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->current_level = 2;
+		current_level = 2;
 		App->fade->StartfadetoBlack();
 	}
 
@@ -124,4 +124,24 @@ void j1Scene::LevelChange(int lvl)
 	//current_level = lvl;
 	//App->fade->StartfadetoBlack(2);
 	//
+}
+
+bool j1Scene::Load(pugi::xml_node& node)
+{
+	bool ret = true;
+	pugi::xml_node lvl_stats = node.child("lvl_stats");
+	if (current_level != lvl_stats.attribute("level").as_uint())
+		current_level = lvl_stats.attribute("level").as_uint();
+	
+	App->fade->NewLevel();
+	return ret;
+}
+
+bool j1Scene::Save(pugi::xml_node& node) const
+{
+
+	bool ret = true;
+	pugi::xml_node lvl_stats = node.append_child("lvl_stats");
+	lvl_stats.append_attribute("level") = current_level;
+	return ret;
 }

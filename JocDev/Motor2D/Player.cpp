@@ -293,10 +293,10 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
 	{
-		if (App->current_level == 1)
-			App->current_level = 2;
+		if (App->scene->current_level == 1)
+			App->scene->current_level = 2;
 		else
-			App->current_level = 1;
+			App->scene->current_level = 1;
 
 		App->fade->StartfadetoBlack();
 	}
