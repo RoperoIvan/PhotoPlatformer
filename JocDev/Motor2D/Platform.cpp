@@ -57,21 +57,6 @@ void Platform::PushBack()
 	anim_idle.loop = false;
 }
 
-bool Platform::Load(pugi::xml_node& node)
-{
-	bool ret = true;
-
-	
-	return ret;
-}
-
-bool Platform::Save(pugi::xml_node& node) const
-{
-	bool ret = true;
-
-	
-	return ret;
-}
 
 void Platform::SaveDataXML(pugi::xml_node&node) const
 {

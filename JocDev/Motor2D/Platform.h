@@ -18,9 +18,6 @@ public:
 	void OnCollision(Collider*) override{}
 	void PushBack() override;
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&)const;
-
 	void SaveDataXML(pugi::xml_node&)const;
 
 	void Draw();
