@@ -27,8 +27,7 @@ bool  j1FadetoBlack::Start()
 	return true;
 }
 
-// Actualización: dibujar fondo
-bool j1FadetoBlack::Update(float id)
+bool j1FadetoBlack::PostUpdate(float id)
 {
 	if (current_step == fade_step::NONE)
 		return true;
@@ -42,8 +41,8 @@ bool j1FadetoBlack::Update(float id)
 		normalized = MIN(1.0f, ((float)now*2.0F) / (float)total_time);
 		if (now >= total_time*0.5F)
 		{
-			App->entityManager->CleanUp();
 			App->collisions->CleanUp();
+			App->entityManager->CleanUp();
 			App->map->CleanUp();
 			App->audio->UnLoadFx();
 			switch (App->current_level)
@@ -60,10 +59,10 @@ bool j1FadetoBlack::Update(float id)
 			default:
 				LOG("Error, that level doesn't exist.");
 			}
-			App->entityManager->Start();
 
 			current_step = fade_step::FADE_FROM_BLACK;
 		}
+		App->entityManager->Start();
 	}
 	break;
 
@@ -91,7 +90,7 @@ bool j1FadetoBlack::StartfadetoBlack(float time)
 	if (current_step == fade_step::NONE)
 	{
 		current_step = fade_step::FADE_TO_BLACK;
-		total_time = (Uint32)(time * 1000.0F);
+		total_time = (Uint32)(time * 0.5F * 1000.0F);
 		start_time = SDL_GetTicks();
 		ret = true;
 	}

@@ -65,6 +65,8 @@ private:
 	//SFX
 	int jump_sfx;
 	int copy_sfx;
+	int death_sfx;
+	int respawn_sfx;
 
 	bool restart_alpha = false;
 

@@ -35,6 +35,9 @@ bool Player::Start()
 	current_animation = &anim_jump;
 	jump_sfx = App->audio->LoadFx("audio/fx/jump_fx.wav");
 	copy_sfx = App->audio->LoadFx("audio/fx/copy_fx.wav");
+	death_sfx = App->audio->LoadFx("audio/fx/death_fx.wav");
+	respawn_sfx = App->audio->LoadFx("audio/fx/respawn_fx.wav");
+
 
 	return true;
 }
@@ -73,6 +76,7 @@ void Player::Move(float dt)
 
 	if (state == Player_States::die_state && anim_death.Done())
 	{
+		App->audio->PlayFx(respawn_sfx);
 		position = respawn;
 		anim_death.Reset();
 		state = Player_States::fall_State;
@@ -289,7 +293,11 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
 	{
-		App->current_level++;
+		if (App->current_level == 1)
+			App->current_level = 2;
+		else
+			App->current_level = 1;
+
 		App->fade->StartfadetoBlack();
 	}
 }
@@ -379,6 +387,8 @@ void Player::ChangeAnim()
 		break;
 	case Player_States::die_state:
 		current_animation = &anim_death;
+		if(current_animation->GetCurrentFrameNumber() == 0)
+			App->audio->PlayFx(death_sfx);
 		break;
 	case Player_States::walking_state:
 		current_animation = &anim_walking;
