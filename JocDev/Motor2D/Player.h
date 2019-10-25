@@ -27,6 +27,7 @@ public:
 	void PreUpdate(float dt)override;
 	void Move(float dt) override;
 	void Draw();
+	void CleanUp() override;
 
 	void OnCollision(Collider* c1) override;
 

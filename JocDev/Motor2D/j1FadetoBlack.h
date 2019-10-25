@@ -12,18 +12,19 @@ public:
 
 	bool Start();
 	bool Update(float id) override;
-	bool fadetoBlack(float time = 2.0f);
+	bool StartfadetoBlack(float time = 2.0f);
 	bool IsFading() const;
 
 
 private:
 
-	enum fade_step
+	enum class fade_step
 	{
 		NONE,
 		FADE_TO_BLACK,
 		FADE_FROM_BLACK
-	} current_step = fade_step::NONE;
+	};
+	fade_step current_step = fade_step::NONE;
 
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;

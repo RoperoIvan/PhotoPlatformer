@@ -13,6 +13,8 @@ public:
 	bool Start() override { return true; }
 	void PreUpdate(float dt)override {};
 	void Move(float dt) override {}
+	void CleanUp() override;
+
 	void OnCollision(Collider*) override{}
 	void PushBack() override;
 

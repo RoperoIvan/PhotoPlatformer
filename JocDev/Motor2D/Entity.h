@@ -70,6 +70,8 @@ public:
 	virtual void PreUpdate(float dt) = 0;
 	virtual void Move(float dt) = 0;
 	virtual void Draw();
+	virtual void CleanUp() = 0;
+
 	virtual void OnCollision(Collider*) = 0;
 	virtual void LoadProperties(pugi::xml_node&);
 	virtual void IdAnimToEntityState();

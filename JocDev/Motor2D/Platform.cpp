@@ -17,11 +17,16 @@ Platform::Platform(const fPoint & position): Entity(position,"platform")
 
 Platform::~Platform()
 {
-	if(collider != nullptr)
+	
+
+}
+
+void Platform::CleanUp()
+{
+	if (collider != nullptr)
 		collider->to_delete = true;
 
 	data.tiled.texture = nullptr;
-
 }
 
 void Platform::PushBack()

@@ -119,17 +119,21 @@ void j1Scene::LevelChange(int lvl)
 	App->entityManager->CleanUp();
 	App->collisions->CleanUp();
 	App->map->CleanUp();
+	App->audio->UnLoadFx();
+	
 	switch (lvl)
 	{
 	case 1:
+		App->fade->StartfadetoBlack(10);
 		App->map->Load("Level1.tmx");
+		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;
 	case 2:
 		App->map->Load("Level2.tmx");
+		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;
 	default:
 		LOG("Error, that level doesn't exist.");
 	}
-	App->collisions->Start();
 	App->entityManager->Start();
 }

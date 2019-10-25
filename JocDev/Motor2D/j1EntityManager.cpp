@@ -90,11 +90,13 @@ bool j1EntityManager::CleanUp()
 
 	while (entityItem != NULL)
 	{
+		entityItem->data->CleanUp();
 		RELEASE(entityItem->data);
 		entityItem = entityItem->next;
 	}
 	entities.clear();
 	interactive_entities.clear();
+
 	return true;
 }
 

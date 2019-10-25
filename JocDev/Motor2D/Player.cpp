@@ -25,10 +25,7 @@ Player::Player(const fPoint &position) : Entity(position,"player")
 
 Player::~Player()
 {
-	DeletePlatforms();
-	if(collider != nullptr)
-		collider->to_delete = true;
-
+	
 }
 
 bool Player::Start()
@@ -108,6 +105,15 @@ void Player::Draw()
 	App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), flip, 1.0F,alpha);
 }
 
+void Player::CleanUp()
+{
+	DeletePlatforms();
+	if (collider != nullptr)
+		collider->to_delete = true;
+
+	App->tex->UnLoad(data.tiled.texture);
+}
+
 bool Player::Load(pugi::xml_node& node)
 {
 	bool ret = true;
@@ -145,7 +151,7 @@ void Player::RestartAlpha(bool& reset_alpha)
 
 void Player::Flash()
 {
-	App->fade->fadetoBlack(2.F);
+	App->fade->StartfadetoBlack(2.F);
 	platforms.add(App->entityManager->CreateEntity(position, ENTITY_TYPE::PLATFORM));
 	position = respawn;
 }

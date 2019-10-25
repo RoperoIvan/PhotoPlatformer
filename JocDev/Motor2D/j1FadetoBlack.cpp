@@ -6,8 +6,9 @@
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
-j1FadetoBlack::j1FadetoBlack()
+j1FadetoBlack::j1FadetoBlack(): j1Module()
 {
+	name.create("fade");
 }
 
 j1FadetoBlack::~j1FadetoBlack(){}
@@ -58,8 +59,7 @@ bool j1FadetoBlack::Update(float id)
 	return true;
 }
 
-// Se desvanece a negro. En el punto medio, desactiva un módulo, luego activa el otro
-bool j1FadetoBlack::fadetoBlack(float time)
+bool j1FadetoBlack::StartfadetoBlack(float time)
 {
 	bool ret = false;
 
@@ -67,13 +67,15 @@ bool j1FadetoBlack::fadetoBlack(float time)
 	{
 		current_step = fade_step::FADE_TO_BLACK;
 		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
-		
+		total_time = (Uint32)(time * 0.5f * 10000.0f);
+
 		ret = true;
 	}
 
 	return ret;
 }
+
+
 
 bool j1FadetoBlack::IsFading() const
 {

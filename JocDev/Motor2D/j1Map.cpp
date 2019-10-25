@@ -123,7 +123,7 @@ bool j1Map::CleanUp()
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
 
-	while (item != NULL)
+	while (item != data.tilesets.end)
 	{
 		RELEASE(item->data);
 		item = item->next;
@@ -134,7 +134,7 @@ bool j1Map::CleanUp()
 	p2List_item<MapLayer*>* item2;
 	item2 = data.mapLayers.start;
 
-	while (item2 != NULL)
+	while (item2 != data.mapLayers.end)
 	{
 		RELEASE(item2->data);
 		item2 = item2->next;

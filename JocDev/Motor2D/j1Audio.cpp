@@ -171,3 +171,12 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+void j1Audio::UnLoadFx()
+{
+	p2List_item<Mix_Chunk*>* item;
+	for (item = fx.start; item != NULL; item = item->next)
+		Mix_FreeChunk(item->data);
+
+	fx.clear();
+}
