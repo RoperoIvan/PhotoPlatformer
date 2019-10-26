@@ -65,6 +65,35 @@ This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garc
 - Colliders loaded and defined from Tiled
 - Checkpoints also loaded and defined from Tiled
 
+## Who made what
+
+This is the trello of the team [link](https://trello.com/b/x8vXZMoM/photoplatformer)
+
+### Dídac Llop Serna
+
+- Info in XML
+- Copies of the player feature
+- Entities handling
+- Entity class base
+- Collisions
+- Movement
+- Camera Culling
+- Camera
+- Death
+- CheckPoints
+- Level making
+
+### Ivan Ropero Garcia
+
+- Sounds and music
+- Parallax
+- Save and Load
+- Debug keys
+- Art
+- Changing levels
+- Sprites and animations from Tiled
+- Level making
+
 ## License
 
 MIT License
