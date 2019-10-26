@@ -40,14 +40,19 @@ This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garc
 ## Art, sounds and music
 
 [Main theme](https://opengameart.org/content/menu-music)
+
 [Player](https://lhteam.itch.io/zombie-toast)
+
 [Level 1](https://rottingpixels.itch.io/platformer-dungeon-tileset)
+
 [Level 2](https://beyonderboy.itch.io/simple-platform-tileset-16x16)
 
 ## Authors
 
-[Dídac Llop Serna](https://github.com/dllop)
+[Dídac Llop Serna](https://github.com/didaclis)
+
 [Ivan Ropero Garcia](https://github.com/RoperoIvan)
+
 [Repository](https://github.com/RoperoIvan/PhotoPlatformer)
 
 ## Innovations
