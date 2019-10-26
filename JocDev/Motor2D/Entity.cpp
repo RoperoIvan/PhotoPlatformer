@@ -48,13 +48,14 @@ bool Entity::LoadData(const char* ent_data)
 	data.tiled.height = node.child("image").attribute("height").as_uint();
 
 	//Number of animations that has the entity
-	
+
 	/*data.num_animations = 0;
 	while (node != NULL) {
-		data.num_animations++;
-		node = node.next_sibling("tile");
+	data.num_animations++;
+	node = node.next_sibling("tile");
 	}*/
 
+	//We load the animations from the tsx of the entity
 	for(node = node.child("tile"); node; node = node.next_sibling("tile"))
 	{
 		pugi::xml_node anima = node.child("animation");
@@ -81,10 +82,9 @@ bool Entity::LoadData(const char* ent_data)
 		data.animations.add(anim);
 	}
 
-
-
 	PushBack();
 
+	//Here we are freeing the animations data because the info has been already loaded in the variables of the entity so we dont need it anymore
 	p2List_item<EntitiesAnim*>* anim_iterator = data.animations.start;
 	while (anim_iterator != nullptr)
 	{
@@ -118,6 +118,11 @@ void Entity::LoadProperties(pugi::xml_node & node)
 	speed.x = node.child("speed").attribute("x").as_float();
 	speed.y = node.child("speed").attribute("y").as_float();
 	gravity = node.child("gravity").attribute("gravity").as_float();
+	data.property.copy_sfx.create(node.child("copy_fx").attribute("path").as_string());
+	data.property.death_sfx.create(node.child("death_fx").attribute("path").as_string());
+	data.property.jump_sfx.create(node.child("jump_fx").attribute("path").as_string());
+	data.property.respawn_sfx.create(node.child("respawn_fx").attribute("path").as_string());
+
 }
 
 void Entity::IdAnimToEntityState()

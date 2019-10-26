@@ -57,21 +57,19 @@ private:
 	Player_States check_state;
 	j1Timer jumpTime;
 	float initialJumpSpeed;
-	fPoint initialSpeed;
 	fPoint respawn;
 	float grav;
 	p2List<Entity*> platforms;
-
-	//SFX
-	int jump_sfx;
-	int copy_sfx;
-	int death_sfx;
-	int respawn_sfx;
 
 	bool restart_alpha = false;
 
 public:
 	Uint8 alpha = 255;
+
+	int jump_sfx;
+	int copy_sfx;
+	int death_sfx;
+	int respawn_sfx;
 };
 
 #endif

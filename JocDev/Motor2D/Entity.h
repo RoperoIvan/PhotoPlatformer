@@ -27,6 +27,13 @@ struct TileEntity {
 	uint width = 0;
 	uint height = 0;
 };
+struct PropertyEntity {
+	//SFX
+	p2SString jump_sfx;
+	p2SString copy_sfx;
+	p2SString death_sfx;
+	p2SString respawn_sfx;
+};
 
 enum class EntityState {
 	IDLE,
@@ -59,6 +66,7 @@ struct EntitiesAnim {
 
 struct EntityInfo {
 	TileEntity tiled;
+	PropertyEntity property;
 	p2List<EntitiesAnim*> animations;
 	uint num_animations = 0;
 
@@ -103,7 +111,6 @@ public:
 	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual bool Save(pugi::xml_node&) const { return true; };
 	bool LoadData(const char*);
-
 public:
 	p2SString name;
 	Collider* collider = nullptr;

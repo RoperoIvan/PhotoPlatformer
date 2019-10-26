@@ -32,10 +32,10 @@ bool Player::Start()
 {
 	data.tiled.texture = App->tex->Load(data.tiled.image_path.GetString());
 	current_animation = &anim_jump;
-	jump_sfx = App->audio->LoadFx("audio/fx/jump_fx.wav");
-	copy_sfx = App->audio->LoadFx("audio/fx/copy_fx.wav");
-	death_sfx = App->audio->LoadFx("audio/fx/death_fx.wav");
-	respawn_sfx = App->audio->LoadFx("audio/fx/respawn_fx.wav");
+	jump_sfx = App->audio->LoadFx(data.property.jump_sfx.GetString());
+	copy_sfx = App->audio->LoadFx(data.property.copy_sfx.GetString());
+	death_sfx = App->audio->LoadFx(data.property.death_sfx.GetString());
+	respawn_sfx = App->audio->LoadFx(data.property.respawn_sfx.GetString());
 
 
 	return true;
