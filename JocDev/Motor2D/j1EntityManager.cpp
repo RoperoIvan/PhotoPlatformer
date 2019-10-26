@@ -46,8 +46,10 @@ bool j1EntityManager::PreUpdate(float dt)
 	while ( entityItem != nullptr)
 	{
 		if (entityItem->data->to_delete == true)
-
+		{
+			entityItem->data->CleanUp();
 			entities.del(entityItem);
+		}
 		else
 			entityItem->data->PreUpdate(dt);
 		
@@ -61,13 +63,13 @@ bool j1EntityManager::PreUpdate(float dt)
 bool j1EntityManager::Update(float dt)
 {
 	bool ret = true;
+	App->entityManager->player;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
 		if (App->render->IsOnCamera(entityItem->data->collider->rect.x, entityItem->data->collider->rect.y, entityItem->data->collider->rect.w, entityItem->data->collider->rect.h))
 		{
-			interactive_entities.add(entityItem->data);
+			entityItem->data->Move(dt);
 		}
-		entityItem->data->Move(dt);
 	}
 	return ret;
 }
@@ -80,7 +82,6 @@ bool j1EntityManager::PostUpdate(float dt)
 			entityItem->data->Draw();
 		}
 	}
-	interactive_entities.clear();
 	return ret;
 }
 
@@ -91,12 +92,12 @@ bool j1EntityManager::CleanUp()
 	while (entityItem != NULL)
 	{
 		entityItem->data->CleanUp();
-		RELEASE(entityItem->data);
+		delete entityItem->data;
+		entityItem->data = nullptr;
 		entityItem = entityItem->next;
 	}
 	entities.clear();
-	interactive_entities.clear();
-
+	player;
 	return true;
 }
 

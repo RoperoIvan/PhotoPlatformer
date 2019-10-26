@@ -90,8 +90,6 @@ public:
 	j1EntityManager*	entityManager = nullptr;
 	j1Collisions*		collisions = nullptr;
 
-
-	int current_level = 1;
 private:
 
 	p2List<j1Module*>	modules;

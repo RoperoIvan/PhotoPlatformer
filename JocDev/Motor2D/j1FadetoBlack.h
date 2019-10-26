@@ -12,6 +12,7 @@ public:
 
 	bool Start();
 	bool PostUpdate(float id) override;
+	void NewLevel();
 	bool StartfadetoBlack(float time = 2.0f);
 	bool IsFading() const;
 

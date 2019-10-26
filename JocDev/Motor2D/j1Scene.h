@@ -35,10 +35,15 @@ public:
 	void DebugKeys();  // Manage all the debug functionalities
 
 	void LevelChange(int lvl); // Change between levels
+
+	bool Load(pugi::xml_node& node) override;
+
+	bool Save(pugi::xml_node& node) const override;
 public:
 
 	iPoint	respawn;
 	fPoint scene_spawn;
+	uint current_level = 1;
 };
 
 #endif // __j1SCENE_H__

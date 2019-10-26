@@ -47,14 +47,6 @@ bool Entity::LoadData(const char* ent_data)
 	data.tiled.width = node.child("image").attribute("width").as_uint();
 	data.tiled.height = node.child("image").attribute("height").as_uint();
 
-	//Number of animations that has the entity
-
-	/*data.num_animations = 0;
-	while (node != NULL) {
-	data.num_animations++;
-	node = node.next_sibling("tile");
-	}*/
-
 	//We load the animations from the tsx of the entity
 	for(node = node.child("tile"); node; node = node.next_sibling("tile"))
 	{

@@ -18,7 +18,10 @@ public:
 	void OnCollision(Collider*) override{}
 	void PushBack() override;
 
-	void Draw() override;
+	void SaveDataXML(pugi::xml_node&)const;
+
+	void Draw();
+
 
 private:
 	Animation idle;
