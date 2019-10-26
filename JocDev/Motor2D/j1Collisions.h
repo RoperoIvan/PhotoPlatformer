@@ -57,7 +57,7 @@ public:
 public:
 
 	Collider * colliders[MAX_COLLIDERS];
-	bool debug = true;
+	bool debug = false;
 	bool god_mode = false;
 private:
 

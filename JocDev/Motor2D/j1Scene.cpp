@@ -34,9 +34,9 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
+	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
 	App->map->Load("Level1.tmx");
-	/*current_level = 1;*/
+
 	return true;
 }
 
