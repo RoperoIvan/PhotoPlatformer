@@ -53,10 +53,6 @@ void j1Map::Draw()
 
 		}
 	}
-
-	p2SString title("num tiles: %d", numTiles);
-	App->win->SetTitle(title.GetString());
-	numTiles = 0u;
 }
 
 iPoint j1Map::MapToWorld(int column, int row) const

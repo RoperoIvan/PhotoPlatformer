@@ -71,12 +71,12 @@ void j1App::AddModule(j1Module* module)
 // Called before render is available
 bool j1App::Awake()
 {
+	bool ret = false;
+
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
 
-	bool ret = false;
-		
 	config = LoadConfig(config_file);
 
 	if(config.empty() == false)
