@@ -199,9 +199,9 @@ void j1App::FinishUpdate()
 	static char title[256];
 
 	if (cap_fps)
-		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF", frames_since_last_update, average_frames, last_ms_in_frames);
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF", frames_since_last_update, average_frames, last_ms_in_frames);
 	else
-		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF", frames_since_last_update, average_frames, last_ms_in_frames);
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF", frames_since_last_update, average_frames, last_ms_in_frames);
 	
 	win->SetTitle(title);
 
@@ -341,6 +341,11 @@ void j1App::SaveGame() const
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
+}
+
+float j1App::GetDT()
+{
+	return dt;
 }
 
 bool j1App::LoadGameNow()

@@ -34,7 +34,7 @@ public:
 private:
 
 	void Flash();
-	void InPut();
+	void InPut(float dt);
 	void PushBack() override;
 	void IdAnimToEntityState();
 	//void LoadProperties(pugi::xml_node&);

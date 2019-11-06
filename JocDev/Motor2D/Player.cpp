@@ -49,7 +49,7 @@ void Player::PreUpdate(float dt)
 void Player::Move(float dt)
 {
 	if(state != Player_States::die_state)
-		InPut();
+		InPut(dt);
 
 	if (state == Player_States::fall_State)
 	{
@@ -61,17 +61,17 @@ void Player::Move(float dt)
 			speed.y = -initialJumpSpeed;
 		
 
-		position.y += speed.y + (gravity*jumpTime.Read() / 1000);
+		position.y += speed.y + (gravity*jumpTime.Read() / 1000) * dt;
 	}
 	if (state == Player_States::jump_State)
 	{
 		gravity = grav;
-		speed.y += (gravity*jumpTime.Read()/10000) * (gravity*jumpTime.Read() / 10000);
+		speed.y += (gravity*jumpTime.Read()/10000) * (gravity*jumpTime.Read() / 10000) * dt;
 
 		if (speed.y >= 0)
 			state = Player_States::fall_State;
 
-		position.y += speed.y;
+		position.y += speed.y * dt;
 	}
 
 	if (state == Player_States::die_state && anim_death.Done())
@@ -176,7 +176,7 @@ void Player::Flash()
 	position = respawn;
 }
 
-void Player::InPut()
+void Player::InPut(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !App->collisions->god_mode)
 	{
@@ -184,24 +184,24 @@ void Player::InPut()
 			App->audio->PlayFx(jump_sfx);
 
 		state = Player_States::jump_State;
-		position.y -= 1;
+		position.y -= 1 * dt;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->collisions->god_mode)
 	{
-		position.y -= 5;
+		position.y -= 5 * dt;
 		state = Player_States::god_mode_state;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && App->collisions->god_mode)
 	{
-		position.y += 5;
+		position.y += 5 * dt;
 	}
 
 	if (state != Player_States::die_state)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed.x;
+			position.x += speed.x * dt;
 			if (flip != SDL_FLIP_HORIZONTAL)
 				flip = SDL_FLIP_HORIZONTAL;
 
@@ -210,7 +210,7 @@ void Player::InPut()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x += -speed.x;
+			position.x += -speed.x * dt;
 			if (flip != SDL_FLIP_NONE)
 				flip = SDL_FLIP_NONE;
 
