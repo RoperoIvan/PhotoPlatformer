@@ -58,7 +58,7 @@ void Player::Move(float dt)
 			jumpTime.Start();
 
 		if (speed.y < 0)
-			speed.y = -initialJumpSpeed;
+			speed.y = -initialJumpSpeed * dt;
 		
 
 		position.y += speed.y + (gravity*jumpTime.Read() / 1000) * dt;
@@ -255,7 +255,7 @@ void Player::OnCollision(Collider *col1)
 		{
 			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != Player_States::jump_State && state != Player_States::walking_state)
 			{
-				speed.y = initialJumpSpeed;
+				speed.y = initialJumpSpeed * App->GetDT();
 				state = Player_States::idle_State;
 				jumpTime.Start();
 			}
@@ -271,12 +271,12 @@ void Player::OnCollision(Collider *col1)
 		{
 			if (collider->rect.x < col1->rect.x + col1->rect.w && collider->rect.x + collider->rect.w > col1->rect.x + col1->rect.w)
 			{
-				position.x += speed.x;
+				position.x += speed.x * App->GetDT();
 			}
 
 			else if (collider->rect.x + collider->rect.w > col1->rect.x && collider->rect.x < col1->rect.x)
 			{
-				position.x -= speed.x;
+				position.x -= speed.x * App->GetDT();
 			}
 		}
 		
