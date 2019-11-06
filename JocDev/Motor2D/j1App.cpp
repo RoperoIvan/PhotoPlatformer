@@ -116,6 +116,7 @@ bool j1App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
+	timer_starting.Start();
 
 	return ret;
 }
