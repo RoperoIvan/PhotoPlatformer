@@ -4,6 +4,7 @@
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "j1Timer.h"
 
 // Modules
 class j1Window;
@@ -95,6 +96,15 @@ private:
 	p2List<j1Module*>	modules;
 	uint				frames;
 	float				dt;
+	bool				cap_fps;
+	uint				frames_cap = 0;
+	j1Timer				timer_frames;
+	j1Timer				timer_frames_second;
+	j1Timer				timer_starting;
+	uint64				time_last_frames_second;
+	uint64				time_frame_second = 0;
+	uint64				frame_counting = 0;
+	uint32				fps_cap = 0;
 	int					argc;
 	char**				args;
 

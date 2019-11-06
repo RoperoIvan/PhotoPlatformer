@@ -86,6 +86,7 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+		fps_cap = 1000 / app_config.attribute("framerate_cap").as_uint();
 	}
 
 	if(ret == true)
@@ -159,6 +160,19 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	if (input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		cap_fps = !cap_fps;
+		if (cap_fps)
+			frames_cap = 30;
+
+		else
+			frames_cap = 60;
+	}
+	frame_counting++;
+	time_frame_second++;
+	dt = timer_frames.ReadSec();
+	timer_frames.Start();
 }
 
 // ---------------------------------------------
@@ -169,6 +183,32 @@ void j1App::FinishUpdate()
 
 	if(want_to_load == true)
 		LoadGameNow();
+
+	if (timer_frames_second.Read() > 1000)
+	{
+		timer_frames_second.Start();
+		time_last_frames_second = time_frame_second;
+		time_frame_second = 0;
+	}
+
+	float average_frames = float(frame_counting) / timer_starting.ReadSec();
+	float starting_seconds = timer_starting.ReadSec();
+	uint32  last_ms_in_frames = timer_frames.Read();
+	uint32 frames_since_last_update = time_last_frames_second;
+	static char title[256];
+
+	if (cap_fps)
+		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF", frames_since_last_update, average_frames, last_ms_in_frames);
+	else
+		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF", frames_since_last_update, average_frames, last_ms_in_frames);
+	
+	win->SetTitle(title);
+
+	if (cap_fps)
+	{
+		if (fps_cap >= last_ms_in_frames)
+			SDL_Delay(fps_cap - last_ms_in_frames);
+	}
 }
 
 // Call modules before each loop iteration
