@@ -11,6 +11,7 @@
 #include "p2Log.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
+#include "Brofiler/Brofiler.h"
 
 j1FadetoBlack::j1FadetoBlack() : j1Module()
 {
@@ -30,6 +31,7 @@ bool  j1FadetoBlack::Start()
 
 bool j1FadetoBlack::PostUpdate(float id)
 {
+	BROFILER_CATEGORY("FadeToBlack PostUpdate", Profiler::Color::Bisque);
 	if (current_step == fade_step::NONE)
 		return true;
 

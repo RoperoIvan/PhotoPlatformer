@@ -132,6 +132,9 @@
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Brofiler\Brofiler.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

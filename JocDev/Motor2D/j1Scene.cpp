@@ -12,6 +12,7 @@
 #include "j1EntityManager.h"
 #include "Player.h"
 #include "j1Collisions.h"
+#include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -50,6 +51,8 @@ bool j1Scene::PreUpdate(float dt)
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("SCENE UPDATE", Profiler::Color::DeepSkyBlue);
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 1;
 
