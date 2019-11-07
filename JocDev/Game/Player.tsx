@@ -3,7 +3,7 @@
  <image source="textures/Player2.png" width="850" height="64"/>
  <tile id="0" type="idle">
   <properties>
-   <property name="speed" type="float" value="0.1"/>
+   <property name="speed" type="float" value="2"/>
   </properties>
   <animation>
    <frame tileid="0" duration="2000"/>
@@ -13,7 +13,7 @@
  </tile>
  <tile id="3" type="walking">
   <properties>
-   <property name="speed" type="float" value="0.2"/>
+   <property name="speed" type="float" value="4"/>
   </properties>
   <animation>
    <frame tileid="3" duration="200"/>
@@ -24,7 +24,7 @@
  </tile>
  <tile id="7" type="jump">
   <properties>
-   <property name="speed" type="float" value="0.1"/>
+   <property name="speed" type="float" value="2"/>
   </properties>
   <animation>
    <frame tileid="7" duration="100"/>
@@ -40,7 +40,7 @@
  </tile>
  <tile id="12" type="death">
   <properties>
-   <property name="speed" type="float" value="0.2"/>
+   <property name="speed" type="float" value="4"/>
   </properties>
   <animation>
    <frame tileid="12" duration="100"/>

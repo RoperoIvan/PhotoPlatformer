@@ -18,7 +18,7 @@ Player::Player(const fPoint &position) : Entity(position,"player")
 	collider = App->collisions->AddCollider({ (int)position.x+ offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);
 	//put in config
 
-	initialJumpSpeed = -speed.y;
+	
 
 	grav = gravity;
 	respawn = position;
@@ -44,10 +44,12 @@ bool Player::Start()
 
 void Player::PreUpdate(float dt)
 {
+	initialJumpSpeed = -speed.y * dt;
 }
 
 void Player::Move(float dt)
 {
+	
 	if(state != Player_States::die_state)
 		InPut(dt);
 

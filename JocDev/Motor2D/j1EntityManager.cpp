@@ -88,7 +88,6 @@ bool j1EntityManager::PostUpdate(float dt)
 bool j1EntityManager::CleanUp()
 {
 	p2List_item<Entity*> *entityItem = entities.start;
-
 	while (entityItem != NULL)
 	{
 		entityItem->data->CleanUp();
@@ -97,7 +96,8 @@ bool j1EntityManager::CleanUp()
 		entityItem = entityItem->next;
 	}
 	entities.clear();
-	player;
+	/*delete player;
+	player = nullptr;*/
 	return true;
 }
 
