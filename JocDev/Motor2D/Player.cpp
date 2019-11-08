@@ -9,6 +9,7 @@
 #include "j1Scene.h"
 #include "Entity.h"
 #include "Platform.h"
+#include "p2Log.h"
 
 #include "SDL/include/SDL_scancode.h"
 
@@ -45,6 +46,7 @@ bool Player::Start()
 void Player::PreUpdate(float dt)
 {
 	initialJumpSpeed = -speed.y * dt;
+	
 }
 
 void Player::Move(float dt)

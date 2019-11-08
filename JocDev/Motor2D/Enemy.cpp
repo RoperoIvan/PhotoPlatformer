@@ -4,7 +4,7 @@
 
 Enemy::Enemy(const fPoint position, const char* name) : Entity(position, name)
 {
-
+	current_animation = &anim_idle;
 }
 
 Enemy::~Enemy()

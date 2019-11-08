@@ -8,7 +8,7 @@ class FlyingEnemy :public Enemy
 public:
 	FlyingEnemy(const fPoint position);
 	~FlyingEnemy();
-	bool Start() override { return true; }
+	bool Start() override;
 	void PreUpdate(float dt)override {};
 	void OnCollision(Collider* c1)override;
 	void IdAnimToEntityState();

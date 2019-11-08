@@ -14,6 +14,12 @@ FlyingEnemy::~FlyingEnemy()
 {
 }
 
+bool FlyingEnemy::Start()
+{
+	data.tiled.texture = App->tex->Load(data.tiled.image_path.GetString());
+	return false;
+}
+
 void FlyingEnemy::OnCollision(Collider * c1)
 {
 }

@@ -438,6 +438,7 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WIN);
 			else if (check_point_type == "first" && value)
 			{
+				App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
 				App->entityManager->player = App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::PLAYER);
 				App->scene->scene_spawn = { obj.attribute("x").as_float(),obj.attribute("y").as_float() };
 				App->render->camera.x = -App->entityManager->player->position.x;

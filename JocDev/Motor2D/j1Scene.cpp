@@ -38,7 +38,6 @@ bool j1Scene::Start()
 	App->win->SetTitle("PhotoPlatformer 0.1.1");
 	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
 	App->map->Load("Level1.tmx");
-
 	return true;
 }
 
