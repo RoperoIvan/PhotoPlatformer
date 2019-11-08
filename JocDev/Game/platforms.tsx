@@ -3,7 +3,7 @@
  <image source="textures/Player2.png" width="850" height="64"/>
  <tile id="13" type="idle">
   <properties>
-   <property name="speed" type="float" value="0.3"/>
+   <property name="speed" type="float" value="15"/>
   </properties>
   <animation>
    <frame tileid="13" duration="200"/>

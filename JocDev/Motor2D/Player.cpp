@@ -39,13 +39,13 @@ bool Player::Start()
 	death_sfx = App->audio->LoadFx(data.property.death_sfx.GetString());
 	respawn_sfx = App->audio->LoadFx(data.property.respawn_sfx.GetString());
 
+	initialJumpSpeed = -speed.y;
 
 	return true;
 }
 
 void Player::PreUpdate(float dt)
 {
-	initialJumpSpeed = -speed.y * dt;
 	
 }
 
@@ -58,22 +58,23 @@ void Player::Move(float dt)
 	if (state == Player_States::fall_State)
 	{
 		gravity = grav;
-		if (speed.y == 0)
-			jumpTime.Start();
+		/*if (speed.y == 0)*/
+		jumpTime.Start();
 
-		if (speed.y < 0)
-			speed.y = -initialJumpSpeed * dt;
+		if (speed.y < -initialJumpSpeed)
+			speed.y += gravity;
 		
 
-		position.y += speed.y + (gravity*jumpTime.Read() / 1000) * dt;
+		position.y += speed.y * dt;
 	}
 	if (state == Player_States::jump_State)
 	{
 		gravity = grav;
-		speed.y += (gravity*jumpTime.Read()/10000) * (gravity*jumpTime.Read() / 10000) * dt;
-
-		if (speed.y >= 0)
+		if (speed.y > 0)
 			state = Player_States::fall_State;
+		else if (speed.y <= -initialJumpSpeed)
+			speed.y += gravity;
+		
 
 		position.y += speed.y * dt;
 	}
@@ -178,27 +179,31 @@ void Player::Flash()
 {
 	platforms.add(App->entityManager->CreateEntity(position, ENTITY_TYPE::PLATFORM));
 	position = respawn;
+	speed.y = -initialJumpSpeed/2;
 }
 
 void Player::InPut(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !App->collisions->god_mode)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !App->collisions->god_mode && is_on_platform)
 	{
+		speed.y = initialJumpSpeed;
 		if (state == Player_States::idle_State)
 			App->audio->PlayFx(jump_sfx);
 
 		state = Player_States::jump_State;
-		position.y -= 1 * dt;
+		position.y -= initialJumpSpeed * dt;
 	}
+	is_on_platform = false;
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->collisions->god_mode)
 	{
-		position.y -= 5 * dt;
+		position.y -= speed.y * dt;
 		state = Player_States::god_mode_state;
+		jumpTime.Start();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && App->collisions->god_mode)
 	{
-		position.y += 5 * dt;
+		position.y += speed.y * dt;
 	}
 
 	if (state != Player_States::die_state)
@@ -259,9 +264,9 @@ void Player::OnCollision(Collider *col1)
 		{
 			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != Player_States::jump_State && state != Player_States::walking_state)
 			{
-				speed.y = initialJumpSpeed * App->GetDT();
+				speed.y = -initialJumpSpeed/2;
 				state = Player_States::idle_State;
-				jumpTime.Start();
+				is_on_platform = true;
 			}
 
 			else if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)

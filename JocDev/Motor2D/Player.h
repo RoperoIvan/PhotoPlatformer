@@ -62,7 +62,7 @@ private:
 	p2List<Entity*> platforms;
 
 	bool restart_alpha = false;
-
+	bool is_on_platform = false;
 public:
 	Uint8 alpha = 255;
 
