@@ -88,7 +88,8 @@ enum class ENTITY_TYPE
 {
 	NO_ENTITY,
 	PLAYER,
-	PLATFORM
+	PLATFORM,
+	FLYING_ENEMY,
 };
 
 class Entity

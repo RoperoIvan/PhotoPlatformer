@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "Player.h"
 #include "Platform.h"
+#include "FlyingEnemy.h"
 #include "p2Log.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
@@ -113,6 +114,9 @@ Entity* j1EntityManager::CreateEntity(const fPoint & position, ENTITY_TYPE type)
 		break;
 	case ENTITY_TYPE::PLATFORM:
 		entity = new Platform(position);
+		break;
+	case ENTITY_TYPE::FLYING_ENEMY:
+		entity = new FlyingEnemy(position);
 		break;
 	default:
 		break;
