@@ -116,29 +116,52 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
-uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
+uint PathNode::FindWalkableAdjacents(PathList& list_to_fill,ENTITY_TYPE type) const
 {
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
-	// north
-	cell.create(pos.x, pos.y + 1);
-	if(App->pathfinding->IsWalkable(cell))
+	if (type == ENTITY_TYPE::FLYING_ENEMY)
+	{
+		// north
+		cell.create(pos.x, pos.y + 1);
+		if (App->pathfinding->IsWalkable(cell))
+			list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+		// south
+		cell.create(pos.x, pos.y - 1);
+		if (App->pathfinding->IsWalkable(cell))
+			list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+		// east
+		cell.create(pos.x + 1, pos.y);
+		if (App->pathfinding->IsWalkable(cell))
+			list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+		// west
+		cell.create(pos.x - 1, pos.y);
+		if (App->pathfinding->IsWalkable(cell))
+			list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	}
+
+	// north-west
+	cell.create(pos.x + 1, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	// south
-	cell.create(pos.x, pos.y - 1);
-	if(App->pathfinding->IsWalkable(cell))
+	// north-est
+	cell.create(pos.x + 1, pos.y - 1);
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	// east
-	cell.create(pos.x + 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
+	// south-east
+	cell.create(pos.x - 1, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	// west
-	cell.create(pos.x - 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
+	// south - west
+	cell.create(pos.x - 1, pos.y - 1);
+	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	return list_to_fill.list.count();
@@ -166,7 +189,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, ENTITY_TYPE type)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::Azure);
 	last_path.Clear();
@@ -199,7 +222,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		else
 		{
 			PathList frontier;
-			close.list.end->data.FindWalkableAdjacents(frontier);
+			close.list.end->data.FindWalkableAdjacents(frontier,type);
 			for (p2List_item<PathNode>* iterator = frontier.list.start; iterator != nullptr; iterator = iterator->next)
 			{
 				if (close.Find(iterator->data.pos))
