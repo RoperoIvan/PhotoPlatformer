@@ -103,7 +103,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Brofiler\Brofiler.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyGround.h" />
+    <ClInclude Include="GroundEnemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FlyingEnemy.h" />
     <ClInclude Include="j1Collisions.h" />

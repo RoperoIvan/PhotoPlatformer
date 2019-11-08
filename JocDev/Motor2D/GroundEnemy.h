@@ -1,13 +1,13 @@
-#ifndef _FLYINGENEMY_H
-#define _FLYINGENEMY_H
+#ifndef _GROUNDENEMY_
+#define _GROUNDENEMY_
 
 #include "Enemy.h"
 
-class FlyingEnemy : public Enemy
+class GroundEnemy : public Enemy
 {
 public:
-	FlyingEnemy(const fPoint position);
-	~FlyingEnemy();
+	GroundEnemy(const fPoint position);
+	~GroundEnemy();
 	bool Start() override;
 	void PreUpdate(float dt)override {};
 	void OnCollision(Collider* c1)override;
@@ -15,8 +15,6 @@ public:
 	void Draw();
 	void CleanUp();
 };
-
-
 
 
 

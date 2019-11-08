@@ -90,6 +90,7 @@ enum class ENTITY_TYPE
 	PLAYER,
 	PLATFORM,
 	FLYING_ENEMY,
+	GROUND_ENEMY,
 };
 
 class Entity

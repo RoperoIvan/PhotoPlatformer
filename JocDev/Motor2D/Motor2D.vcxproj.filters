@@ -156,7 +156,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyGround.h">
+    <ClInclude Include="GroundEnemy.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
