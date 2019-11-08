@@ -17,6 +17,7 @@ class j1Map;
 class j1FadetoBlack;
 class j1EntityManager;
 class j1Collisions;
+class j1PathFinding;
 
 class j1App
 {
@@ -90,6 +91,7 @@ public:
 	j1Map*				map = nullptr;
 	j1EntityManager*	entityManager = nullptr;
 	j1Collisions*		collisions = nullptr;
+	j1PathFinding*		pathfinding = nullptr;
 
 private:
 
