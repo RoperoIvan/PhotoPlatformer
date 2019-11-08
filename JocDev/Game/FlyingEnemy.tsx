@@ -3,7 +3,7 @@
  <image source="textures/bat.png" width="64" height="32"/>
  <tile id="0" type="idle">
   <properties>
-   <property name="speed" type="float" value="2"/>
+   <property name="speed" type="float" value="4"/>
   </properties>
   <animation>
    <frame tileid="0" duration="100"/>
