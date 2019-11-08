@@ -120,7 +120,7 @@ void Player::CleanUp()
 	DeletePlatforms();
 	if (collider != nullptr)
 		collider->to_delete = true;
-
+	current_animation = nullptr;
 	App->tex->UnLoad(data.tiled.texture);
 }
 

@@ -54,5 +54,9 @@ void FlyingEnemy::Draw()
 
 void FlyingEnemy::CleanUp()
 {
+	App->tex->UnLoad(data.tiled.texture);
+	if (collider != nullptr)
+		collider->to_delete = true;
+	current_animation = nullptr;
 }
 
