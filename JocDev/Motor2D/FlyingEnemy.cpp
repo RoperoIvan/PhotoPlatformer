@@ -46,6 +46,10 @@ void FlyingEnemy::IdAnimToEntityState()
 	}
 }
 
+void FlyingEnemy::Move(float dt)
+{
+}
+
 void FlyingEnemy::Draw()
 {
 	if (current_animation != nullptr)

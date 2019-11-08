@@ -12,6 +12,7 @@ public:
 	void PreUpdate(float dt)override {};
 	void OnCollision(Collider* c1)override;
 	void IdAnimToEntityState();
+	void Move(float dt) override;
 	void Draw();
 	void CleanUp();
 };

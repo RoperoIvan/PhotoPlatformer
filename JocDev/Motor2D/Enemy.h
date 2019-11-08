@@ -22,7 +22,6 @@ public:
 
 public:
 	bool Update(float dt);
-	void Move(float dt);
 
 public:
 	//void LoadProperties(pugi::xml_node&);

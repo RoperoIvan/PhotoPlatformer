@@ -2,7 +2,8 @@
 #include "GroundEnemy.h"
 #include "j1Collisions.h"
 #include "j1Render.h"
-
+#include "j1Pathfinding.h"
+#include "j1EntityManager.h"
 
 GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy")
 {
@@ -43,6 +44,14 @@ void GroundEnemy::IdAnimToEntityState()
 			anim->data->states = EntityState::UNKNOWN;
 			break;
 		}
+	}
+}
+
+void GroundEnemy::Move(float dt)
+{
+	if (position.DistanceManhattan(App->entityManager->player->position) <= 10)
+	{
+		App->pathfinding->CreatePath(iPoint(position.x,position.y), iPoint(App->entityManager->player->position.x, App->entityManager->player->position.y), ENTITY_TYPE::FLYING_ENEMY);
 	}
 }
 

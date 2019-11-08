@@ -17,10 +17,6 @@ bool Enemy::Update(float dt)
 	return false;
 }
 
-void Enemy::Move(float dt)
-{
-}
-
 void Enemy::PushBack()
 {
 	for (p2List_item<EntitiesAnim*> *animation = data.animations.start; animation != nullptr; animation = animation->next)
