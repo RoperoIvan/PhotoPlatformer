@@ -45,11 +45,8 @@ void j1Map::Draw()
 					uint gid = layerIterator->data->tileArray[layerIterator->data->GetArrayPos(column, row)];
 					if (gid != 0) {
 						iPoint worldPos = MapToWorld(column, row);
-						if (App->render->IsOnCamera(worldPos.x, worldPos.y, tilesetIterator->data->GetTileRect(gid).w, tilesetIterator->data->GetTileRect(gid).h,layerIterator->data->speed))
-						{
-							++numTiles;
-							App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), SDL_RendererFlip::SDL_FLIP_NONE, layerIterator->data->speed);
-						}
+						App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), SDL_RendererFlip::SDL_FLIP_NONE, layerIterator->data->speed);
+						
 					}
 				}
 			}
@@ -110,9 +107,26 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	rect.x = margin + ((rect.w + spacing) * (relative_id % columns));
 	rect.y = margin + ((rect.h + spacing) * (relative_id / columns));
 	return rect;
-	return rect;
 }
 
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+
+	return set;
+}
 // Called before quitting
 bool j1Map::CleanUp()
 {
@@ -372,11 +386,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->columns = node.attribute("width").as_int();
 	layer->rows = node.attribute("height").as_int();
+	LoadProperties(node, *layer);
 	pugi::xml_node layer_data = node.child("data");
-
-	pugi::xml_node layer_properties = node.child("properties");
-
-	layer->speed = layer_properties.child("property").attribute("value").as_float();
 
 	if (layer_data == NULL)
 	{
@@ -393,6 +404,32 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
 		{
 			layer->tileArray[i++] = tile.attribute("gid").as_int(0);
+		}
+	}
+
+	return ret;
+}
+
+bool j1Map::LoadProperties(pugi::xml_node& node, MapLayer& layer)
+{
+	bool ret = false;
+
+	pugi::xml_node data = node.child("properties");
+
+	if (data != NULL)
+	{
+		pugi::xml_node prop;
+
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		{
+			Properties::Property* p = new Properties::Property();
+
+			p->name = prop.attribute("name").as_string();
+			p->value = prop.attribute("value").as_int();
+
+			if(strcmp(p->name.GetString(), "speed") == 0)
+				layer.speed = prop.attribute("value").as_float();
+			layer.properties.list.add(p);
 		}
 	}
 
@@ -438,7 +475,6 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WIN);
 			else if (check_point_type == "first" && value)
 			{
-				App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
 				App->entityManager->player = App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::PLAYER);
 				App->scene->scene_spawn = { obj.attribute("x").as_float(),obj.attribute("y").as_float() };
 				App->render->camera.x = -App->entityManager->player->position.x;
@@ -446,14 +482,64 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 			}
 			else
 			{
-
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_CHECKPOINT);
-
 			}			
 		}
 	}
-
+	else if (name == "GroundEnemy")
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
+	}
 
 
 	return ret;
+}
+
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.mapLayers.start;
+
+	for (item = data.mapLayers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->columns * layer->rows];
+		memset(map, 1, layer->columns * layer->rows);
+
+		for (int y = 0; y < layer->columns * layer->rows; ++y)
+		{
+			if (layer->tileArray[y] == NULL)
+				map[y] = 1;
+			else
+				map[y] = 0;
+		}
+
+		*buffer = map;
+		width = data.columns;
+		height = data.rows;
+		ret = true;
+
+		break;
+	}
+	return ret;
+}
+
+int Properties::Get(const char* name, int default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == name)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
 }

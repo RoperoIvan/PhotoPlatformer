@@ -12,6 +12,7 @@
 #include "j1EntityManager.h"
 #include "Player.h"
 #include "j1Collisions.h"
+#include "j1Pathfinding.h"
 #include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -37,7 +38,15 @@ bool j1Scene::Start()
 {
 	App->win->SetTitle("PhotoPlatformer 0.1.1");
 	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
-	App->map->Load("Level1.tmx");
+	if (App->map->Load("Level1.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 	return true;
 }
 

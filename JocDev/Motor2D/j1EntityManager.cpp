@@ -68,10 +68,9 @@ bool j1EntityManager::Update(float dt)
 	App->entityManager->player;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		if (App->render->IsOnCamera(entityItem->data->collider->rect.x, entityItem->data->collider->rect.y, entityItem->data->collider->rect.w, entityItem->data->collider->rect.h))
-		{
-			entityItem->data->Move(dt);
-		}
+		
+		entityItem->data->Move(dt);
+		
 	}
 	return ret;
 }

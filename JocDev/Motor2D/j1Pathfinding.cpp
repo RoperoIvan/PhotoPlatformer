@@ -2,6 +2,8 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "j1Render.h"
+#include "j1Map.h"
 #include "Brofiler/Brofiler.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH),width(0), height(0)
@@ -58,6 +60,7 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 
 	return INVALID_WALK_CODE;
 }
+
 
 // To request all tiles involved in the last generated path
 const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
@@ -194,7 +197,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, E
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::Azure);
 	last_path.Clear();
 
-	if (!IsWalkable(origin) || !IsWalkable(destination))
+	if (IsWalkable(origin) == false|| IsWalkable(destination) == false)
 		return -1;
 
 	PathList open;
@@ -247,3 +250,19 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, E
 	return -1;
 }
 
+
+bool j1PathFinding::DrawPath()
+{
+	if (last_path.Count() <= 0)
+		last_path;
+	else
+	{
+		for (uint i = 0; i < last_path.Count(); ++i)
+		{
+			App->render->DrawQuad({ App->map->MapToWorld(last_path.At(i)->x,last_path.At(i)->y).x, App->map->MapToWorld(last_path.At(i)->x,last_path.At(i)->y).y , App->map->data.tile_width,App->map->data.tile_height }, 255, 0, 0, 250);
+		}
+	}
+
+
+	return false;
+}
