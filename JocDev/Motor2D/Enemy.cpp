@@ -1,8 +1,8 @@
 #include "Enemy.h"
+#include "j1Collisions.h"
+#include "j1Map.h"
 
-
-
-Enemy::Enemy(const fPoint position, const char* name) : Entity(position, name)
+Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity(position, name,type)
 {
 	current_animation = &anim_idle;
 }
@@ -54,5 +54,43 @@ bool Enemy::Load(pugi::xml_node &)
 bool Enemy::Save(pugi::xml_node &) const
 {
 	return false;
+}
+
+void Enemy::OnCollision(Collider* col1)
+{
+	if (col1->type == COLLIDER_TYPE::COLLIDER_WALL)
+	{
+		iPoint enemy_pos = App->map->WorldToMap(position.x, position.y);
+		iPoint objective = App->map->WorldToMap(col1->rect.x, col1->rect.y);
+		fPoint direction(enemy_pos.x - objective.x, enemy_pos.y - objective.y);
+
+		/*direction.x /= sqrt(direction.DistanceNoSqrt(fPoint(objective.x,objective.y)));
+		direction.y /= sqrt(direction.DistanceNoSqrt(fPoint(objective.x, objective.y)));*/
+		//vertical collisions
+		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
+		{
+			position.y -= gravity * App->GetDT();
+			
+		}
+
+		//horitzontal collisions
+		if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5)
+		{
+			position.x += speed.x * direction.x * App->GetDT();
+		}
+
+	}
+
+	if (col1->type == COLLIDER_TYPE::COLLIDER_WALL)
+	{
+		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
+		{
+			to_delete = true;
+		}
+		else
+		{
+			enemy_path = nullptr;
+		}
+	}
 }
 

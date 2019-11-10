@@ -17,7 +17,7 @@ enum class EnemyState {
 class Enemy :public Entity
 {
 public:
-	Enemy(const fPoint position, const char* name);
+	Enemy(const fPoint position, const char* name, ENTITY_TYPE type);
 	~Enemy();
 
 public:
@@ -29,11 +29,16 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	void OnCollision(Collider*) override;
+
 public:
 	EnemyState state;
 	Animation anim_idle;
 	Animation anim_walking;
 	Animation anim_dying;
+
+	const p2DynArray<iPoint>* enemy_path;
+
 
 };
 

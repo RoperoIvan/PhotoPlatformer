@@ -45,7 +45,7 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 
-	bool DrawPath();
+	bool DrawPath(const p2DynArray<iPoint>* path);
 
 private:
 

@@ -68,9 +68,7 @@ bool j1EntityManager::Update(float dt)
 	App->entityManager->player;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		
-		entityItem->data->Move(dt);
-		
+		entityItem->data->Move(dt);		
 	}
 	return ret;
 }
@@ -135,15 +133,20 @@ void j1EntityManager::DeleteEntity(Entity * entity)
 
 void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 {
-	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+	for (p2List_item<Entity*>* entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		dynamic_cast<Player*>(player)->OnCollision(col2);
+		if (entityItem != nullptr && entityItem->data->collider == col1)
+		{
+			if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER && entityItem->data->type == ENTITY_TYPE::PLAYER)
+			{
+				entityItem->data->OnCollision(col2);
+			}
+			if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY && (entityItem->data->type == ENTITY_TYPE::FLYING_ENEMY || entityItem->data->type == ENTITY_TYPE::GROUND_ENEMY))
+			{
+				entityItem->data->OnCollision(col2);
+			}
+		}
 	}
-	else if (col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
-	{
-		dynamic_cast<Player*>(player)->OnCollision(col1);
-	}
-
 }
 
 bool j1EntityManager::Load(pugi::xml_node& file)

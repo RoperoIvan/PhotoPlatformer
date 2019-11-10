@@ -6,7 +6,7 @@
 #include "j1EntityManager.h"
 #include "j1Map.h"
 
-GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy")
+GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy",ENTITY_TYPE::GROUND_ENEMY)
 {
 	LoadData("GroundEnemy.tsx");
 	collider = App->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->entityManager);
@@ -20,10 +20,6 @@ bool GroundEnemy::Start()
 {
 	data.tiled.texture = App->tex->Load(data.tiled.image_path.GetString());
 	return false;
-}
-
-void GroundEnemy::OnCollision(Collider * c1)
-{
 }
 
 void GroundEnemy::IdAnimToEntityState()
@@ -50,18 +46,62 @@ void GroundEnemy::IdAnimToEntityState()
 
 void GroundEnemy::Move(float dt)
 {
-	if (position.DistanceManhattan(App->entityManager->player->position) <= 500)
+	fPoint direction;
+	iPoint enemy_pos = App->map->WorldToMap(position.x + offset.x, position.y + offset.y);
+	if (position.DistanceManhattan(App->entityManager->player->position) <= 150)
 	{
 		iPoint player_pos = App->map->WorldToMap(App->entityManager->player->position.x + App->entityManager->player->size.x / 2, App->entityManager->player->position.y + App->entityManager->player->size.y);
-		iPoint enemy_pos = App->map->WorldToMap(position.x, position.y);
 		
-		if (App->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::FLYING_ENEMY) != -1)
+		
+		if (App->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::GROUND_ENEMY) != -1 && App->entityManager->player)
 		{
-			App->pathfinding->DrawPath();
+			enemy_path = App->pathfinding->GetLastPath();
+			App->pathfinding->DrawPath(enemy_path);
+
+			if (enemy_path->Count() > 0)
+			{
+				fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
+
+				direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
+			}
+		}
+	}
+	
+	else
+	{
+		fPoint objective;
+		iPoint enemy_size_pos = App->map->WorldToMap(position.x + size.x, position.y + size.y);
+
+		iPoint cell(enemy_size_pos.x + 1, enemy_size_pos.y + 2);
+		iPoint cell1(enemy_size_pos.x + 2, enemy_size_pos.y);
+		iPoint cell2(enemy_pos.x - 1, enemy_size_pos.y + 2);
+		iPoint cell3(enemy_pos.x - 2, enemy_size_pos.y);
+
+		//go right
+		if (App->pathfinding->IsWalkable(cell) || !App->pathfinding->IsWalkable(cell1))
+			go_right = false;
+		//go left
+		else if (App->pathfinding->IsWalkable(cell2) || !App->pathfinding->IsWalkable(cell3))
+			go_right = true;
+
+		if (go_right)
+			objective.create(enemy_pos.x + 0.5, enemy_pos.y);
+		else
+			objective.create(enemy_pos.x - 0.5, enemy_pos.y);
+
+
+		if (objective.x != 0)
+		{
+			direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
+
 		}
 	}
 
+	
+	position.y += gravity * dt;
+	position.x += direction.x * speed.x * dt;
 
+	collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
 }
 
 void GroundEnemy::Draw()

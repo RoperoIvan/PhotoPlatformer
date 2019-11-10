@@ -5,7 +5,7 @@
 #include "j1Render.h"
 #include "Player.h"
 
-Platform::Platform(const fPoint & position): Entity(position,"platform")
+Platform::Platform(const fPoint & position): Entity(position,"platform",ENTITY_TYPE::PLATFORM)
 {
 	LoadData("platforms.tsx");
 

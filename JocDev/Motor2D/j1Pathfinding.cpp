@@ -119,54 +119,53 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
-uint PathNode::FindWalkableAdjacents(PathList& list_to_fill,ENTITY_TYPE type) const
+uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENTITY_TYPE type) const
 {
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
+	// south
+	cell.create(pos.x, pos.y - 1);
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// east
+	cell.create(pos.x + 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// west
+	cell.create(pos.x - 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// north
+	cell.create(pos.x, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
 	if (type == ENTITY_TYPE::FLYING_ENEMY)
 	{
-		// north
-		cell.create(pos.x, pos.y + 1);
+		// north-west
+		cell.create(pos.x + 1, pos.y + 1);
 		if (App->pathfinding->IsWalkable(cell))
 			list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-		// south
-		cell.create(pos.x, pos.y - 1);
+		// north-est
+		cell.create(pos.x + 1, pos.y - 1);
 		if (App->pathfinding->IsWalkable(cell))
 			list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-		// east
-		cell.create(pos.x + 1, pos.y);
+		// south-east
+		cell.create(pos.x - 1, pos.y + 1);
 		if (App->pathfinding->IsWalkable(cell))
 			list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-		// west
-		cell.create(pos.x - 1, pos.y);
+		// south - west
+		cell.create(pos.x - 1, pos.y - 1);
 		if (App->pathfinding->IsWalkable(cell))
 			list_to_fill.list.add(PathNode(-1, -1, cell, this));
 	}
-
-	// north-west
-	cell.create(pos.x + 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
-
-	// north-est
-	cell.create(pos.x + 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
-
-	// south-east
-	cell.create(pos.x - 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
-
-	// south - west
-	cell.create(pos.x - 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
-
 	return list_to_fill.list.count();
 }
 
@@ -214,7 +213,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, E
 		if (close.list.end->data.pos == destination)
 		{
 			const PathNode* parent = &close.list.end->data;
-			while (parent)
+			while (parent->parent)
 			{
 				last_path.PushBack(parent->pos);
 				parent = parent->parent;
@@ -251,15 +250,15 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, E
 }
 
 
-bool j1PathFinding::DrawPath()
+bool j1PathFinding::DrawPath(const p2DynArray<iPoint>* path)
 {
-	if (last_path.Count() <= 0)
-		last_path;
+	if (path->Count() <= 0)
+		path;
 	else
 	{
-		for (uint i = 0; i < last_path.Count(); ++i)
+		for (uint i = 0; i < path->Count(); ++i)
 		{
-			App->render->DrawQuad({ App->map->MapToWorld(last_path.At(i)->x,last_path.At(i)->y).x, App->map->MapToWorld(last_path.At(i)->x,last_path.At(i)->y).y , App->map->data.tile_width,App->map->data.tile_height }, 255, 0, 0, 250);
+			App->render->DrawQuad({ App->map->MapToWorld(path->At(i)->x,path->At(i)->y).x, App->map->MapToWorld(path->At(i)->x,path->At(i)->y).y , App->map->data.tile_width,App->map->data.tile_height }, 255, 0, 0, 250);
 		}
 	}
 

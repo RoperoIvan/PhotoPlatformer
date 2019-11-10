@@ -10,7 +10,6 @@ public:
 	~FlyingEnemy();
 	bool Start() override;
 	void PreUpdate(float dt)override {};
-	void OnCollision(Collider* c1)override;
 	void IdAnimToEntityState();
 	void Move(float dt) override;
 	void Draw();

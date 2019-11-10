@@ -4,7 +4,7 @@
 #include "j1Render.h"
 
 
-FlyingEnemy::FlyingEnemy(const fPoint position) : Enemy(position, "FlyingEnemy")
+FlyingEnemy::FlyingEnemy(const fPoint position) : Enemy(position, "FlyingEnemy",ENTITY_TYPE::FLYING_ENEMY)
 {
 	LoadData("FlyingEnemy.tsx");
 	collider = App->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->entityManager);
@@ -18,10 +18,6 @@ bool FlyingEnemy::Start()
 {
 	data.tiled.texture = App->tex->Load(data.tiled.image_path.GetString());
 	return false;
-}
-
-void FlyingEnemy::OnCollision(Collider * c1)
-{
 }
 
 void FlyingEnemy::IdAnimToEntityState()

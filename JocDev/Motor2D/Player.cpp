@@ -13,7 +13,7 @@
 
 #include "SDL/include/SDL_scancode.h"
 
-Player::Player(const fPoint &position) : Entity(position,"player")
+Player::Player(const fPoint &position) : Entity(position,"player",ENTITY_TYPE::PLAYER)
 {
 	LoadData("Player.tsx");
 	collider = App->collisions->AddCollider({ (int)position.x+ offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (j1Module*)App->entityManager);

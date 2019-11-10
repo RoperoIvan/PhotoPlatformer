@@ -2,7 +2,7 @@
 #include "p2Log.h"
 #include "j1Render.h"
 
-Entity::Entity(const fPoint &position, const char* name):position(position),name(name)
+Entity::Entity(const fPoint &position, const char* name, ENTITY_TYPE type):position(position),name(name),type(type)
 {
 	pugi::xml_document config_file;
 	pugi::xml_node ret;

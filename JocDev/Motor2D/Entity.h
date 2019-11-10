@@ -97,7 +97,7 @@ class Entity
 {
 public:
 
-	Entity(const fPoint &position, const char* name);
+	Entity(const fPoint& position, const char* name, ENTITY_TYPE type);
 	~Entity();
 
 	virtual bool Start() = 0;
@@ -125,6 +125,7 @@ public:
 	float gravity;
 
 	EntityInfo data;
+	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float anim_speed;
 	Animation anim_idle;

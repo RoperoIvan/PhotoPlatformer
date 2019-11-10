@@ -37,5 +37,11 @@
       <size x ="34" y ="4"/> 
       <offset x ="0" y ="56"/>
     </platform>
+    <GroundEnemy>
+      <speed x = "80" y = "80"/>
+      <size x ="24" y ="20"/>
+      <offset x ="20" y ="23"/>
+      <gravity gravity ="80"/>
+    </GroundEnemy>
   </entities>
 </config>

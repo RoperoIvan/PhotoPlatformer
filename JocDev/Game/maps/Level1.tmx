@@ -115670,8 +115670,7 @@
   <object id="186" x="800" y="401.333" width="1748" height="13.3333"/>
  </objectgroup>
  <objectgroup color="#550000" id="9" name="GroundEnemy">
-  <object id="194" x="972.727" y="1472.73" width="69.697" height="57.5758"/>
-  <object id="195" x="936.364" y="1648.48" width="54.5455" height="39.3939"/>
+  <object id="195" x="1136.36" y="1436.36" width="54.5455" height="39.3939"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="6" name="CheckPoint">
   <object id="28" x="666.425" y="1487.27" width="72.7272" height="54.5454">
