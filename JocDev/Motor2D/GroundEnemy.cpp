@@ -50,7 +50,7 @@ void GroundEnemy::Move(float dt)
 	{
 		fPoint direction;
 		iPoint enemy_pos = App->map->WorldToMap(position.x + offset.x, position.y + offset.y);
-		if (position.DistanceManhattan(App->entityManager->player->position) <= 150)
+		if (position.DistanceManhattan(App->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = App->map->WorldToMap(App->entityManager->player->position.x + App->entityManager->player->size.x / 2, App->entityManager->player->position.y + App->entityManager->player->size.y);
 
@@ -87,9 +87,9 @@ void GroundEnemy::Move(float dt)
 				go_right = true;
 
 			if (go_right)
-				objective.create(enemy_pos.x + 0.5, enemy_pos.y);
+				objective.create(enemy_pos.x + path_speed, enemy_pos.y);
 			else
-				objective.create(enemy_pos.x - 0.5, enemy_pos.y);
+				objective.create(enemy_pos.x - path_speed, enemy_pos.y);
 
 
 			if (objective.x != 0)

@@ -51,7 +51,7 @@ void FlyingEnemy::Move(float dt)
 	{
 		fPoint direction;
 		iPoint enemy_pos = App->map->WorldToMap(position.x + offset.x, position.y + offset.y);
-		if (position.DistanceManhattan(App->entityManager->player->position) <= 150)
+		if (position.DistanceManhattan(App->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = App->map->WorldToMap(App->entityManager->player->position.x + App->entityManager->player->size.x / 2, App->entityManager->player->position.y + App->entityManager->player->size.y);
 
@@ -66,8 +66,8 @@ void FlyingEnemy::Move(float dt)
 					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
-					direction.x *= 0.75;
-					direction.y *= 0.75;
+					direction.x *= path_speed;
+					direction.y *= path_speed;
 				}
 			}
 			if (direction.x > 0)
@@ -106,17 +106,17 @@ void FlyingEnemy::Move(float dt)
 
 				if (initial_pos.y < position.y || !App->pathfinding->IsWalkable(cell_up))
 				{
-					objective.create(enemy_pos.x - 0.5, enemy_pos.y);
+					objective.create(enemy_pos.x - path_speed, enemy_pos.y);
 				}
 				else if (initial_pos.y > position.y || !App->pathfinding->IsWalkable(cell_down))
 				{
-				objective.create(enemy_pos.x + 0.5, enemy_pos.y);
+				objective.create(enemy_pos.x + path_speed, enemy_pos.y);
 				}
 			}
 			if (go_right)
-				objective.create(enemy_pos.x + 0.5, enemy_pos.y);
+				objective.create(enemy_pos.x + path_speed, enemy_pos.y);
 			else
-				objective.create(enemy_pos.x - 0.5, enemy_pos.y);
+				objective.create(enemy_pos.x - path_speed, enemy_pos.y);
 
 
 			if (objective.x != 0)

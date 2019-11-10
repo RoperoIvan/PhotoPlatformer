@@ -37,6 +37,9 @@ public:
 	Animation anim_walking;
 	Animation anim_dying;
 
+	int search;
+	float path_speed;
+
 	const p2DynArray<iPoint>* enemy_path;
 
 

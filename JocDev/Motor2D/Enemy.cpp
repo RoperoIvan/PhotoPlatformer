@@ -5,6 +5,15 @@
 Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity(position, name,type)
 {
 	current_animation = &anim_idle;
+
+	pugi::xml_document config_file;
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = config_file.load_file("config.xml");
+
+	ret = config_file.child("config").child("entities").child("GroundEnemy");
+	search = ret.child("path").attribute("search").as_int();
+	path_speed = ret.child("path").attribute("speed").as_float();
 }
 
 Enemy::~Enemy()

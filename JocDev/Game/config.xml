@@ -42,12 +42,14 @@
       <size x ="24" y ="20"/>
       <offset x ="20" y ="23"/>
       <gravity gravity ="80"/>
+      <path search ="200" speed ="0.75"/>
     </GroundEnemy>
     <FlyingEnemy>
       <speed x = "80" y = "80"/>
       <size x ="30" y ="19"/>
       <offset x ="0" y ="7"/>
       <gravity gravity ="80"/>
+      <path search ="150" speed ="0.5"/>
     </FlyingEnemy>
   </entities>
 </config>
