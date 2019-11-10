@@ -14,7 +14,7 @@ Enemy::~Enemy()
 
 bool Enemy::Update(float dt)
 {
-	return false;
+	return true;
 }
 
 void Enemy::PushBack()
@@ -48,12 +48,12 @@ void Enemy::PushBack()
 
 bool Enemy::Load(pugi::xml_node &)
 {
-	return false;
+	return true;
 }
 
 bool Enemy::Save(pugi::xml_node &) const
 {
-	return false;
+	return true;
 }
 
 void Enemy::OnCollision(Collider* col1)
@@ -83,7 +83,8 @@ void Enemy::OnCollision(Collider* col1)
 	{
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
-			to_delete = true;
+			state = EnemyState::DEAD;
+			collider->to_delete = true;
 		}
 		else
 		{

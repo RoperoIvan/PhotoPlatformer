@@ -32,7 +32,7 @@ public:
 	void OnCollision(Collider*) override;
 
 public:
-	EnemyState state;
+	EnemyState state = EnemyState::IDLE;
 	Animation anim_idle;
 	Animation anim_walking;
 	Animation anim_dying;

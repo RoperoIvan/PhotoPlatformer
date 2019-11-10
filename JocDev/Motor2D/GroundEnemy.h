@@ -17,6 +17,7 @@ public:
 
 private:
 	bool go_right = true;
+	int alpha = 255;
 };
 
 
