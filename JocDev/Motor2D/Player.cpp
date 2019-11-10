@@ -298,7 +298,11 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY)
 	{
-		state = Player_States::die_state;
+		if (collider->rect.y + collider->rect.h > col1->rect.y + 5)
+		{
+				state = Player_States::die_state;	
+		}
+		
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
 	{

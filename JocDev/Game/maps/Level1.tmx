@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="196">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="197">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="60" columns="6">
   <image source="tileset.png" width="96" height="160"/>
  </tileset>
@@ -115670,7 +115670,7 @@
   <object id="186" x="800" y="401.333" width="1748" height="13.3333"/>
  </objectgroup>
  <objectgroup color="#550000" id="9" name="GroundEnemy">
-  <object id="195" x="1136.36" y="1436.36" width="54.5455" height="39.3939"/>
+  <object id="195" x="1151.51" y="1596.97" width="54.5455" height="39.3939"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="6" name="CheckPoint">
   <object id="28" x="666.425" y="1487.27" width="72.7272" height="54.5454">
@@ -115708,6 +115708,9 @@
   <object id="191" x="2276" y="816" width="26" height="30"/>
   <object id="192" x="884" y="666" width="28" height="38"/>
   <object id="193" x="800" y="360" width="36" height="36"/>
+ </objectgroup>
+ <objectgroup color="#00aa00" id="11" name="FlyingEnemy">
+  <object id="196" x="866.667" y="1369.7" width="39.3939" height="42.4242"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="7" name="MapDamage">
   <object id="34" x="2192" y="1702.25" width="1614.5" height="10.75"/>

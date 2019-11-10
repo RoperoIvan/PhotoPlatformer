@@ -64,8 +64,6 @@ void Enemy::OnCollision(Collider* col1)
 		iPoint objective = App->map->WorldToMap(col1->rect.x, col1->rect.y);
 		fPoint direction(enemy_pos.x - objective.x, enemy_pos.y - objective.y);
 
-		/*direction.x /= sqrt(direction.DistanceNoSqrt(fPoint(objective.x,objective.y)));
-		direction.y /= sqrt(direction.DistanceNoSqrt(fPoint(objective.x, objective.y)));*/
 		//vertical collisions
 		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
 		{
@@ -81,7 +79,7 @@ void Enemy::OnCollision(Collider* col1)
 
 	}
 
-	if (col1->type == COLLIDER_TYPE::COLLIDER_WALL)
+	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER)
 	{
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{

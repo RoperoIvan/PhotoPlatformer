@@ -491,6 +491,11 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
 	}
+	else if (name == "FlyingEnemy")
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
+	}
 
 
 	return ret;
