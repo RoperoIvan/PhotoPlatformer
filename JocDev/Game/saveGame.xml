@@ -6,14 +6,36 @@
 	<audio />
 	<map />
 	<scene>
-		<lvl_stats level="2" />
+		<lvl_stats level="1" />
 	</scene>
 	<entities>
-		<player_stats gravity="1.20000005" position_x="389" position_y="466" num_platforms="0" alpha="255" />
+		<enemy_stats type="4" gravity="80" position_x="1064" position_y="1657" />
+		<enemy_stats type="4" gravity="80" position_x="3177" position_y="1158" />
+		<enemy_stats type="4" gravity="80" position_x="2150" position_y="938" />
+		<enemy_stats type="4" gravity="80" position_x="1184" position_y="666" />
+		<enemy_stats type="4" gravity="80" position_x="2107" position_y="359" />
+		<enemy_stats type="4" gravity="80" position_x="2605" position_y="725" />
+		<enemy_stats type="4" gravity="80" position_x="1674" position_y="536" />
+		<enemy_stats type="4" gravity="80" position_x="974" position_y="534" />
+		<enemy_stats type="4" gravity="80" position_x="696" position_y="935" />
+		<enemy_stats type="4" gravity="80" position_x="1809" position_y="934" />
+		<enemy_stats type="4" gravity="80" position_x="2877" position_y="743" />
+		<player_stats gravity="1.79999995" position_x="666" position_y="1637" num_platforms="0" alpha="255" />
+		<enemy_stats type="3" gravity="80" position_x="1610" position_y="1415" />
+		<enemy_stats type="3" gravity="80" position_x="2772" position_y="1427" />
+		<enemy_stats type="3" gravity="80" position_x="3660" position_y="1500" />
+		<enemy_stats type="3" gravity="80" position_x="3354" position_y="342" />
+		<enemy_stats type="3" gravity="80" position_x="1400" position_y="206" />
+		<enemy_stats type="3" gravity="80" position_x="1682" position_y="472" />
+		<enemy_stats type="3" gravity="80" position_x="2160" position_y="615" />
+		<enemy_stats type="3" gravity="80" position_x="1927" position_y="751" />
+		<enemy_stats type="3" gravity="80" position_x="2877" position_y="592" />
+		<enemy_stats type="3" gravity="80" position_x="1836" position_y="266" />
 	</entities>
+	<pathfinding />
 	<:anonymous />
 	<fade />
 	<renderer>
-		<camera x="-241" y="69" />
+		<camera x="-518" y="-1083" />
 	</renderer>
 </game_state>

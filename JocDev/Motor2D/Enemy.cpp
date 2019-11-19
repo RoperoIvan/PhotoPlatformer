@@ -55,13 +55,19 @@ void Enemy::PushBack()
 	anim_dying.loop = false;
 }
 
-bool Enemy::Load(pugi::xml_node &)
+bool Enemy::Load(pugi::xml_node &node)
 {
+	
 	return true;
 }
 
-bool Enemy::Save(pugi::xml_node &) const
+bool Enemy::Save(pugi::xml_node &node) const
 {
+	pugi::xml_node enemy_stats = node.append_child("enemy_stats");
+	enemy_stats.append_attribute("type") = (int)type;
+	enemy_stats.append_attribute("gravity") = (float)gravity;
+	enemy_stats.append_attribute("position_x") = (int)position.x;
+	enemy_stats.append_attribute("position_y") = (int)position.y;
 	return true;
 }
 

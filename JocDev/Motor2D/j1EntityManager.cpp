@@ -154,12 +154,19 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	bool ret = true;
 
 	p2List_item<Entity*> *item = entities.start;
-	for (; item != nullptr; item = item->next)
+	while (item != nullptr)
 	{
-		if (item != nullptr)
+		if (item->data == player)
 			item->data->Load(file);
+		else
+			item->data->to_delete = true;
+		item = item->next;
 	}
-
+	for (pugi::xml_node enemy_stats = file.child("enemy_stats"); enemy_stats != nullptr; enemy_stats = enemy_stats.next_sibling("enemy_stats"))
+	{
+		Entity* ent = CreateEntity(fPoint(enemy_stats.attribute("position_x").as_float(), enemy_stats.attribute("position_y").as_float()), ENTITY_TYPE(enemy_stats.attribute("type").as_int()));
+		ent->Start();
+	}
 	return ret;
 }
 
