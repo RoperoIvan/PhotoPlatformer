@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="159" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="26" nextobjectid="109">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="159" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="26" nextobjectid="111">
  <tileset firstgid="1" name="Background" tilewidth="16" tileheight="16" tilecount="64" columns="8">
   <image source="Background.png" width="128" height="128"/>
  </tileset>
@@ -71609,7 +71609,7 @@
   <object id="12" x="339.333" y="342.667" width="89.3333" height="16"/>
   <object id="13" x="337.333" y="61.333" width="14.6667" height="703.667"/>
   <object id="16" x="606.667" y="529.33" width="14.6667" height="256"/>
-  <object id="17" x="816" y="304" width="463.333" height="15.3333"/>
+  <object id="17" x="816" y="304" width="463.333" height="188.667"/>
   <object id="22" x="800.667" y="576.67" width="46.6667" height="16"/>
   <object id="23" x="934.667" y="578" width="18" height="14"/>
   <object id="27" x="623.333" y="640.67" width="191" height="14.6667"/>
@@ -71641,9 +71641,6 @@
   <object id="60" x="1042" y="546" width="14" height="141"/>
   <object id="61" x="800" y="674" width="242" height="13"/>
   <object id="62" x="801" y="642" width="15" height="32"/>
-  <object id="63" x="818" y="478" width="462" height="16"/>
-  <object id="64" x="817" y="303" width="17" height="191"/>
-  <object id="65" x="1265" y="304" width="15" height="189"/>
   <object id="67" x="1042" y="546" width="76.6667" height="13.3333"/>
   <object id="68" x="1120.67" y="624.667" width="32.6667" height="14.6667"/>
   <object id="69" x="1103.33" y="548" width="16.6667" height="92"/>
@@ -71656,11 +71653,13 @@
   <object id="76" x="1840.67" y="623.333" width="47.3333" height="16"/>
   <object id="77" x="1999.33" y="576" width="47.3333" height="16"/>
   <object id="87" x="252" y="748" width="18.6667" height="560"/>
+  <object id="109" x="479.174" y="1311.25" width="15.833" height="112"/>
  </objectgroup>
  <objectgroup color="#550000" id="24" name="GroundEnemy">
-  <object id="97" x="1060" y="112" width="40" height="24"/>
-  <object id="98" x="2304" y="420" width="28" height="32"/>
-  <object id="99" x="404" y="140" width="38" height="28"/>
+  <object id="97" x="373.333" y="1149.33" width="40" height="24"/>
+  <object id="98" x="2334.67" y="377.333" width="28" height="32"/>
+  <object id="99" x="481.333" y="78.6667" width="38" height="28"/>
+  <object id="110" x="1064" y="82.6667" width="40" height="24"/>
  </objectgroup>
  <objectgroup color="#00ff00" id="25" name="FlyingEnemy">
   <object id="100" x="1192" y="906" width="30" height="26"/>
@@ -71689,7 +71688,7 @@
     <property name="win" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="82" x="416" y="1263.34" width="33.3333" height="30.6667"/>
+  <object id="82" x="632" y="1199.34" width="33.3333" height="30.6667"/>
   <object id="83" x="464" y="1008" width="30" height="32"/>
   <object id="85" x="2242.67" y="542.667" width="33.3333" height="33.3333"/>
   <object id="86" x="1230.67" y="510.667" width="33.3333" height="34.6667"/>

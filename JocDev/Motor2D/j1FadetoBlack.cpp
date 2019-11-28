@@ -8,6 +8,7 @@
 #include "j1Audio.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Pathfinding.h"
 #include "p2Log.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
@@ -77,11 +78,27 @@ void j1FadetoBlack::NewLevel()
 	{
 	case 1:
 
-		App->map->Load("Level1.tmx");
+		if (App->map->Load("Level1.tmx") == true)
+		{
+			int w, h;
+			uchar* data = NULL;
+			if (App->map->CreateWalkabilityMap(w, h, &data))
+				App->pathfinding->SetMap(w, h, data);
+
+			RELEASE_ARRAY(data);
+		}
 		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;
 	case 2:
-		App->map->Load("Level2.tmx");
+		if (App->map->Load("Level2.tmx") == true)
+		{
+			int w, h;
+			uchar* data = NULL;
+			if (App->map->CreateWalkabilityMap(w, h, &data))
+				App->pathfinding->SetMap(w, h, data);
+
+			RELEASE_ARRAY(data);
+		}
 		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;
 	default:
