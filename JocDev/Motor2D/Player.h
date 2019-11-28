@@ -59,6 +59,8 @@ private:
 	float initialJumpSpeed;
 	fPoint respawn;
 	float grav;
+	float tmp_position;
+	float cap_jump = 30;
 	p2List<Entity*> platforms;
 
 	bool restart_alpha = false;
