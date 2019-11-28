@@ -58,6 +58,7 @@ void Player::Move(float dt)
 	if (state == Player_States::fall_State)
 	{
 		gravity = grav;
+		/*if (speed.y == 0)*/
 		jumpTime.Start();
 
 		if (speed.y < -initialJumpSpeed)
@@ -74,9 +75,6 @@ void Player::Move(float dt)
 		else if (speed.y <= -initialJumpSpeed)
 			speed.y += gravity;
 		
-		if (position.y > tmp_position + cap_jump)
-			state = Player_States::fall_State;
-
 
 		position.y += speed.y * dt;
 	}
@@ -193,7 +191,6 @@ void Player::InPut(float dt)
 			App->audio->PlayFx(jump_sfx);
 
 		state = Player_States::jump_State;
-		tmp_position = position.y;
 		position.y -= initialJumpSpeed * dt;
 	}
 	is_on_platform = false;
