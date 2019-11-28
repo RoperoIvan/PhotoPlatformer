@@ -229,7 +229,6 @@ void Player::InPut(float dt)
 			if (state == Player_States::idle_State)
 				state = Player_States::walking_state;
 		}
-
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && alpha >100)
 	{
@@ -298,7 +297,6 @@ void Player::OnCollision(Collider *col1)
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_CHECKPOINT)
 	{
 		respawn = position;
-		App->SaveGame();
 		col1->to_delete = true;
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY)

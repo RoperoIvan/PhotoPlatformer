@@ -143,10 +143,9 @@ bool j1Scene::Load(pugi::xml_node& node)
 	bool ret = true;
 	pugi::xml_node lvl_stats = node.child("lvl_stats");
 	if (current_level != lvl_stats.attribute("level").as_uint())
-	{
 		current_level = lvl_stats.attribute("level").as_uint();
-		App->fade->NewLevel();
-	}
+	
+	App->fade->NewLevel();
 	return ret;
 }
 
