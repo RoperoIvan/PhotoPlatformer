@@ -14,8 +14,17 @@ public:
 	UI(const fPoint &pos) :position(pos) {}
 	~UI() {}
 
+	enum class Type {
+		BUTTON,
+		IMAGE,
+		LABEL,
+
+		MAX
+	};
+
 	virtual bool Draw() { return true; }
 	fPoint position;
+	UI::Type ui_type;
 };
 
 class Image :public UI {
@@ -47,14 +56,19 @@ public:
 
 class Label :public UI {
 public:
-	Label(fPoint pos, const char* path_font, const char* txt) :UI(pos) {
+	Label(fPoint pos, const char* txt, const char* path_font) :UI(pos) {
 		font = App->fonts->Load(path_font);
 		text.create(txt);
+		SDL_Color color = { 255, 255, 255, 255 };
+		texture = App->fonts->Print(text.GetString(), color, font);
 	}
 	~Label() {}
 
-	_TTF_Font* font;
-	p2SString text;
+	bool Draw();
+
+	_TTF_Font*		font;
+	SDL_Texture*	texture;
+	p2SString		text;
 };
 
 // ---------------------------------------------------
@@ -74,10 +88,10 @@ public:
 	bool Start();
 
 	// Called before all Updates
-	bool PreUpdate();
+	bool PreUpdate(float dt);
 
 	// Called after all Updates
-	bool PostUpdate();
+	bool PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -88,7 +102,7 @@ public:
 	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
 	Label * CreateLabel(const fPoint & pos, const char * text, const char * font);
 
-	void Draw();
+	//virtual bool Draw() { return false; };
 	void CheckMouse(Button*);
 	const SDL_Texture* GetAtlas() const;
 

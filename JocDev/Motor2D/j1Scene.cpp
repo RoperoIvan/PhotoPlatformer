@@ -50,8 +50,8 @@ bool j1Scene::Start()
 	}
 
 	SDL_Rect r = { 0,0,100,100 };
-	App->gui->CreateImage(fPoint(0, 0), r);
-
+	App->gui->CreateImage(fPoint(0,0), r);
+	text = App->gui->CreateLabel(fPoint(0, 0), "TEST", "fonts/open_sans/OpenSans-Regular.ttf");
 	return true;
 }
 

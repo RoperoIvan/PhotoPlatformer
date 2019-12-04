@@ -35,17 +35,18 @@ bool j1Gui::Start()
 }
 
 // Update all guis
-bool j1Gui::PreUpdate()
+bool j1Gui::PreUpdate(float dt)
 {
 	p2List_item<UI*>* item = objects.start;
 	for (; item; item = item->next) {
-		CheckMouse((Button*)item->data);
+		if (item->data->ui_type == UI::Type::BUTTON)
+			CheckMouse((Button*)item->data);
 	}
 	return true;
 }
 
 // Called after all Updates
-bool j1Gui::PostUpdate()
+bool j1Gui::PostUpdate(float dt)
 {
 	p2List_item<UI*>* item = objects.start;
 	for (; item; item = item->next) {
@@ -73,10 +74,6 @@ Button * j1Gui::CreateButton(const fPoint & pos, const SDL_Rect & idle, const SD
 	return ret;
 }
 
-void j1Gui::Draw() {
-
-}
-
 Image* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
 {
 	Image* ret = nullptr;
@@ -92,6 +89,10 @@ Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font
 	objects.add(ret);
 	return ret;
 }
+
+//void j1Gui::Draw() {
+//	LOG("GOL");
+//}
 
 void j1Gui::CheckMouse(Button *b)
 {
@@ -114,7 +115,6 @@ void j1Gui::CheckMouse(Button *b)
 		b->mouse = Mouse::IDLE;
 		LOG("IDLE");
 	}
-
 
 }
 
@@ -150,4 +150,10 @@ bool Button::Draw()
 		break;
 	}
 	return ret;
+}
+
+bool Label::Draw()
+{
+	App->render->Blit(texture, position.x, position.y, 0, SDL_FLIP_NONE, 0.0f);
+	return false;
 }
