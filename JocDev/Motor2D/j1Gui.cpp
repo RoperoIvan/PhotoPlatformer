@@ -124,11 +124,17 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
+void j1Gui::DeleteElement(UI* ui)
+{
+	p2List_item<UI*> item = objects[objects.find(ui)];
+	objects.del(&item);
+}
+
 // class Gui ---------------------------------------------------
 
 bool Image::Draw()
 {
-	bool ret = false;
+	bool ret = true;
 
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, SDL_FLIP_NONE, 0.0F);
 
@@ -137,7 +143,7 @@ bool Image::Draw()
 
 bool Button::Draw()
 {
-	bool ret = false;
+	bool ret = true;
 	switch (mouse) {
 	case Mouse::ONHOVER:
 		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, SDL_FLIP_NONE ,0.0f);
@@ -156,4 +162,14 @@ bool Label::Draw()
 {
 	App->render->Blit(texture, position.x, position.y, 0, SDL_FLIP_NONE, 0.0f);
 	return false;
+}
+
+bool CheckBox::Draw()
+{
+	bool ret = true;
+	if(is_active)
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active, SDL_FLIP_NONE, 0.0f);
+	else
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive, SDL_FLIP_NONE, 0.0f);
+	return ret;
 }

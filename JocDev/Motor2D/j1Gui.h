@@ -71,6 +71,18 @@ public:
 	p2SString		text;
 };
 
+class CheckBox :public UI {
+public:
+	CheckBox(const fPoint& position, const SDL_Rect& active, const SDL_Rect& disactive, const bool &is_active) :UI(position), active(active), disactive(disactive), is_active(is_active) {}
+	~CheckBox() {}
+
+	bool Draw();
+
+	bool is_active;
+	SDL_Rect active;
+	SDL_Rect disactive;
+};
+
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -105,6 +117,8 @@ public:
 	//virtual bool Draw() { return false; };
 	void CheckMouse(Button*);
 	const SDL_Texture* GetAtlas() const;
+
+	void DeleteElement(UI* ui);
 
 private:
 
