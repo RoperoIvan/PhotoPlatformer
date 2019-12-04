@@ -5,6 +5,9 @@
 
 struct SDL_Texture;
 
+class Image;
+class Label;
+
 class j1Scene : public j1Module
 {
 public:
@@ -44,6 +47,9 @@ public:
 	iPoint	respawn;
 	fPoint scene_spawn;
 	uint current_level = 1;
+
+	Image* banner;
+	Label* text;
 };
 
 #endif // __j1SCENE_H__

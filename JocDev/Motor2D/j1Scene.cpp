@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "j1Collisions.h"
 #include "j1Pathfinding.h"
+#include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -47,6 +48,10 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+
+	SDL_Rect r = { 0,0,100,100 };
+	App->gui->CreateImage(fPoint(0, 0), r);
+
 	return true;
 }
 

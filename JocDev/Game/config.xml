@@ -52,4 +52,7 @@
       <path search ="150" speed ="0.5"/>
     </FlyingEnemy>
   </entities>
+  <gui>
+    <atlas file="UI/Button.png"/>
+  </gui>
 </config>
