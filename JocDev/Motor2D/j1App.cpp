@@ -179,9 +179,17 @@ void j1App::PrepareUpdate()
 		else
 			frames_cap = 60;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == j1KeyState::KEY_DOWN)
+		pause_game = !pause_game;
+
 	frame_counting++;
 	time_frame_second++;
-	dt = timer_frames.ReadSec();
+	if (!pause_game)
+		dt = timer_frames.ReadSec();
+	else
+		dt = 0.0f;
+
 	timer_frames.Start();
 }
 

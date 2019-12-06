@@ -114,7 +114,7 @@ private:
 	uint32				fps_cap = 0;
 	int					argc;
 	char**				args;
-
+	bool				pause_game = false;
 	p2SString			title;
 	p2SString			organization;
 
