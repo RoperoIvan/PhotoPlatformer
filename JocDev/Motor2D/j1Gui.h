@@ -51,14 +51,18 @@ class Button :public UI {
 		No_button
 	};
 public:
-	Button(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
+	Button(const fPoint& position, const SDL_Rect& idle, const SDL_Rect& hover, const SDL_Rect& push, const Button_Type& type, const p2SString text)
+		:UI(position), idle(idle), hover(hover), push(push), type(type)
+	{
+		width = idle.w; height = idle.h; this->text = new Label({position.x + width / 4, position.y + height / 3}, text.GetString(),nullptr,1);
+	}
 	~Button() {}
 
 	bool Draw();
 	void ClickLogic();
 
 	Button_Type type = Button_Type::No_button;
-	Label Text;
+	Label* text = nullptr;
 	SDL_Rect idle;
 	SDL_Rect hover;
 	SDL_Rect push;
