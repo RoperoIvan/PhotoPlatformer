@@ -82,10 +82,10 @@ Image* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font)
+Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font,const uint& size)
 {
 	Label* ret = nullptr;
-	ret = new Label(pos, text, font);
+	ret = new Label(pos, text, font, size);
 	objects.add(ret);
 	return ret;
 }
@@ -136,7 +136,7 @@ bool Image::Draw()
 {
 	bool ret = true;
 
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, SDL_FLIP_NONE, 0.0F);
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, true, SDL_FLIP_NONE, 0.0F);
 
 	return ret;
 }
@@ -146,13 +146,13 @@ bool Button::Draw()
 	bool ret = true;
 	switch (mouse) {
 	case Mouse::ONHOVER:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, SDL_FLIP_NONE ,0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, true,SDL_FLIP_NONE ,0.0f);
 		break;
 	case Mouse::IDLE:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, SDL_FLIP_NONE, 0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, true,SDL_FLIP_NONE, 0.0f);
 		break;
 	case Mouse::PUSH:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, SDL_FLIP_NONE, 0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true,SDL_FLIP_NONE, 0.0f);
 		break;
 	}
 	return ret;
@@ -160,7 +160,7 @@ bool Button::Draw()
 
 bool Label::Draw()
 {
-	App->render->Blit(texture, position.x, position.y, 0, SDL_FLIP_NONE, 0.0f);
+	App->render->Blit(texture, position.x, position.y, 0, false ,SDL_FLIP_NONE, 0.0f);
 	return false;
 }
 
@@ -168,8 +168,8 @@ bool CheckBox::Draw()
 {
 	bool ret = true;
 	if(is_active)
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active, SDL_FLIP_NONE, 0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active, true,SDL_FLIP_NONE, 0.0f);
 	else
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive, SDL_FLIP_NONE, 0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive, true,SDL_FLIP_NONE, 0.0f);
 	return ret;
 }

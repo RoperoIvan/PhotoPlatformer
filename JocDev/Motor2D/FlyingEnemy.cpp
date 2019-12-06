@@ -141,7 +141,7 @@ void FlyingEnemy::Move(float dt)
 void FlyingEnemy::Draw()
 {
 	if (current_animation != nullptr)
-		App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), flip, 1.0F);
+		App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), true ,flip, 1.0F);
 }
 
 void FlyingEnemy::CleanUp()

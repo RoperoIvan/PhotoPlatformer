@@ -49,9 +49,9 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	SDL_Rect r = { 0,0,100,100 };
-	App->gui->CreateImage(fPoint(0,0), r);
-	text = App->gui->CreateLabel(fPoint(0, 0), "TEST", "fonts/open_sans/OpenSans-Regular.ttf");
+	SDL_Rect r = { 0,0,363,178 };
+	App->gui->CreateImage(fPoint(177,0), r);
+	text = App->gui->CreateLabel(fPoint(0, 0), "TEST","fonts/open_sans/OpenSans-Regular.ttf", 34);
 	return true;
 }
 

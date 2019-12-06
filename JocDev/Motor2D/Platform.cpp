@@ -69,5 +69,5 @@ void Platform::SaveDataXML(pugi::xml_node&node) const
 void Platform::Draw()
 {
 	if (current_animation != nullptr)
-		App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(),SDL_FLIP_NONE,1.F,alpha);
+		App->render->Blit(data.tiled.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), true ,SDL_FLIP_NONE,1.F,alpha);
 }

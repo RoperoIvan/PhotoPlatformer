@@ -45,7 +45,7 @@ void j1Map::Draw()
 					uint gid = layerIterator->data->tileArray[layerIterator->data->GetArrayPos(column, row)];
 					if (gid != 0) {
 						iPoint worldPos = MapToWorld(column, row);
-						App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), SDL_RendererFlip::SDL_FLIP_NONE, layerIterator->data->speed);
+						App->render->Blit(tilesetIterator->data->texture, worldPos.x, worldPos.y, &tilesetIterator->data->GetTileRect(gid), true,SDL_RendererFlip::SDL_FLIP_NONE, layerIterator->data->speed);
 						
 					}
 				}

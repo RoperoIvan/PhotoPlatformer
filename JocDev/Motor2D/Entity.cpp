@@ -96,7 +96,7 @@ bool Entity::LoadData(const char* ent_data)
 void Entity::Draw()
 {
 	if (current_animation != nullptr)
-		App->render->Blit(data.tiled.texture, position.x, position.y, &current_animation->frames[current_animation->GetCurrentFrameNumber()], flip, 1.0F, true);
+		App->render->Blit(data.tiled.texture, position.x, position.y, &current_animation->frames[current_animation->GetCurrentFrameNumber()], true, flip, 1.0F, true);
 	else
 		App->render->Blit(data.tiled.texture, position.x, position.y);
 }

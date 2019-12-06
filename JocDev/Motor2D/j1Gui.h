@@ -6,7 +6,7 @@
 
 #define CURSOR_WIDTH 2
 
-// TODO 1: Create your structure of classes
+
 struct _TTF_Font;
 
 class UI {
@@ -56,8 +56,8 @@ public:
 
 class Label :public UI {
 public:
-	Label(fPoint pos, const char* txt, const char* path_font) :UI(pos) {
-		font = App->fonts->Load(path_font);
+	Label(const fPoint &pos, const char* txt, const char* path_font, const uint &size) :UI(pos) {
+		font = App->fonts->Load(path_font, size);
 		text.create(txt);
 		SDL_Color color = { 255, 255, 255, 255 };
 		texture = App->fonts->Print(text.GetString(), color, font);
@@ -69,6 +69,7 @@ public:
 	_TTF_Font*		font;
 	SDL_Texture*	texture;
 	p2SString		text;
+	uint			size;
 };
 
 class CheckBox :public UI {
@@ -112,7 +113,7 @@ public:
 	// Gui creation functions
 	Button* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
 	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
-	Label * CreateLabel(const fPoint & pos, const char * text, const char * font);
+	Label * CreateLabel(const fPoint & pos, const char * text, const char * font,const uint& size = DEFAULT_FONT_SIZE);
 
 	//virtual bool Draw() { return false; };
 	void CheckMouse(Button*);
