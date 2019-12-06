@@ -123,7 +123,8 @@ void j1Gui::CheckMouse(UI *b)
 UI * j1Gui::Select() const
 {
 	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next) {
+	for (; item; item = item->next)
+	{
 		if (item->data->m_state == UI::MouseState::PUSH)
 			return  item->data;
 	}
@@ -167,6 +168,22 @@ bool Button::Draw()
 		break;
 	}
 	return ret;
+}
+
+void Button::ClickLogic()
+{
+	
+	switch (type)
+	{
+	case Button_Type::Go_to_Menu:
+		//insert funtion
+		break;
+	case Button_Type::No_button:
+		//insert funtion
+		break;
+	default:
+		break;
+	}
 }
 
 bool Label::Draw()

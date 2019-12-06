@@ -45,12 +45,20 @@ public:
 };
 
 class Button :public UI {
+	enum class Button_Type
+	{
+		Go_to_Menu,
+		No_button
+	};
 public:
 	Button(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
 	~Button() {}
 
 	bool Draw();
+	void ClickLogic();
 
+	Button_Type type = Button_Type::No_button;
+	Label Text;
 	SDL_Rect idle;
 	SDL_Rect hover;
 	SDL_Rect push;
