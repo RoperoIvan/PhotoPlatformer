@@ -21,34 +21,36 @@ public:
 
 		MAX
 	};
+	enum class MouseState {
+		IDLE,
+		ONHOVER,
+		PUSH
+	};
 
 	virtual bool Draw() { return true; }
 	fPoint position;
 	UI::Type ui_type;
+	int width = 0;
+	int height = 0;
+	MouseState m_state = MouseState::IDLE;
 };
 
 class Image :public UI {
 public:
-	Image(const fPoint &pos, const SDL_Rect &r) :UI(pos), dimension(r) {}
+	Image(const fPoint &pos, const SDL_Rect &r) :UI(pos), dimension(r) { width = r.w; height = r.h; }
 
 	bool Draw();
 
 	SDL_Rect dimension;
 };
-enum class Mouse {
-	IDLE,
-	ONHOVER,
-	PUSH
-};
+
 class Button :public UI {
 public:
-	Button(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) {}
+	Button(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
 	~Button() {}
 
 	bool Draw();
 
-
-	Mouse	 mouse = Mouse::IDLE;
 	SDL_Rect idle;
 	SDL_Rect hover;
 	SDL_Rect push;
@@ -61,6 +63,7 @@ public:
 		text.create(txt);
 		SDL_Color color = { 255, 255, 255, 255 };
 		texture = App->fonts->Print(text.GetString(), color, font);
+		App->fonts->CalcSize(txt, width, height, font);
 	}
 	~Label() {}
 
@@ -116,7 +119,8 @@ public:
 	Label * CreateLabel(const fPoint & pos, const char * text, const char * font,const uint& size = DEFAULT_FONT_SIZE);
 
 	//virtual bool Draw() { return false; };
-	void CheckMouse(Button*);
+	void CheckMouse(UI*);
+	UI* Select()const;
 	const SDL_Texture* GetAtlas() const;
 
 	void DeleteElement(UI* ui);
@@ -126,6 +130,7 @@ private:
 	SDL_Texture * atlas;
 	p2SString atlas_file_name;
 	p2List<UI*> objects;
+	UI* selected = nullptr;
 };
 
 #endif // __j1GUI_H__

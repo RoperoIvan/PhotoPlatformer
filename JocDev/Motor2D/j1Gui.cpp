@@ -39,9 +39,15 @@ bool j1Gui::PreUpdate(float dt)
 {
 	p2List_item<UI*>* item = objects.start;
 	for (; item; item = item->next) {
-		if (item->data->ui_type == UI::Type::BUTTON)
-			CheckMouse((Button*)item->data);
+			CheckMouse(item->data);
 	}
+
+	if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_DOWN && selected == nullptr)
+		selected = Select();
+	else if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_UP && selected != nullptr)
+		selected = nullptr;
+	LOG("%i", selected);
+
 	return true;
 }
 
@@ -90,32 +96,37 @@ Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font
 	return ret;
 }
 
-//void j1Gui::Draw() {
-//	LOG("GOL");
-//}
-
-void j1Gui::CheckMouse(Button *b)
+void j1Gui::CheckMouse(UI *b)
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	if (x > b->position.x&&x<b->position.x + b->idle.w &&
-		y>b->position.y&&y < b->position.y + b->idle.h) {
+	if (x > b->position.x&&x<b->position.x + b->width &&
+		y>b->position.y&&y < b->position.y + b->height) {
 		if (App->input->GetMouseButtonDown(1)) {
-			b->mouse = Mouse::PUSH;
+			b->m_state = UI::MouseState::PUSH;
 			LOG("PUSH");
 		}
 		else {
-			b->mouse = Mouse::ONHOVER;
+			b->m_state = UI::MouseState::ONHOVER;
 			LOG("ONHOVER");
 		}
 
 
 	}
-	else if (b->mouse != Mouse::IDLE) {
-		b->mouse = Mouse::IDLE;
+	else if (b->m_state != UI::MouseState::IDLE) {
+		b->m_state = UI::MouseState::IDLE;
 		LOG("IDLE");
 	}
 
+}
+
+UI * j1Gui::Select() const
+{
+	p2List_item<UI*>* item = objects.start;
+	for (; item; item = item->next) {
+		if (item->data->m_state == UI::MouseState::PUSH)
+			return  item->data;
+	}
 }
 
 // const getter for atlas
@@ -144,14 +155,14 @@ bool Image::Draw()
 bool Button::Draw()
 {
 	bool ret = true;
-	switch (mouse) {
-	case Mouse::ONHOVER:
+	switch (m_state) {
+	case UI::MouseState::ONHOVER:
 		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, true,SDL_FLIP_NONE ,0.0f);
 		break;
-	case Mouse::IDLE:
+	case UI::MouseState::IDLE:
 		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, true,SDL_FLIP_NONE, 0.0f);
 		break;
-	case Mouse::PUSH:
+	case UI::MouseState::PUSH:
 		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true,SDL_FLIP_NONE, 0.0f);
 		break;
 	}
