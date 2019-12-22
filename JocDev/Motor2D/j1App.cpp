@@ -149,6 +149,10 @@ bool j1App::Update()
 		ret = PostUpdate();
 
 	FinishUpdate();
+
+	if (exit)
+		ret = false;
+
 	return ret;
 }
 
@@ -180,8 +184,8 @@ void j1App::PrepareUpdate()
 			frames_cap = 60;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == j1KeyState::KEY_DOWN)
-		pause_game = !pause_game;
+	/*if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == j1KeyState::KEY_DOWN)
+		pause_game = !pause_game;*/
 
 	frame_counting++;
 	time_frame_second++;
@@ -433,4 +437,9 @@ bool j1App::SavegameNow() const
 	data.reset();
 	want_to_save = false;
 	return ret;
+}
+
+bool j1App::Pause()
+{
+	return pause_game = !pause_game;
 }

@@ -53,6 +53,6 @@
     </FlyingEnemy>
   </entities>
   <gui>
-    <atlas file="UI/Button.png"/>
+    <atlas file="UI/atlas.png"/>
   </gui>
 </config>

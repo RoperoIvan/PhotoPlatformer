@@ -30,6 +30,16 @@ public:
 	// Retrieve window scale
 	uint GetScale() const;
 
+	uint j1Window::GetWindowWidth() const
+	{
+		return width;
+	}
+
+	uint j1Window::GetWindowHeight() const
+	{
+		return height;
+	}
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;

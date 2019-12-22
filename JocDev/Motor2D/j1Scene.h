@@ -7,6 +7,7 @@ struct SDL_Texture;
 
 class Image;
 class Label;
+class Button;
 
 class j1Scene : public j1Module
 {
@@ -42,6 +43,13 @@ public:
 	bool Load(pugi::xml_node& node) override;
 
 	bool Save(pugi::xml_node& node) const override;
+
+	void CreatePauseMenu();
+
+	void DestroyPauseMenu();
+
+	void CreateSettingsMenu();
+
 public:
 
 	iPoint	respawn;
@@ -50,6 +58,19 @@ public:
 
 	Image* banner;
 	Label* text;
+
+	//Pause Menu
+	Image* panel = nullptr;
+	Button* resume_button = nullptr;
+	Label* resume_label = nullptr;
+	Button* exit_button = nullptr;
+	Label* exit_label = nullptr;
+	Button* settings_button = nullptr;
+	Label* settings_label = nullptr;
+
+	//Settings Menu
+	Image* settings_panel = nullptr;
+
 };
 
 #endif // __j1SCENE_H__

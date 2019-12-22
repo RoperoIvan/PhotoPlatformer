@@ -57,6 +57,7 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 	float GetDT();
+	bool Pause();
 private:
 
 	// Load config file
@@ -114,7 +115,7 @@ private:
 	uint32				fps_cap = 0;
 	int					argc;
 	char**				args;
-	bool				pause_game = false;
+	
 	p2SString			title;
 	p2SString			organization;
 
@@ -122,6 +123,9 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+public:
+	bool				pause_game = false;
+	bool				exit = false;
 };
 
 extern j1App* App;
