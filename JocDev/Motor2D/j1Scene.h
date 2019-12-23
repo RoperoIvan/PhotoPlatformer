@@ -8,6 +8,8 @@ struct SDL_Texture;
 class Image;
 class Label;
 class Button;
+class Slider;
+class CheckBox;
 
 class j1Scene : public j1Module
 {
@@ -50,6 +52,7 @@ public:
 
 	void CreateSettingsMenu();
 
+	void DestroySettingsMenu();
 public:
 
 	iPoint	respawn;
@@ -70,7 +73,13 @@ public:
 
 	//Settings Menu
 	Image* settings_panel = nullptr;
-
+	Image* volume_level = nullptr;
+	Slider* slider_volume = nullptr;
+	Button* to_pause_menu_button = nullptr;
+	Label* to_pause_menu_label = nullptr;
+	Button* thumb_button = nullptr;
+	CheckBox* fullscreen_checkbox = nullptr;
+	Label* fullscreen_label = nullptr;
 };
 
 #endif // __j1SCENE_H__

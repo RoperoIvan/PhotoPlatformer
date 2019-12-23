@@ -22,6 +22,11 @@ enum Color
 	COLOR_NOT_DEF
 };
 
+enum class Slider_TYPE {
+	X,
+	Y
+};
+
 class UI {
 public:
 	UI(const int& pos_x, const int& pos_y, UI* parent, const int &width = 0, const int &height = 0, bool drawable = true) :position({pos_x, pos_y, width, height}), parent(parent), drawable(drawable) {}
@@ -32,13 +37,15 @@ public:
 		IMAGE,
 		LABEL,
 		CHECK_BOX,
+		SLIDER,
 		NO_TYPE,
 		MAX
 	};
 	enum class MouseState {
 		IDLE,
 		ONHOVER,
-		PUSH
+		PUSH,
+		REPEAT,
 	};
 	enum class Button_Type
 	{
@@ -50,12 +57,21 @@ public:
 		Play,
 		Continue,
 		Resume,
+		Slider,
+		Return,
+	};
+
+	enum class CheckBox_Type
+	{
+		No_checkbox,
+		Fullscreen,
 	};
 
 	bool Draw();
 
 	iPoint GetGlobalPosition() const;
 	virtual void InnerDraw() {};
+	virtual void PostUpdate() {};
 
 public:
 	SDL_Rect position;
@@ -120,19 +136,58 @@ public:
 
 class CheckBox :public UI {
 public:
-	CheckBox(int pos_x, int pos_y, const SDL_Rect& active, const SDL_Rect& disactive, const bool &is_active, UI* parent) :UI(pos_x, pos_y, parent, 0, 0, drawable), active(active), disactive(disactive), is_active(is_active)
+	CheckBox(int pos_x, int pos_y, const bool &is_active, UI* parent, bool drawable, CheckBox_Type type, const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,
+		const SDL_Rect& disactive_hover, const SDL_Rect& disactive_push) :UI(pos_x, pos_y, parent, active_idle.w, active_idle.h, drawable), active_idle(active_idle), active_hover(active_hover), active_push(active_push) ,
+		disactive_idle(disactive_idle), disactive_hover(disactive_hover), disactive_push(disactive_push), is_active(is_active), type(type)
 	{
 		ui_type = UI::Type::CHECK_BOX;
 	}
 	~CheckBox() {}
 
 	void InnerDraw();
+	void ClickLogic();
 
-	bool is_active;
-	SDL_Rect active;
-	SDL_Rect disactive;
+	bool is_active = false;
+	SDL_Rect active_idle;
+	SDL_Rect active_hover;
+	SDL_Rect active_push;
+	SDL_Rect disactive_idle;
+	SDL_Rect disactive_hover;
+	SDL_Rect disactive_push;
+	CheckBox_Type type;
 };
 
+class Slider : public UI
+{
+public:
+
+	Slider(const int &pos_x, const int &pos_y, const SDL_Rect &slider_rect, UI* parent = nullptr, Slider_TYPE slider_type = Slider_TYPE::Y) : UI(pos_x, pos_y, parent, slider_rect.w, slider_rect.h, true)
+	{
+		position = { pos_x, pos_y, slider_rect.w, slider_rect.h };
+		image = slider_rect;
+		type = slider_type;
+		ui_type = UI::Type::SLIDER;
+		value = 0.0F;
+	}
+
+	void AddTargets(UI*);
+	void AddThumb(Button*);
+	void SetSliderValueStart(float slider_value);
+
+	void InnerDraw();
+	void PostUpdate();
+
+	float GetSliderValue() const;
+	Button* GetSliderButton() const;
+
+private:
+
+	float value = 0.0F;
+	Slider_TYPE type = Slider_TYPE::Y;
+	Button* thumb = nullptr;
+	SDL_Rect image = { 0,0,0,0 };
+	p2List<UI*> control;
+};
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -163,7 +218,9 @@ public:
 	Button* CreateButton(const fPoint & pos, UI* parent, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push, const UI::Button_Type& type);
 	Image * CreateImage(const fPoint & pos, UI* parent, const SDL_Rect & rect, bool drawable);
 	Label * CreateLabel(const fPoint & pos, UI* parent, const char * text, const Color& c, const char * font,const uint& size = DEFAULT_FONT_SIZE);
-
+	Slider * CreateSlider(const fPoint & pos, const SDL_Rect &slider_rect, Slider_TYPE type, UI* parent = nullptr);
+	CheckBox* CreateCheckbox(const fPoint & pos, const bool &is_active, UI* parent, bool drawable, UI::CheckBox_Type type,const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,
+		const SDL_Rect& disactive_hover, const SDL_Rect& disactive_push);
 	//virtual bool Draw() { return false; };
 	void CheckMouse(UI*);
 	bool Select()const;

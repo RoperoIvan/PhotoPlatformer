@@ -2,6 +2,7 @@
 #define __j1INPUT_H__
 
 #include "j1Module.h"
+#include "p2Point.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
@@ -68,6 +69,7 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 	void GetMousePositionInWorld(int& x, int& y);
+	iPoint GetMousePosition();
 
 private:
 	bool		windowEvents[WE_COUNT];

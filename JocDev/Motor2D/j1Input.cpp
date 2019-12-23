@@ -163,3 +163,8 @@ void j1Input::GetMousePositionInWorld(int & x, int & y)
 	x = App->render->FromScreenToWorld(mouse_x, mouse_y).x;
 	y = App->render->FromScreenToWorld(mouse_x, mouse_y).y;
 }
+
+iPoint j1Input::GetMousePosition()
+{
+	return iPoint(mouse_x, mouse_y);
+}

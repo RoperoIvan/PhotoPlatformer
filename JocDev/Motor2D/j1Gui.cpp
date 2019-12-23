@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Scene.h";
+#include "j1Audio.h"
 #include "j1Gui.h"
 
 j1Gui::j1Gui() : j1Module()
@@ -46,10 +47,8 @@ bool j1Gui::PreUpdate(float dt)
 	}
 
 	if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_DOWN && selected == nullptr)
-		/*selected = */Select();
-	//else if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_UP && selected != nullptr)
-	//	selected = nullptr;
-	//LOG("%i", selected);
+		Select();
+
 
 	return true;
 }
@@ -57,6 +56,10 @@ bool j1Gui::PreUpdate(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate(float dt)
 {
+	for (int i = 0; i < objects.count(); ++i) {
+		objects[i]->PostUpdate();
+	}
+
 	p2List_item<UI*>* item = objects.start;
 	for (; item; item = item->next) {
 		if(item->data->drawable)
@@ -100,6 +103,22 @@ Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const
 	return ret;
 }
 
+Slider * j1Gui::CreateSlider(const fPoint & pos, const SDL_Rect & slider_rect, Slider_TYPE type, UI * parent)
+{
+	Slider* ret = nullptr;
+	ret = new Slider(pos.x, pos.y, slider_rect, parent, type);
+	objects.add(ret);
+	return ret;
+}
+
+CheckBox * j1Gui::CreateCheckbox(const fPoint & pos, const bool & is_active, UI * parent, bool drawable, UI::CheckBox_Type type,const SDL_Rect & active_idle, const SDL_Rect & active_hover, const SDL_Rect & active_push, const SDL_Rect & disactive_idle, const SDL_Rect & disactive_hover, const SDL_Rect & disactive_push)
+{
+	CheckBox* ret = nullptr;
+	ret = new CheckBox(pos.x, pos.y, is_active, parent, drawable, type, active_idle, active_hover, active_push, disactive_idle, disactive_hover, disactive_push);
+	objects.add(ret);
+	return ret;
+}
+
 void j1Gui::CheckMouse(UI *b)
 {
 	int x, y;
@@ -134,7 +153,10 @@ bool j1Gui::Select() const
 		{
 			dynamic_cast<Button*>(item->data)->ClickLogic();
 		}
-			
+		if (item->data->m_state == UI::MouseState::PUSH && item->data->ui_type == UI::Type::CHECK_BOX)
+		{
+			dynamic_cast<CheckBox*>(item->data)->ClickLogic();
+		}
 	}
 	return  ret;
 }
@@ -201,13 +223,16 @@ void Button::InnerDraw()
 {
 	switch (m_state) {
 	case UI::MouseState::ONHOVER:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, true,SDL_FLIP_NONE ,0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, true,SDL_FLIP_NONE ,0.0f, 255, true);
 		break;
 	case UI::MouseState::IDLE:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, true,SDL_FLIP_NONE, 0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, true,SDL_FLIP_NONE, 0.0f, 255, true);
 		break;
 	case UI::MouseState::PUSH:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true,SDL_FLIP_NONE, 0.0f);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true,SDL_FLIP_NONE, 0.0f, 255, true);
+		break;
+	case UI::MouseState::REPEAT:
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true, SDL_FLIP_NONE, 0.0f, 255, true);
 		break;
 	}
 }
@@ -235,6 +260,15 @@ void Button::ClickLogic()
 	case Button_Type::Resume:
 		(App->Pause()) ? App->scene->CreatePauseMenu() : App->scene->DestroyPauseMenu();
 		break;
+	case Button_Type::Slider:
+		this->position.x = App->input->GetMousePosition().x;
+		/*this->position.y = ;*/
+			App->audio->SetVolume(dynamic_cast<Slider*>(parent)->GetSliderValue());		
+		break;
+	case Button_Type::Return:
+		App->scene->DestroySettingsMenu();
+		App->scene->CreatePauseMenu();
+		break;
 	case Button_Type::No_button:
 		//insert funtion
 		break;
@@ -246,7 +280,7 @@ void Button::ClickLogic()
 void Label::InnerDraw()
 {
 	if(drawable)
-		App->render->Blit(texture, position.x, position.y, 0, false ,SDL_FLIP_NONE, 0.0f);
+		App->render->Blit(texture, position.x, position.y, 0, false ,SDL_FLIP_NONE, 0.0f, 255, true);
 
 }
 
@@ -292,8 +326,121 @@ void CheckBox::InnerDraw()
 	if (drawable)
 	{
 		if (is_active)
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active, true, SDL_FLIP_NONE, 0.0f);
+		{
+			switch (m_state)
+			{
+			case UI::MouseState::ONHOVER:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_hover, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			case UI::MouseState::IDLE:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_idle, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			case UI::MouseState::PUSH:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			case UI::MouseState::REPEAT:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			}
+		}
+			
+			
 		else
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive, true, SDL_FLIP_NONE, 0.0f);
+		{
+			switch (m_state)
+			{
+			case UI::MouseState::ONHOVER:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_hover, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			case UI::MouseState::IDLE:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_idle, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			case UI::MouseState::PUSH:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			case UI::MouseState::REPEAT:
+				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
+				break;
+			}
+		}
 	}
+}
+
+void CheckBox::ClickLogic()
+{
+	switch (type)
+	{
+	case CheckBox_Type::No_checkbox:
+			break;
+	case CheckBox_Type::Fullscreen:
+		App->win->fullscreen = !App->win->fullscreen;
+		if(App->win->fullscreen)
+			SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		else
+			SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_SHOWN);
+		break;
+	}
+	is_active = !is_active;
+}
+
+void Slider::AddTargets(UI * target)
+{
+	control.add(target);
+}
+
+void Slider::AddThumb(Button * thumb_b)
+{
+	if (thumb == nullptr) {
+		thumb = thumb_b;
+	}
+	else {
+		thumb->to_delete = true;
+	}
+}
+
+void Slider::SetSliderValueStart(float slider_value)
+{
+	if (slider_value >= 0.0f && slider_value <= 1.0f) {
+		value = slider_value;
+	}
+	else {
+		value = 0;
+	}
+
+	//App->gui->SetPosition(thumb, position.x * value, position.y * value);
+}
+
+void Slider::InnerDraw()
+{
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &image, false, SDL_FLIP_NONE, 0.0f, 255, true);
+}
+
+void Slider::PostUpdate()
+{
+	//if (thumb->position.x < 0)
+	//	thumb->position.x = 0;
+
+	///*if (thumb->position.y < 0)
+	//	thumb->position.y = 0;*/
+
+	//if (thumb->position.x > position.w - thumb->position.w)
+	//	thumb->position.x = position.w - thumb->position.w;
+
+	//if (thumb->position.y > position.h - thumb->position.h)
+	//	thumb->position.y = position.h - thumb->position.h;
+
+	if (type == Slider_TYPE::X)
+		value = (float)(thumb->position.x + thumb->position.w / 2) / (float)position.w;
+	else
+		value = (float)(thumb->position.y + thumb->position.h / 2) / (float)position.h;
+}
+
+float Slider::GetSliderValue() const
+{
+	return value;
+}
+
+Button * Slider::GetSliderButton() const
+{
+	return thumb;
 }

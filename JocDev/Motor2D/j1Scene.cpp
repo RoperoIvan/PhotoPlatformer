@@ -226,4 +226,43 @@ void j1Scene::CreateSettingsMenu()
 	//Panel
 	settings_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1504,960,503,717 }, true);
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
+	//Slider
+	/*volume_level = App->gui->CreateImage(fPoint(0, 0), settings_panel, {}, true);*/
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), {193, 423, 469, 10}, Slider_TYPE::X, settings_panel);
+	thumb_button = App->gui->CreateButton(fPoint(500, 200), slider_volume, { 77, 400, 30, 45 }, { 77, 400, 30, 45 }, { 77, 456, 30, 45 }, UI::Button_Type::Slider);
+	slider_volume->AddThumb(thumb_button);
+	
+	//CheckBox
+	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 280, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
+	fullscreen_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 60, (settings_panel->position.h / 2) - 10), to_pause_menu_button, "Fullscreen", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
+	//Buttons	 
+	to_pause_menu_button = App->gui->CreateButton(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) + 120), settings_panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Return);
+	to_pause_menu_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 200, (settings_panel->position.h / 2) + 150), to_pause_menu_button, "Return", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
+}
+
+void j1Scene::DestroySettingsMenu()
+{
+	settings_panel->to_delete = true;
+	App->gui->DeleteElement(settings_panel);
+	settings_panel = nullptr;
+
+	slider_volume->to_delete = true;
+	App->gui->DeleteElement(slider_volume);
+	slider_volume = nullptr;
+
+	thumb_button->to_delete = true;
+	App->gui->DeleteElement(thumb_button);
+	thumb_button = nullptr;
+
+	fullscreen_checkbox->to_delete = true;
+	App->gui->DeleteElement(fullscreen_checkbox);
+	fullscreen_checkbox = nullptr;
+
+	to_pause_menu_button->to_delete = true;
+	App->gui->DeleteElement(to_pause_menu_button);
+	to_pause_menu_button = nullptr;
+
+	to_pause_menu_label->to_delete = true;
+	App->gui->DeleteElement(to_pause_menu_label);
+	to_pause_menu_label = nullptr;
 }

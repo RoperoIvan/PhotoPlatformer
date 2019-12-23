@@ -181,3 +181,28 @@ void j1Audio::UnLoadFx()
 
 	fx.clear();
 }
+
+int j1Audio::SetVolume(float vol)
+{
+	return Mix_VolumeMusic(MIX_MAX_VOLUME*vol);
+}
+
+int j1Audio::RaiseVolume()
+{
+	if (music_volume <= MIX_MAX_VOLUME)
+		music_volume += 10;
+	else 
+		music_volume = MIX_MAX_VOLUME;
+
+	return Mix_VolumeMusic(music_volume);
+}
+
+int j1Audio::DecreaseVolume()
+{
+	if (music_volume >= 10)
+		music_volume -= 10;
+	else 
+		music_volume = 0;
+
+	return Mix_VolumeMusic(music_volume);
+}
