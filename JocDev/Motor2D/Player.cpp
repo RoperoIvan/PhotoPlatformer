@@ -231,6 +231,12 @@ void Player::CoinsManagement()
 {
 	
 	coins_label->SetText(p2SString("%i", coins).GetString());
+
+	if (lifes < 3 && coins >= 10)
+	{
+		lifes++;
+		coins -= 10;
+	}
 }
 
 void Player::Flash()
