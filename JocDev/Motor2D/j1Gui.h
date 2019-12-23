@@ -126,6 +126,7 @@ public:
 	void InnerDraw();
 	void SetColor(Color color);
 	void SetColor(SDL_Color color);
+	void SetText(const char* text);
 
 	_TTF_Font*		font;
 	SDL_Texture*	texture;
@@ -221,7 +222,7 @@ public:
 	Slider * CreateSlider(const fPoint & pos, const SDL_Rect &slider_rect, Slider_TYPE type, UI* parent = nullptr);
 	CheckBox* CreateCheckbox(const fPoint & pos, const bool &is_active, UI* parent, bool drawable, UI::CheckBox_Type type,const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,
 		const SDL_Rect& disactive_hover, const SDL_Rect& disactive_push);
-	//virtual bool Draw() { return false; };
+	void CreateScreen();
 	void CheckMouse(UI*);
 	bool Select()const;
 	const SDL_Texture* GetAtlas() const;

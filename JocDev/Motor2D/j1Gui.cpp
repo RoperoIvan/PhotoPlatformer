@@ -33,8 +33,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-	if (objects.find(screen) == -1)
-		screen = CreateImage(fPoint(0, 0), nullptr,{ 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, false);
+	CreateScreen();
+
 	return true;
 }
 
@@ -77,6 +77,12 @@ bool j1Gui::CleanUp()
 		RELEASE(item->data);
 	}
 	return true;
+}
+
+void j1Gui::CreateScreen()
+{
+	if (objects.find(screen) == -1)
+		screen = CreateImage(fPoint(0, 0), nullptr, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, false);
 }
 
 Button * j1Gui::CreateButton(const fPoint & pos, UI* parent,const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push, const UI::Button_Type& type)
@@ -152,10 +158,12 @@ bool j1Gui::Select() const
 		if (item->data->m_state == UI::MouseState::PUSH && item->data->ui_type == UI::Type::BUTTON)
 		{
 			dynamic_cast<Button*>(item->data)->ClickLogic();
+			break;
 		}
 		if (item->data->m_state == UI::MouseState::PUSH && item->data->ui_type == UI::Type::CHECK_BOX)
 		{
 			dynamic_cast<CheckBox*>(item->data)->ClickLogic();
+			break;
 		}
 	}
 	return  ret;
@@ -216,8 +224,12 @@ bool UI::Draw()
 }
 void Image::InnerDraw()
 {
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, true, SDL_FLIP_NONE, 0.0F, 255,
-		true, false,{ parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
+	if (drawable)
+	{
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, true, SDL_FLIP_NONE, 0.0F, 255,
+			true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
+	}
+	
 }
 void Button::InnerDraw()
 {
@@ -319,6 +331,14 @@ void Label::SetColor(SDL_Color c)
 {
 	color = c;
 	texture = App->fonts->Print(text.GetString(), color, font);
+}
+
+void Label::SetText(const char * txt)
+{
+	text.create(txt);
+	App->tex->UnLoad(texture);
+	texture = App->fonts->Print(text.GetString(), color, font);
+	App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
 }
 
 void CheckBox::InnerDraw()

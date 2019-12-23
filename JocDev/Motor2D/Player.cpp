@@ -10,6 +10,8 @@
 #include "Entity.h"
 #include "Platform.h"
 #include "p2Log.h"
+#include "j1Window.h"
+#include "j1Gui.h"
 
 #include "SDL/include/SDL_scancode.h"
 
@@ -41,12 +43,21 @@ bool Player::Start()
 
 	initialJumpSpeed = -speed.y;
 
+	//HUD
+	App->gui->CreateScreen();
+	heart_1 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 788, 210, 59 }, false);
+	heart_2 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 716, 210, 59 }, false);
+	heart_3 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 647, 210, 59 }, true);
+	coin = App->gui->CreateImage(fPoint(App->win->GetWindowWidth() - 150, 20), App->gui->screen, { 77, 873, 67, 66 }, true);
+	coins_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth() - 70, -25), coin, "", BLACK, "fonts/Final_Fantasy_font.ttf", 130);
+
 	return true;
 }
 
 void Player::PreUpdate(float dt)
 {
-	
+	if (hit_time)
+		HitTimeManagement();
 }
 
 void Player::Move(float dt)
@@ -83,6 +94,7 @@ void Player::Move(float dt)
 	{
 		App->audio->PlayFx(respawn_sfx);
 		position = respawn;
+		lifes = 3;
 		anim_death.Reset();
 		state = Player_States::fall_State;
 	}		
@@ -106,8 +118,15 @@ void Player::Move(float dt)
 	{
 		state = Player_States::fall_State;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		lifes--;
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		coins++;
 
 	RestartAlpha(restart_alpha);
+	ManageLifesHUD();
+	CoinsManagement();
 }
 
 void Player::Draw()
@@ -164,6 +183,31 @@ bool Player::Save(pugi::xml_node& node) const
 	return ret;
 }
 
+void Player::ManageLifesHUD()
+{
+	switch (lifes)
+	{
+	case 0:
+		state = Player_States::die_state;
+		break;
+	case 1:
+		heart_3->drawable = false;
+		heart_2->drawable = false;
+		heart_1->drawable = true;
+		break;
+	case 2:
+		heart_3->drawable = false;
+		heart_2->drawable = true;
+		heart_1->drawable = false;
+		break;
+	case 3:
+		heart_1->drawable = false;
+		heart_2->drawable = false;
+		heart_3->drawable = true;
+		break;
+	}
+}
+
 void Player::RestartAlpha(bool& reset_alpha)
 {
 	if (alpha >= 255)
@@ -173,6 +217,20 @@ void Player::RestartAlpha(bool& reset_alpha)
 	}
 	else if(reset_alpha == true)
 		alpha += 10;
+}
+
+void Player::HitTimeManagement()
+{
+	if (time_to_hit.ReadSec() >= 5)
+	{
+		hit_time = false;
+	}
+}
+
+void Player::CoinsManagement()
+{
+	
+	coins_label->SetText(p2SString("%i", coins).GetString());
 }
 
 void Player::Flash()
@@ -298,9 +356,11 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY)
 	{
-		if (collider->rect.y + collider->rect.h - 5 > col1->rect.y)
+		if (collider->rect.y + collider->rect.h - 5 > col1->rect.y && !hit_time)
 		{
-				state = Player_States::die_state;	
+			lifes--;
+			hit_time = true;
+			time_to_hit.Start();			
 		}
 		
 	}

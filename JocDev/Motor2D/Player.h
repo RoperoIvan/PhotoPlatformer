@@ -4,8 +4,8 @@
 #include "Entity.h"
 #include "j1Timer.h"
 
-
-
+class Label;
+class Image;
 
 enum class Player_States
 {
@@ -42,8 +42,10 @@ private:
 	void ChangeAnim();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
-
+	void ManageLifesHUD();
 	void RestartAlpha(bool&);
+	void HitTimeManagement();
+	void CoinsManagement();
 private:
 
 	Animation anim_walking;
@@ -63,9 +65,18 @@ private:
 
 	bool restart_alpha = false;
 	bool is_on_platform = false;
+	bool hit_time = false;
+	//HUD
+	Image* heart_1 = nullptr;
+	Image* heart_2 = nullptr;
+	Image* heart_3 = nullptr;
+	Image* coin = nullptr;
+	Label* coins_label = nullptr;
+	j1Timer time_to_hit;
 public:
 	Uint8 alpha = 255;
-
+	int lifes = 3;
+	int coins = 0;
 	int jump_sfx;
 	int copy_sfx;
 	int death_sfx;

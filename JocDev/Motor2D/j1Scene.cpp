@@ -258,6 +258,10 @@ void j1Scene::DestroySettingsMenu()
 	App->gui->DeleteElement(fullscreen_checkbox);
 	fullscreen_checkbox = nullptr;
 
+	fullscreen_label->to_delete = true;
+	App->gui->DeleteElement(fullscreen_label);
+	fullscreen_label = nullptr;
+
 	to_pause_menu_button->to_delete = true;
 	App->gui->DeleteElement(to_pause_menu_button);
 	to_pause_menu_button = nullptr;
