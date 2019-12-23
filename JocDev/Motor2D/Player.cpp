@@ -142,6 +142,7 @@ void Player::CleanUp()
 		collider->to_delete = true;
 	current_animation = nullptr;
 	App->tex->UnLoad(data.tiled.texture);
+	data.tiled.texture = nullptr;
 }
 
 bool Player::Load(pugi::xml_node& node)
@@ -379,6 +380,12 @@ void Player::OnCollision(Collider *col1)
 
 		App->fade->StartfadetoBlack();
 	}
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_COIN)
+	{
+		coins++;
+		
+	}
+
 }
 
 void Player::PushBack()

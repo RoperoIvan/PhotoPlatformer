@@ -91,6 +91,7 @@ enum class ENTITY_TYPE
 	PLATFORM,
 	FLYING_ENEMY,
 	GROUND_ENEMY,
+	COIN,
 };
 
 class Entity

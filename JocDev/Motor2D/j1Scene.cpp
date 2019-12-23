@@ -48,12 +48,8 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-
-	/*SDL_Rect r = { 0,0,363,178 };
-	App->gui->CreateImage(fPoint(177,0), r);
-	text = App->gui->CreateLabel(fPoint(0, 0), "TEST","fonts/open_sans/OpenSans-Regular.ttf", 34);*/
-	/*panel = App->gui->CreateImage(fPoint(0, 0), { 1504,960,503,717 });
-	App->gui->SetPosition(panel, (App->render->camera.x + App->render->camera.w), (App->render->camera.y + App->render->camera.h) );*/
+	App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
+	
 	return true;
 }
 

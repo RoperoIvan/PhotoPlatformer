@@ -6,6 +6,7 @@
 #include "Platform.h"
 #include "FlyingEnemy.h"
 #include "GroundEnemy.h"
+#include "Coin.h"
 #include "p2Log.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
@@ -119,6 +120,9 @@ Entity* j1EntityManager::CreateEntity(const fPoint & position, ENTITY_TYPE type)
 	case ENTITY_TYPE::GROUND_ENEMY:
 		entity = new GroundEnemy(position);
 		break;
+	case ENTITY_TYPE::COIN:
+		entity = new Coin(position);
+		break;
 	default:
 		break;
 	}
@@ -142,6 +146,10 @@ void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 				entityItem->data->OnCollision(col2);
 			}
 			if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY && (entityItem->data->type == ENTITY_TYPE::FLYING_ENEMY || entityItem->data->type == ENTITY_TYPE::GROUND_ENEMY))
+			{
+				entityItem->data->OnCollision(col2);
+			}
+			if (col1->type == COLLIDER_TYPE::COLLIDER_COIN && entityItem->data->type == ENTITY_TYPE::COIN )
 			{
 				entityItem->data->OnCollision(col2);
 			}

@@ -16,6 +16,7 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_WALL][COLLIDER_WIN] = false;
 	matrix[COLLIDER_WALL][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_WALL][COLLIDER_COIN] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
@@ -23,6 +24,7 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_COIN] = true;
 
 	matrix[COLLIDER_CHECKPOINT][COLLIDER_WALL] = false;
 	matrix[COLLIDER_CHECKPOINT][COLLIDER_PLAYER] = false;
@@ -30,6 +32,7 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_CHECKPOINT][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_CHECKPOINT][COLLIDER_WIN] = false;
 	matrix[COLLIDER_CHECKPOINT][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_CHECKPOINT][COLLIDER_COIN] = false;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
@@ -37,6 +40,8 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_WIN] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_COIN] = false;
+
 
 	matrix[COLLIDER_WIN][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLAYER] = true;
@@ -44,7 +49,15 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_WIN][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
 	matrix[COLLIDER_WIN][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_WIN][COLLIDER_COIN] = false;
 
+	matrix[COLLIDER_COIN][COLLIDER_WALL] = false;
+	matrix[COLLIDER_COIN][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_COIN][COLLIDER_CHECKPOINT] = false;
+	matrix[COLLIDER_COIN][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_COIN][COLLIDER_WIN] = false;
+	matrix[COLLIDER_COIN][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_COIN][COLLIDER_COIN] = false;
 	//matrix[COLLIDER_DAMAGE][COLLIDER_WALL] = false;
 	//matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = true;
 	//matrix[COLLIDER_DAMAGE][COLLIDER_CHECKPOINT] = false;
@@ -140,6 +153,9 @@ void j1Collisions::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		case COLLIDER_WIN:
+			App->render->DrawQuad(colliders[i]->rect, 255, 125, 0, alpha);
+			break;
+		case COLLIDER_COIN:
 			App->render->DrawQuad(colliders[i]->rect, 255, 125, 0, alpha);
 			break;
 		}

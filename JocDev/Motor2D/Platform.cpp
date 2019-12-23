@@ -26,6 +26,7 @@ void Platform::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 
+	App->tex->UnLoad(data.tiled.texture);
 	data.tiled.texture = nullptr;
 }
 
