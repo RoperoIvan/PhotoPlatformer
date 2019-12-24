@@ -103,10 +103,10 @@ Image* j1Gui::CreateImage(const fPoint & pos, UI* parent, const SDL_Rect & rect,
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const Color& c,const char* font,const uint& size)
+Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const Color& c,const char* font,const uint& size, uint32 wrap_length)
 {
 	Label* ret = nullptr;
-	ret = new Label(pos.x, pos.y, text, c,font, size, parent);
+	ret = new Label(pos.x, pos.y, text, c,font, size, parent, true, wrap_length);
 	objects.add(ret);
 	return ret;
 }
@@ -305,7 +305,16 @@ void Button::ClickLogic()
 		break;
 	case Button_Type::Return_MainMenu:
 		App->main_menu->DestroyCreditsMenu();
-		App->main_menu->CreateMainMenu();
+		App->main_menu->CreateMainMenu();	
+		break;
+	case Button_Type::Profile_Didac:
+		ShellExecuteA(NULL, "open", "https://github.com/didaclis", NULL, NULL, SW_SHOWNORMAL);
+		break;
+	case Button_Type::Profile_Ivan:
+		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan", NULL, NULL, SW_SHOWNORMAL);
+		break;
+	case Button_Type::Webpage:
+		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan/PhotoPlatformer", NULL, NULL, SW_SHOWNORMAL); //TODO: LINK THE REAL WEBPAGE
 		break;
 	case Button_Type::No_button:
 		//insert funtion

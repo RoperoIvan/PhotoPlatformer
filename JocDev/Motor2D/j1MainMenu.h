@@ -82,5 +82,15 @@ public:
 	Label* fullscreen_label = nullptr;
 
 	//Credits Menu
+	Image* credits_panel = nullptr;
+	Label* authors_label = nullptr;
+	Button* didac_button = nullptr;
+	Label* didac_label = nullptr;
+	Button* ivan_button = nullptr;
+	Label* ivan_label = nullptr;
+	Label* license_text_label = nullptr;
+	Label* license_label = nullptr;
+	Button* page_button = nullptr;
+	Label* page_label = nullptr;
 };
 #endif

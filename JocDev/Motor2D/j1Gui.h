@@ -61,6 +61,9 @@ public:
 		Return,
 		Main_Settings_Menu,
 		Return_MainMenu,
+		Profile_Didac,
+		Profile_Ivan,
+		Webpage,
 	};
 
 	enum class CheckBox_Type
@@ -117,10 +120,15 @@ public:
 
 class Label :public UI {
 public:
-	Label(int pos_x, int pos_y, const char* txt, const Color & c, const char* path_font, const uint &size, UI* parent, bool drawable = true) :UI(pos_x, pos_y, parent, 0, 0, drawable) {
+	Label(int pos_x, int pos_y, const char* txt, const Color & c, const char* path_font, const uint &size, UI* parent, bool drawable = true, uint32 wrap_length = 0U) :UI(pos_x, pos_y, parent, 0, 0, drawable) {
 		font = App->fonts->Load(path_font, size);
 		text.create(txt);
 		SetColor(c);
+		if (wrap_length == 0U)
+			texture = App->fonts->Print(text.GetString(), color, font);
+		else 
+			texture = App->fonts->PrintWrapped(text.GetString(), color, font, wrap_length);
+
 		App->fonts->CalcSize(txt, position.w, position.h, font);
 		ui_type = UI::Type::LABEL;
 	}
@@ -220,7 +228,7 @@ public:
 	// Gui creation functions
 	Button* CreateButton(const fPoint & pos, UI* parent, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push, const UI::Button_Type& type);
 	Image * CreateImage(const fPoint & pos, UI* parent, const SDL_Rect & rect, bool drawable);
-	Label * CreateLabel(const fPoint & pos, UI* parent, const char * text, const Color& c, const char * font,const uint& size = DEFAULT_FONT_SIZE);
+	Label * CreateLabel(const fPoint & pos, UI* parent, const char * text, const Color& c, const char * font,const uint& size = DEFAULT_FONT_SIZE, uint32 wrap_length = 0U);
 	Slider * CreateSlider(const fPoint & pos, const SDL_Rect &slider_rect, Slider_TYPE type, UI* parent = nullptr);
 	CheckBox* CreateCheckbox(const fPoint & pos, const bool &is_active, UI* parent, bool drawable, UI::CheckBox_Type type,const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,
 		const SDL_Rect& disactive_hover, const SDL_Rect& disactive_push);

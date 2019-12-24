@@ -194,8 +194,70 @@ void j1MainMenu::DestroySettingsMenu()
 
 void j1MainMenu::CreateCreditsMenu()
 {
+	credits_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1704, 57, 1024, 768 }, true);
+	App->gui->SetPosition(credits_panel, (App->win->GetWindowWidth() - credits_panel->position.w) / 2, (App->win->GetWindowHeight() - credits_panel->position.h) / 2);;
+	authors_label = App->gui->CreateLabel(fPoint(80, 50), credits_panel, "Authors", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
+	didac_button = App->gui->CreateButton(fPoint(100, 150), credits_panel, { 24, 1904, 167, 82 }, { 200, 1904, 168, 82 }, { 376, 1904, 168, 82 }, UI::Button_Type::Profile_Didac);
+	didac_label = App->gui->CreateLabel(fPoint(130, 170), didac_button, "Didac Llop", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 40);
+	ivan_button = App->gui->CreateButton(fPoint(100, 250), credits_panel, { 24, 1904, 167, 82 }, { 200, 1904, 168, 82 }, { 376, 1904, 168, 82 }, UI::Button_Type::Profile_Ivan);
+	ivan_label = App->gui->CreateLabel(fPoint(120, 270), didac_button, "Ivan Ropero", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 40);
+	p2SString license;
+	license.create("MIT License\nCopyright(c) 2019\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the ''Software''), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions : \n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n\nTHE SOFTWARE IS PROVIDED ''AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
+	license_text_label = App->gui->CreateLabel(fPoint(80, 400), credits_panel, license.GetString(), BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 12, 900U);
+	license_label = App->gui->CreateLabel(fPoint(80, 340), credits_panel, "License", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 40);
+	page_button = App->gui->CreateButton(fPoint(650, 150), credits_panel, { 77, 1158, 87, 87 }, { 171, 1158, 87, 87 }, { 265, 1158, 87, 87 }, UI::Button_Type::Webpage);
+	page_label = App->gui->CreateLabel(fPoint(500, 150), credits_panel, "Website", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 70);
+	to_main_menu_button = App->gui->CreateButton(fPoint((credits_panel->position.w / 2) - 100, (credits_panel->position.h / 2) + 260), credits_panel, { 24, 1904, 167, 82 }, { 200, 1904, 168, 82 }, { 376, 1904, 168, 82 }, UI::Button_Type::Return_MainMenu);
+	to_main_menu_label = App->gui->CreateLabel(fPoint((credits_panel->position.w / 2) - 60, (credits_panel->position.h / 2) + 275), to_main_menu_button, "Return", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 }
 
 void j1MainMenu::DestroyCreditsMenu()
 {
+	credits_panel->to_delete = true;
+	App->gui->DeleteElement(credits_panel);
+	credits_panel = nullptr;
+
+	authors_label->to_delete = true;
+	App->gui->DeleteElement(authors_label);
+	authors_label = nullptr;
+
+	didac_button->to_delete = true;
+	App->gui->DeleteElement(didac_button);
+	didac_button = nullptr;
+
+	didac_label->to_delete = true;
+	App->gui->DeleteElement(didac_label);
+	didac_label = nullptr;
+
+	ivan_button->to_delete = true;
+	App->gui->DeleteElement(ivan_button);
+	ivan_button = nullptr;
+
+	ivan_label->to_delete = true;
+	App->gui->DeleteElement(ivan_label);
+	ivan_label = nullptr;
+
+	license_text_label->to_delete = true;
+	App->gui->DeleteElement(license_text_label);
+	license_text_label = nullptr;
+
+	license_label->to_delete = true;
+	App->gui->DeleteElement(license_label);
+	license_label = nullptr;
+
+	page_button->to_delete = true;
+	App->gui->DeleteElement(page_button);
+	page_button = nullptr;
+
+	page_label->to_delete = true;
+	App->gui->DeleteElement(page_label);
+	page_label = nullptr;
+
+	to_main_menu_button->to_delete = true;
+	App->gui->DeleteElement(to_main_menu_button);
+	to_main_menu_button = nullptr;
+
+	to_main_menu_label->to_delete = true;
+	App->gui->DeleteElement(to_main_menu_label);
+	to_main_menu_label = nullptr;
 }
