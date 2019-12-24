@@ -41,12 +41,6 @@ bool j1MainMenu::PreUpdate(float dt)
 {
 	bool ret = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-	{
-		App->current_level = 1;
-		App->fade->StartfadetoBlack();
-	}
-
 	return ret;
 }
 

@@ -5,6 +5,8 @@
 #include "j1Textures.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1MainMenu.h"
+#include "j1FadetoBlack.h"
 #include "j1Scene.h";
 #include "j1Audio.h"
 #include "j1Gui.h"
@@ -267,6 +269,9 @@ void Button::ClickLogic()
 	case Button_Type::Credits:
 		break;
 	case Button_Type::Play:
+		App->current_level = 1;
+		App->fade->StartfadetoBlack();
+		App->main_menu->DestroyMainMenu();
 		break;
 	case Button_Type::Continue:
 		break;

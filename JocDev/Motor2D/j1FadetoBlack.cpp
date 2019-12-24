@@ -85,9 +85,7 @@ void j1FadetoBlack::NewLevel()
 		App->main_menu->Start();
 
 		break;
-	case 1:
-		App->main_menu->DestroyMainMenu();
-		//App->scene->DestroyHUD();
+	case 1:		
 		App->scene->CreateHUD();
 		App->main_menu->active = false;
 		App->scene->active = true;

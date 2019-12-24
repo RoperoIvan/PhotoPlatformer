@@ -125,8 +125,12 @@ void Player::Move(float dt)
 		coins++;
 
 	RestartAlpha(restart_alpha);
-	ManageLifesHUD();
-	CoinsManagement();
+	if (App->scene->heart_3)
+	{
+		ManageLifesHUD();
+		CoinsManagement();
+	}
+
 }
 
 void Player::Draw()
@@ -206,8 +210,7 @@ void Player::ManageLifesHUD()
 			App->scene->heart_2->drawable = false;
 			App->scene->heart_3->drawable = true;
 			break;
-		}
-	
+		}			
 }
 
 void Player::RestartAlpha(bool& reset_alpha)
