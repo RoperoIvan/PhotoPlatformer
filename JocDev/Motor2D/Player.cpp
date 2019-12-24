@@ -45,11 +45,7 @@ bool Player::Start()
 
 	//HUD
 	App->gui->CreateScreen();
-	heart_1 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 788, 210, 59 }, false);
-	heart_2 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 716, 210, 59 }, false);
-	heart_3 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 647, 210, 59 }, true);
-	coin = App->gui->CreateImage(fPoint(App->win->GetWindowWidth() - 150, 20), App->gui->screen, { 77, 873, 67, 66 }, true);
-	coins_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth() - 70, -25), coin, "", BLACK, "fonts/Final_Fantasy_font.ttf", 130);
+	
 
 	return true;
 }
@@ -118,8 +114,12 @@ void Player::Move(float dt)
 	{
 		state = Player_States::fall_State;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-		lifes--;
+	/*if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		heart_1->to_delete = true;
+		App->gui->DeleteElement(heart_1);
+		heart_1 = nullptr;
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 		coins++;
@@ -186,27 +186,28 @@ bool Player::Save(pugi::xml_node& node) const
 
 void Player::ManageLifesHUD()
 {
-	switch (lifes)
-	{
-	case 0:
-		state = Player_States::die_state;
-		break;
-	case 1:
-		heart_3->drawable = false;
-		heart_2->drawable = false;
-		heart_1->drawable = true;
-		break;
-	case 2:
-		heart_3->drawable = false;
-		heart_2->drawable = true;
-		heart_1->drawable = false;
-		break;
-	case 3:
-		heart_1->drawable = false;
-		heart_2->drawable = false;
-		heart_3->drawable = true;
-		break;
-	}
+		switch (lifes)
+		{
+		case 0:
+			state = Player_States::die_state;
+			break;
+		case 1:
+			App->scene->heart_3->drawable = false;
+			App->scene->heart_2->drawable = false;
+			App->scene->heart_1->drawable = true;
+			break;
+		case 2:
+			App->scene->heart_3->drawable = false;
+			App->scene->heart_2->drawable = true;
+			App->scene->heart_1->drawable = false;
+			break;
+		case 3:
+			App->scene->heart_1->drawable = false;
+			App->scene->heart_2->drawable = false;
+			App->scene->heart_3->drawable = true;
+			break;
+		}
+	
 }
 
 void Player::RestartAlpha(bool& reset_alpha)
@@ -231,7 +232,7 @@ void Player::HitTimeManagement()
 void Player::CoinsManagement()
 {
 	
-	coins_label->SetText(p2SString("%i", coins).GetString());
+	App->scene->coins_label->SetText(p2SString("%i", coins).GetString());
 
 	if (lifes < 3 && coins >= 10)
 	{
@@ -373,10 +374,17 @@ void Player::OnCollision(Collider *col1)
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_WIN)
 	{
-		if (App->scene->current_level == 1)
-			App->scene->current_level = 2;
+		if (App->current_level == 1)
+		{
+			App->current_level = 2;
+			App->scene->DestroyHUD();
+		}
+			
 		else
-			App->scene->current_level = 1;
+		{
+			App->current_level = 1;
+			App->scene->DestroyHUD();
+		}			
 
 		App->fade->StartfadetoBlack();
 	}

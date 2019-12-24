@@ -53,11 +53,15 @@ public:
 	void CreateSettingsMenu();
 
 	void DestroySettingsMenu();
+
+	void CreateHUD();
+
+	void DestroyHUD();
+
 public:
 
 	iPoint	respawn;
 	fPoint scene_spawn;
-	uint current_level = 1;
 
 	Image* banner;
 	Label* text;
@@ -80,6 +84,13 @@ public:
 	Button* thumb_button = nullptr;
 	CheckBox* fullscreen_checkbox = nullptr;
 	Label* fullscreen_label = nullptr;
+
+	//HUD
+	Image* heart_1 = nullptr;
+	Image* heart_2 = nullptr;
+	Image* heart_3 = nullptr;
+	Image* coin = nullptr;
+	Label* coins_label = nullptr;
 };
 
 #endif // __j1SCENE_H__

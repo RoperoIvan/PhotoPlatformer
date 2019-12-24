@@ -9,7 +9,9 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Pathfinding.h"
+#include "j1MainMenu.h"
 #include "p2Log.h"
+#include "Player.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 #include "Brofiler/Brofiler.h"
@@ -69,15 +71,27 @@ bool j1FadetoBlack::PostUpdate(float id)
 }
 
 void j1FadetoBlack::NewLevel()
-{
+{	
 	App->collisions->CleanUp();
 	App->entityManager->CleanUp();
 	App->map->CleanUp();
 	App->audio->UnLoadFx();
-	switch (App->scene->current_level)
+	switch (App->current_level)
 	{
-	case 1:
+	case 0:
+		App->scene->DestroyHUD();
+		App->scene->active = false;
+		App->main_menu->active = true;
+		App->main_menu->Start();
 
+		break;
+	case 1:
+		App->main_menu->DestroyMainMenu();
+		//App->scene->DestroyHUD();
+		App->scene->CreateHUD();
+		App->main_menu->active = false;
+		App->scene->active = true;
+		App->scene->Start();
 		if (App->map->Load("Level1.tmx") == true)
 		{
 			int w, h;
@@ -90,6 +104,12 @@ void j1FadetoBlack::NewLevel()
 		App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 		break;
 	case 2:
+		//App->scene->DestroyHUD();
+		App->scene->CreateHUD();
+		App->main_menu->active = false;
+		App->scene->active = true;
+		App->scene->Start();
+
 		if (App->map->Load("Level2.tmx") == true)
 		{
 			int w, h;

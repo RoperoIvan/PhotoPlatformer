@@ -37,9 +37,10 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->win->SetTitle("PhotoPlatformer 0.1.1");
-	App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);
-	if (App->map->Load("Level1.tmx") == true)
+	//App->win->SetTitle("PhotoPlatformer 0.1.1");
+	/*App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);*/
+	App->map->Load("MainMenu.tmx");
+	/*if (App->map->Load("Level1.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -47,7 +48,7 @@ bool j1Scene::Start()
 			App->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
-	}
+	}*/
 	App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
 	
 	return true;
@@ -88,14 +89,10 @@ bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 
-	/*if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;*/
-
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		(App->Pause()) ? CreatePauseMenu() : DestroyPauseMenu();
 	}
 
-	LOG(" POS X: %i POS Y: %i", App->render->camera.x, App->render->camera.y);
 	return ret;
 }
 
@@ -111,13 +108,15 @@ void j1Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		current_level = 1;
+		App->current_level = 1;
+		App->scene->DestroyHUD();
 		App->fade->StartfadetoBlack();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		current_level = 2;
+		App->current_level = 2;
+		App->scene->DestroyHUD();
 		App->fade->StartfadetoBlack();
 	}
 
@@ -137,6 +136,12 @@ void j1Scene::DebugKeys()
 	{
 		App->collisions->GodMode();
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		App->current_level = 0;
+		App->fade->StartfadetoBlack();
+	}
 }
 
 void j1Scene::LevelChange(int lvl)
@@ -150,8 +155,8 @@ bool j1Scene::Load(pugi::xml_node& node)
 {
 	bool ret = true;
 	pugi::xml_node lvl_stats = node.child("lvl_stats");
-	if (current_level != lvl_stats.attribute("level").as_uint())
-		current_level = lvl_stats.attribute("level").as_uint();
+	if (App->current_level != lvl_stats.attribute("level").as_uint())
+		App->current_level = lvl_stats.attribute("level").as_uint();
 	
 	App->fade->NewLevel();
 	return ret;
@@ -162,7 +167,7 @@ bool j1Scene::Save(pugi::xml_node& node) const
 
 	bool ret = true;
 	pugi::xml_node lvl_stats = node.append_child("lvl_stats");
-	lvl_stats.append_attribute("level") = current_level;
+	lvl_stats.append_attribute("level") = App->current_level;
 	return ret;
 }
 
@@ -265,4 +270,36 @@ void j1Scene::DestroySettingsMenu()
 	to_pause_menu_label->to_delete = true;
 	App->gui->DeleteElement(to_pause_menu_label);
 	to_pause_menu_label = nullptr;
+}
+
+void j1Scene::CreateHUD()
+{
+	heart_1 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 788, 210, 59 }, false);
+	heart_2 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 716, 210, 59 }, false);
+	heart_3 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 647, 210, 59 }, true);
+	coin = App->gui->CreateImage(fPoint(App->win->GetWindowWidth() - 150, 20), App->gui->screen, { 77, 873, 67, 66 }, true);
+	coins_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth() - 70, -25), coin, "", BLACK, "fonts/Final_Fantasy_font.ttf", 130);
+}
+
+void j1Scene::DestroyHUD()
+{
+	heart_1->to_delete = true;
+	App->gui->DeleteElement(heart_1);
+	heart_1 = nullptr;
+
+	heart_2->to_delete = true;
+	App->gui->DeleteElement(heart_2);
+	heart_2 = nullptr;
+
+	heart_3->to_delete = true;
+	App->gui->DeleteElement(heart_3);
+	heart_3 = nullptr;
+
+	coin->to_delete = true;
+	App->gui->DeleteElement(coin);
+	coin = nullptr;
+
+	coins_label->to_delete = true;
+	App->gui->DeleteElement(coins_label);
+	coins_label = nullptr;
 }

@@ -20,6 +20,7 @@ class j1Collisions;
 class j1PathFinding;
 class j1Fonts;
 class j1Gui;
+class j1MainMenu;
 
 
 class j1App
@@ -97,7 +98,8 @@ public:
 	j1Collisions*		collisions = nullptr;
 	j1PathFinding*		pathfinding = nullptr;
 	j1Fonts*			fonts = nullptr;
-	j1Gui*				gui;
+	j1Gui*				gui = nullptr;
+	j1MainMenu*			main_menu = nullptr;
 
 private:
 
@@ -126,6 +128,7 @@ private:
 public:
 	bool				pause_game = false;
 	bool				exit = false;
+	uint current_level = 1;
 };
 
 extern j1App* App;

@@ -180,9 +180,10 @@ void j1Gui::DeleteElement(UI* ui) //TODO: Change this atrocity
 	p2List_item<UI*>* item = objects.start;
 	while (item != nullptr)
 	{
-		if (item->data->to_delete == true)
+		if (item->data->to_delete == true && item->data != nullptr)
 		{
 			objects.del(item);
+			break;
 		}
 		item = item->next;
 
