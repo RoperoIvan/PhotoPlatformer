@@ -59,6 +59,8 @@ public:
 		Resume,
 		Slider,
 		Return,
+		Main_Settings_Menu,
+		Return_MainMenu,
 	};
 
 	enum class CheckBox_Type

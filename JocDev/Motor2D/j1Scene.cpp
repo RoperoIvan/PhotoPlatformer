@@ -182,13 +182,13 @@ void j1Scene::CreatePauseMenu()
 	
 	//Buttons
 	resume_button = App->gui->CreateButton(fPoint((panel->position.w / 2) +80, (panel->position.h / 2) -250), panel, {77, 109, 363, 178}, {462, 109, 362, 178}, {845, 109, 362, 178}, UI::Button_Type::Resume);
-	resume_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 180, (panel->position.h / 2) - 220), resume_button, "Resume", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
+	resume_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 178, (panel->position.h / 2) - 220), resume_button, "Resume", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
 
-	exit_button = App->gui->CreateButton(fPoint((panel->position.w / 2) + 80, (panel->position.h / 2) + 120), panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Exit);
-	exit_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 215, (panel->position.h / 2) + 150), resume_button, "Exit", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
+	exit_button = App->gui->CreateButton(fPoint((panel->position.w / 2) + 80, (panel->position.h / 2) + 120), panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Go_to_Menu);
+	exit_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 152, (panel->position.h / 2) + 160), exit_button, "Go to Menu", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 80);
 
 	settings_button = App->gui->CreateButton(fPoint((panel->position.w / 2) + 80, (panel->position.h / 2) - 65), panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Settings_Menu);
-	settings_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 150, (panel->position.h / 2) - 25), settings_button, "Settings", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
+	settings_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 160, (panel->position.h / 2) - 30), settings_button, "Settings", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
 }
 
 void j1Scene::DestroyPauseMenu()
@@ -238,7 +238,7 @@ void j1Scene::CreateSettingsMenu()
 	fullscreen_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 60, (settings_panel->position.h / 2) - 10), to_pause_menu_button, "Fullscreen", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
 	//Buttons	 
 	to_pause_menu_button = App->gui->CreateButton(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) + 120), settings_panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Return);
-	to_pause_menu_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 200, (settings_panel->position.h / 2) + 150), to_pause_menu_button, "Return", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
+	to_pause_menu_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 170, (settings_panel->position.h / 2) + 150), to_pause_menu_button, "Return", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
 }
 
 void j1Scene::DestroySettingsMenu()

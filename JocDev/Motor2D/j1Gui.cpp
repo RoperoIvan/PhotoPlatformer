@@ -257,7 +257,9 @@ void Button::ClickLogic()
 	switch (type)
 	{
 	case Button_Type::Go_to_Menu:
-		//insert funtion
+		App->scene->DestroyPauseMenu();
+		App->current_level = 0;
+		App->fade->StartfadetoBlack();
 		break;
 	case Button_Type::Settings_Menu:
 		App->scene->DestroyPauseMenu();
@@ -267,6 +269,8 @@ void Button::ClickLogic()
 		App->exit = true;
 		break;
 	case Button_Type::Credits:
+		App->main_menu->DestroyMainMenu();
+		App->main_menu->CreateCreditsMenu();
 		break;
 	case Button_Type::Play:
 		App->current_level = 1;
@@ -284,8 +288,24 @@ void Button::ClickLogic()
 			App->audio->SetVolume(dynamic_cast<Slider*>(parent)->GetSliderValue());		
 		break;
 	case Button_Type::Return:
-		App->scene->DestroySettingsMenu();
-		App->scene->CreatePauseMenu();
+		if (App->scene->active == true)
+		{
+			App->scene->DestroySettingsMenu();
+			App->scene->CreatePauseMenu();
+		}
+		else if(App->main_menu->active == true)
+		{
+			App->main_menu->DestroySettingsMenu();
+			App->main_menu->CreateMainMenu();
+		}
+		break;
+	case Button_Type::Main_Settings_Menu:
+		App->main_menu->DestroyMainMenu();
+		App->main_menu->CreateSettingsMenu();
+		break;
+	case Button_Type::Return_MainMenu:
+		App->main_menu->DestroyCreditsMenu();
+		App->main_menu->CreateMainMenu();
 		break;
 	case Button_Type::No_button:
 		//insert funtion

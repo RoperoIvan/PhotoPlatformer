@@ -44,12 +44,21 @@ public:
 	void CreateMainMenu();
 
 	void DestroyMainMenu();
+
+	void CreateSettingsMenu();
+
+	void DestroySettingsMenu();
+
+	void CreateCreditsMenu();
+
+	void DestroyCreditsMenu();
+
 public:
 	uint win_width = 0;
 	uint win_height = 0;
 	bool can_load = false;
 
-	//GUI
+	//Main Menu
 	Image* panel = nullptr;
 	Button* play_button = nullptr;
 	Label* play_label = nullptr;
@@ -59,6 +68,19 @@ public:
 	Label* main_settings_label = nullptr;
 	Button* credits_button = nullptr;
 	Label* credits_label = nullptr;
+	Button* exit_button = nullptr;
+	Label* exit_label = nullptr;
 
+	//Settings Menu
+	Image* settings_panel = nullptr;
+	Image* volume_level = nullptr;
+	Slider* slider_volume = nullptr;
+	Button* to_main_menu_button = nullptr;
+	Label* to_main_menu_label = nullptr;
+	Button* thumb_button = nullptr;
+	CheckBox* fullscreen_checkbox = nullptr;
+	Label* fullscreen_label = nullptr;
+
+	//Credits Menu
 };
 #endif
