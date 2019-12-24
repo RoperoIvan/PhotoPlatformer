@@ -277,7 +277,9 @@ void Button::ClickLogic()
 		App->fade->StartfadetoBlack();
 		App->main_menu->DestroyMainMenu();
 		break;
-	case Button_Type::Continue:
+	case Button_Type::Continue: //TODO: REMEMBER THIS!!
+		App->main_menu->DestroyMainMenu();
+		App->LoadGame();
 		break;
 	case Button_Type::Resume:
 		(App->Pause()) ? App->scene->CreatePauseMenu() : App->scene->DestroyPauseMenu();
@@ -317,7 +319,6 @@ void Button::ClickLogic()
 		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan/PhotoPlatformer", NULL, NULL, SW_SHOWNORMAL); //TODO: LINK THE REAL WEBPAGE
 		break;
 	case Button_Type::No_button:
-		//insert funtion
 		break;
 	default:
 		break;
