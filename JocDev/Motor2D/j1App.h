@@ -21,7 +21,7 @@ class j1PathFinding;
 class j1Fonts;
 class j1Gui;
 class j1MainMenu;
-
+class j1Console;
 
 class j1App
 {
@@ -100,6 +100,7 @@ public:
 	j1Fonts*			fonts = nullptr;
 	j1Gui*				gui = nullptr;
 	j1MainMenu*			main_menu = nullptr;
+	j1Console*			console = nullptr;
 
 private:
 

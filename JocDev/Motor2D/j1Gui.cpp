@@ -127,6 +127,14 @@ CheckBox * j1Gui::CreateCheckbox(const fPoint & pos, const bool & is_active, UI 
 	return ret;
 }
 
+InputBox* j1Gui::CreateInputBox(const fPoint& pos, const char* text, UI* parent, Color color, const char* font_path, const SDL_Rect& rect, bool drawable)
+{
+	InputBox* ret = nullptr;
+	ret = new InputBox(pos.x, pos.y, text, color, font_path, rect, drawable, parent);
+	objects.add(ret);
+	return ret;
+}
+
 void j1Gui::CheckMouse(UI *b)
 {
 	int x, y;
@@ -277,7 +285,7 @@ void Button::ClickLogic()
 		App->fade->StartfadetoBlack();
 		App->main_menu->DestroyMainMenu();
 		break;
-	case Button_Type::Continue: //TODO: REMEMBER THIS!!
+	case Button_Type::Continue:
 		App->main_menu->DestroyMainMenu();
 		App->LoadGame();
 		break;
@@ -499,4 +507,120 @@ float Slider::GetSliderValue() const
 Button * Slider::GetSliderButton() const
 {
 	return thumb;
+}
+
+void InputBox::InnerDraw()
+{
+	if (text.Length() <= MAX_CHARACTERS) {
+		SDL_StartTextInput();
+		if ((char*)App->input->input_text.GetString()[0] != '\0') {
+			p2SString t = App->input->input_text;
+			App->input->input_text.Clear();
+			AddText(t.GetString());
+		}
+	}
+	else
+		App->input->input_text.Clear();
+
+	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN && text.GetCapacity() != 0)
+	{
+		DeleteText();
+	}
+
+	//App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &box, true, SDL_FLIP_NONE, 0.0F, 255,
+	//	true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
+
+	uint width_ = 0u, height_ = 0u;
+	App->tex->GetSize(texture, width_, height_);
+	iPoint pos{ 0,0 };
+	pos.x = (box.w - (int)width_) * 0.5F;
+	pos.y = (box.h - (int)HEIGHT) * 0.5F;
+	pos.x += position.x;
+	pos.y += position.y;
+
+	if (texture != nullptr)
+		App->render->Blit(texture, position.x, position.y, 0, false, SDL_FLIP_NONE, 0.0f, 255, true);
+
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), pos.x + width_, pos.y + HEIGHT * 0.4F, &cursor->GetCurrentFrame(), false, SDL_FLIP_NONE, 0.0F);
+}
+
+void InputBox::SetText(const char* txt)
+{
+	text.create(txt);
+	App->tex->UnLoad(texture);
+	texture = App->fonts->Print(text.GetString(), color, font);
+	App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
+}
+
+void InputBox::SetColor(const Color& c)
+{
+	switch (c) {
+	case RED:
+		color = { 255,0,0,color.a };
+		break;
+	case GREEN:
+		color = { 0,255,0,color.a };
+		break;
+	case BLUE:
+		color = { 0,0,255,color.a };
+		break;
+	case YELLOW:
+		color = { 255,255,0,color.a };
+		break;
+	case GREY:
+		color = { 150,150,150,color.a };
+		break;
+	case BLACK:
+		color = { 0,0,0,color.a };
+		break;
+	case WHITE:
+		color = { 255,255,255,color.a };
+		break;
+	default:
+		color = { 255,255,255,color.a };
+		break;
+	}
+	texture = App->fonts->Print(text.GetString(), color, font);
+}
+
+void InputBox::SetColor(const SDL_Color& c)
+{
+	color = c;
+}
+
+p2SString InputBox::GetText()
+{
+	return text;
+}
+
+void InputBox::ChangeFont(const char* f, const int& size)
+{
+	App->fonts->Load(f, size);
+	texture = App->fonts->Print(text.GetString(), color, font);
+}
+
+void InputBox::AddText(const char* txt)
+{
+	if (text.Length() <= MAX_CHARACTERS) {
+		text += txt;
+		App->tex->UnLoad(texture);
+		texture = App->fonts->Print(text.GetString(), color, font);
+		App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
+	}
+}
+
+void InputBox::DeleteText()
+{
+	if (text.GetCapacity() > 0) {
+		int i = 0;
+		//char* p = text.Getchar();
+		while (text.Getchar()[i] != '\0')
+		{
+			i++;
+		}
+		text.Getchar()[i - 1] = '\0';
+		//text = p;
+		App->tex->UnLoad(texture);
+		texture = App->fonts->Print(text.GetString(), color, font);
+	}
 }

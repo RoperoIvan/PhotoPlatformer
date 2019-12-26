@@ -3,9 +3,14 @@
 
 #include "j1Module.h"
 #include "j1Fonts.h"
+#include "p2Point.h"
+#include "SDL/include/SDL_rect.h"
+#include "SDL/include/SDL_keyboard.h"
+#include "Animation.h"
+#include "j1Textures.h"
 
 #define CURSOR_WIDTH 2
-
+#define MAX_CHARACTERS 10
 
 struct _TTF_Font;
 
@@ -29,7 +34,7 @@ enum class Slider_TYPE {
 
 class UI {
 public:
-	UI(const int& pos_x, const int& pos_y, UI* parent, const int &width = 0, const int &height = 0, bool drawable = true) :position({pos_x, pos_y, width, height}), parent(parent), drawable(drawable) {}
+	UI(const int pos_x, const int pos_y, UI* parent, const int &width = 0, const int &height = 0, bool drawable = true) : position({pos_x, pos_y, width, height}), parent(parent), drawable(drawable) {}
 	~UI() {}
 
 	enum class Type {
@@ -38,6 +43,7 @@ public:
 		LABEL,
 		CHECK_BOX,
 		SLIDER,
+		INPUT_BOX,
 		NO_TYPE,
 		MAX
 	};
@@ -111,7 +117,7 @@ public:
 	~Button() {}
 	void InnerDraw();
 	void ClickLogic();
-
+	
 	Button_Type type = Button_Type::No_button;	
 	SDL_Rect idle;
 	SDL_Rect hover;
@@ -199,6 +205,64 @@ private:
 	SDL_Rect image = { 0,0,0,0 };
 	p2List<UI*> control;
 };
+
+class InputBox : public UI
+{
+public:
+	InputBox(const int& pos_x, const int& pos_y, const char* txt, const Color& c, const char* path_font, const SDL_Rect& rect, bool drawable, UI* parent) :UI(pos_x, pos_y, parent, 0, 0, drawable)
+	{
+		font = App->fonts->Load(path_font, 40);
+		ui_type = UI::Type::INPUT_BOX;
+		text.create(txt);
+		box = rect;
+		SetColor(c);
+		texture = App->fonts->Print(text.GetString(), color, font);
+		App->fonts->CalcSize(txt, position.w, position.h, font);
+		cursor = new Animation();
+		cursor->PushBack({ 92, 1344, 5,24 });
+		cursor->PushBack({ 0,0,0,0 });
+		cursor->speed = 2.0F;
+		uint width_ = 0u;
+		App->tex->GetSize(texture, width_, HEIGHT);
+
+
+	/*	texture = App->fonts->Print("hola", color, font);
+		
+		App->fonts->CalcSize(txt, position.w, position.h, font);*/
+		
+	}
+	~InputBox()
+	{
+		SDL_StopTextInput();
+		delete cursor;
+		cursor = nullptr;
+	}
+
+	void InnerDraw();
+
+	void SetText(const char* txt);
+
+	void SetColor(const Color& c);
+
+	void SetColor(const SDL_Color& c);
+
+	p2SString GetText();
+
+	void ChangeFont(const char* f, const int& size);
+
+public:
+	void AddText(const char* txt);
+	void DeleteText();
+	SDL_Rect box = { 0,0,0,0 };
+protected:
+	SDL_Texture* texture = nullptr;
+	SDL_Color color = { 255,255,255,255 };
+	p2SString text;
+	SDL_Rect input_box{ 0,0,0,0 };
+	_TTF_Font* font;
+	Animation* cursor = nullptr;
+	uint HEIGHT = 0u;
+};
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -232,6 +296,7 @@ public:
 	Slider * CreateSlider(const fPoint & pos, const SDL_Rect &slider_rect, Slider_TYPE type, UI* parent = nullptr);
 	CheckBox* CreateCheckbox(const fPoint & pos, const bool &is_active, UI* parent, bool drawable, UI::CheckBox_Type type,const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,
 		const SDL_Rect& disactive_hover, const SDL_Rect& disactive_push);
+	InputBox* CreateInputBox(const fPoint& pos, const char* text, UI* parent, Color color, const char* font_path, const SDL_Rect& rect, bool drawable);
 	void CreateScreen();
 	void CheckMouse(UI*);
 	bool Select()const;

@@ -220,7 +220,17 @@ public:
 		str[0] = '\0';
 	}
 
+	bool empty() const
+	{
+		return (size == 0);
+	}
+
 	const char* GetString() const
+	{
+		return str;
+	}
+
+	char* Getchar()
 	{
 		return str;
 	}
@@ -252,17 +262,18 @@ public:
 	{
 		// cut right --
 		char* end = str + size;
-		while(*--end == ' ') *end = '\0';
+		while (*--end == ' ') *end = '\0';
 
 		// cut left --
 		char* start = str;
-		while(*++start == ' ');
+		while (*++start == ' ');
 
 		uint s = strlen(start);
 
-		for(uint i = 0; i < s + 1; ++i)
+		for (uint i = 0; i < s + 1; ++i)
 			str[i] = start[i];
 	}
+
 
 	uint Substitute(const char* src, const char *dst)
 	{
@@ -353,6 +364,11 @@ public:
 		}
 		else
 			return 0;
+	}
+
+	void Setchar(char* p)
+	{
+		str = p;
 	}
 
 private:

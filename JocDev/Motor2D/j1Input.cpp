@@ -87,7 +87,9 @@ bool j1Input::PreUpdate(float dt)
 			case SDL_QUIT:
 				windowEvents[WE_QUIT] = true;
 			break;
-
+			case SDL_TEXTINPUT:
+				input_text += (p2SString)event.text.text;
+				break;
 			case SDL_WINDOWEVENT:
 				switch(event.window.event)
 				{

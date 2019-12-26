@@ -9,6 +9,7 @@ class Label;
 class Image;
 class CheckBox;
 class Slider;
+class InputBox;
 
 class j1MainMenu : public j1Module
 {
@@ -92,5 +93,7 @@ public:
 	Label* license_label = nullptr;
 	Button* page_button = nullptr;
 	Label* page_label = nullptr;
+
+	InputBox* input_console = nullptr;
 };
 #endif

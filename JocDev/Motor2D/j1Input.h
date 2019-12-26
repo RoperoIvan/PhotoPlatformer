@@ -71,6 +71,8 @@ public:
 	void GetMousePositionInWorld(int& x, int& y);
 	iPoint GetMousePosition();
 
+	p2SString input_text;
+
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;

@@ -32,7 +32,7 @@ bool j1MainMenu::Start()
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
-
+	
 	CreateMainMenu();
 
 	return ret;
@@ -93,6 +93,7 @@ void j1MainMenu::CreateMainMenu()
 	credits_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 265, (panel->position.h / 2) + 185), play_button, "Credits", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 	exit_button = App->gui->CreateButton(fPoint((panel->position.w / 2) + 230, (panel->position.h / 2) + 260), panel, { 24, 1904, 167, 82 }, { 200, 1904, 168, 82 }, { 376, 1904, 168, 82 }, UI::Button_Type::Exit);
 	exit_label = App->gui->CreateLabel(fPoint((panel->position.w / 2) + 290, (panel->position.h / 2) + 275), play_button, "Exit", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
+	input_console = App->gui->CreateInputBox(fPoint((panel->position.w / 2), (panel->position.h / 2)), "holita", App->gui->screen, BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", { 0,0,0,0 }, true);
 }
 
 void j1MainMenu::DestroyMainMenu()

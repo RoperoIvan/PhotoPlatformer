@@ -18,6 +18,7 @@
 #include "j1Fonts.h"
 #include "j1Gui.h"
 #include "j1MainMenu.h"
+#include "j1Console.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -39,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fonts = new j1Fonts();
 	gui = new j1Gui();
 	main_menu = new j1MainMenu();
+	console = new j1Console();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -54,6 +56,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(fade);
 	AddModule(fonts);
+	AddModule(console);
 	AddModule(gui);
 	// render last to swap buffer
 	AddModule(render);
