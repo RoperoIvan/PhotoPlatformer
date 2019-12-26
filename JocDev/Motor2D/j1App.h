@@ -58,6 +58,10 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 	float GetDT();
+	void SetFPScap(uint fps)
+	{
+		fps_cap = 1000 / fps;
+	}
 	bool Pause();
 private:
 

@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1MainMenu.h"
+#include "j1Console.h"
 #include "j1FadetoBlack.h"
 #include "j1Scene.h";
 #include "j1Audio.h"
@@ -143,18 +144,18 @@ void j1Gui::CheckMouse(UI *b)
 		y>b->position.y&&y < b->position.y + b->position.h) {
 		if (App->input->GetMouseButtonDown(1)) {
 			b->m_state = UI::MouseState::PUSH;
-			LOG("PUSH");
+			//LOG("PUSH");
 		}
 		else {
 			b->m_state = UI::MouseState::ONHOVER;
-			LOG("ONHOVER");
+			//LOG("ONHOVER");
 		}
 
 
 	}
 	else if (b->m_state != UI::MouseState::IDLE) {
 		b->m_state = UI::MouseState::IDLE;
-		LOG("IDLE");
+		//LOG("IDLE");
 	}
 
 }
@@ -325,6 +326,13 @@ void Button::ClickLogic()
 		break;
 	case Button_Type::Webpage:
 		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan/PhotoPlatformer", NULL, NULL, SW_SHOWNORMAL); //TODO: LINK THE REAL WEBPAGE
+		break;
+	case Button_Type::Command:		
+		ConsoleCommand* command;
+		command = App->console->LookForCommand(App->console->console_input->GetText().GetString());
+		
+		if(command)
+			App->console->ExecuteCommand(command);
 		break;
 	case Button_Type::No_button:
 		break;
@@ -526,22 +534,17 @@ void InputBox::InnerDraw()
 	{
 		DeleteText();
 	}
-
+	//Input Box blit
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &box, true, SDL_FLIP_NONE, 0.0F, 255,
 		true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
 
 	uint width_ = 0u, height_ = 0u;
 	App->tex->GetSize(texture, width_, height_);
-	iPoint pos{ 0,0 };
-	pos.x = (box.w - (int)width_) * 0.5F;
-	pos.y = (box.h - (int)HEIGHT) * 0.5F;
-	pos.x += position.x;
-	pos.y += position.y;
-
+	//Text blit
 	if (texture != nullptr)
-		App->render->Blit(texture, position.x, position.y, 0, false, SDL_FLIP_NONE, 0.0f, 255, true);
-
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), pos.x + width_, pos.y + HEIGHT * 0.4F, &cursor->GetCurrentFrame(), false, SDL_FLIP_NONE, 0.0F);
+		App->render->Blit(texture, position.x + 10, position.y, 0, false, SDL_FLIP_NONE, 0.0f, 255, true);
+	//Cursor blit
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x + width_ + 10, position.y + 5, &cursor->GetCurrentFrame(), false, SDL_FLIP_NONE, 0.0F);
 }
 
 void InputBox::SetText(const char* txt)

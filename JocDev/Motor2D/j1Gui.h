@@ -70,6 +70,7 @@ public:
 		Profile_Didac,
 		Profile_Ivan,
 		Webpage,
+		Command,
 	};
 
 	enum class CheckBox_Type
@@ -211,7 +212,7 @@ class InputBox : public UI
 public:
 	InputBox(const int& pos_x, const int& pos_y, const char* txt, const Color& c, const char* path_font, const SDL_Rect& rect, bool drawable, UI* parent) :UI(pos_x, pos_y, parent, 0, 0, drawable)
 	{
-		font = App->fonts->Load(path_font, 40);
+		font = App->fonts->Load(path_font, 15);
 		ui_type = UI::Type::INPUT_BOX;
 		text.create(txt);
 		box = rect;
@@ -219,16 +220,11 @@ public:
 		texture = App->fonts->Print(text.GetString(), color, font);
 		App->fonts->CalcSize(txt, position.w, position.h, font);
 		cursor = new Animation();
-		cursor->PushBack({ 92, 1344, 5,24 });
+		cursor->PushBack({ 103,1345, 2,15 });
 		cursor->PushBack({ 0,0,0,0 });
 		cursor->speed = 2.0F;
 		uint width_ = 0u;
 		App->tex->GetSize(texture, width_, HEIGHT);
-
-
-	/*	texture = App->fonts->Print("hola", color, font);
-		
-		App->fonts->CalcSize(txt, position.w, position.h, font);*/
 		
 	}
 	~InputBox()
