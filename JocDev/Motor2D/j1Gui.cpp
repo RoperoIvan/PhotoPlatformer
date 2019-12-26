@@ -527,8 +527,8 @@ void InputBox::InnerDraw()
 		DeleteText();
 	}
 
-	//App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &box, true, SDL_FLIP_NONE, 0.0F, 255,
-	//	true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &box, true, SDL_FLIP_NONE, 0.0F, 255,
+		true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
 
 	uint width_ = 0u, height_ = 0u;
 	App->tex->GetSize(texture, width_, height_);
@@ -611,15 +611,14 @@ void InputBox::AddText(const char* txt)
 
 void InputBox::DeleteText()
 {
-	if (text.GetCapacity() > 0) {
+	if (text.Length() > 0) {
 		int i = 0;
-		//char* p = text.Getchar();
-		while (text.Getchar()[i] != '\0')
+		while (text.Getchar()[i] != '\0')//Remove last character
 		{
 			i++;
 		}
 		text.Getchar()[i - 1] = '\0';
-		//text = p;
+		text.Length();
 		App->tex->UnLoad(texture);
 		texture = App->fonts->Print(text.GetString(), color, font);
 	}
