@@ -60,6 +60,8 @@ public:
 
 	void TimerManage();
 
+	void ScoreManage();
+
 public:
 
 	iPoint	respawn;
@@ -100,6 +102,8 @@ public:
 
 	p2SString str_time;
 	int start_time = 0;
+	int score = 100;
+	int minus_time = 10;
 };
 
 #endif // __j1SCENE_H__

@@ -239,6 +239,7 @@ void Player::CoinsManagement()
 	{
 		lifes++;
 		coins -= 10;
+		App->scene->score -= 20;
 	}
 }
 
@@ -396,7 +397,7 @@ void Player::OnCollision(Collider *col1)
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_COIN)
 	{
 		coins++;
-		
+		App->scene->score += 20;
 	}
 
 }

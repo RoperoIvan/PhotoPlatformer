@@ -84,6 +84,7 @@ bool j1Scene::PostUpdate(float dt)
 		(App->Pause()) ? CreatePauseMenu() : DestroyPauseMenu();
 	}
 	TimerManage();
+	ScoreManage();
 
 	return ret;
 }
@@ -273,7 +274,7 @@ void j1Scene::CreateHUD()
 	coins_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth() - 70, -25), coin, "", BLACK, "fonts/Final_Fantasy_font.ttf", 130);	
 	/*points_panel = App->gui->CreateImage(fPoint(5, 70), App->gui->screen, { 62, 1588, 305, 112 }, true);*/
 	points_image = App->gui->CreateImage(fPoint(280, 12), App->gui->screen, { 171, 871, 66, 61 }, true);
-	points_label = App->gui->CreateLabel(fPoint(350, -30), App->gui->screen, "0", BLACK, "fonts/Final_Fantasy_font.ttf", 130);
+	points_label = App->gui->CreateLabel(fPoint(350, -30), App->gui->screen, p2SString(("%i"),score).GetString(), BLACK, "fonts/Final_Fantasy_font.ttf", 130);
 	timer_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth()/2, -28), App->gui->screen, str_time.GetString(), BLACK, "fonts/Final_Fantasy_font.ttf", 130);
 }
 
@@ -320,4 +321,15 @@ void j1Scene::TimerManage()
 		timer_label->SetText(str_time.GetString());
 	}
 	
+}
+
+void j1Scene::ScoreManage()
+{
+	int time = (SDL_GetTicks() - start_time) / 1000 % 60;
+	if ( time - minus_time >= 0)
+	{
+		minus_time += 10;
+		score -= 10;
+	}
+	points_label->SetText(p2SString(("%i"), score).GetString());
 }
