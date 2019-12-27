@@ -58,7 +58,8 @@ void GroundEnemy::Move(float dt)
 			if (App->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::GROUND_ENEMY) != -1 && App->entityManager->player)
 			{
 				enemy_path = App->pathfinding->GetLastPath();
-				App->pathfinding->DrawPath(enemy_path);
+				if (App->collisions->debug)
+					App->pathfinding->DrawPath(enemy_path);
 
 				if (enemy_path->Count() > 0)
 				{

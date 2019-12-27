@@ -99,7 +99,7 @@ void Enemy::OnCollision(Collider* col1)
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
 			state = EnemyState::DEAD;
-			collider->to_delete = true;
+			//collider->to_delete = true;
 		}
 		else
 		{

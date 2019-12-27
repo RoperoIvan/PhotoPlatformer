@@ -283,8 +283,9 @@ void Button::ClickLogic()
 		break;
 	case Button_Type::Play:
 		App->current_level = 1;
-		App->fade->StartfadetoBlack();
 		App->main_menu->DestroyMainMenu();
+		App->fade->StartfadetoBlack();
+
 		break;
 	case Button_Type::Continue:
 		App->main_menu->DestroyMainMenu();

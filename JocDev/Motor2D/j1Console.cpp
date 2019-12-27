@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "j1EntityManager.h"
 #include "j1Collisions.h"
+#include "j1FadetoBlack.h"
 #include "j1Gui.h"
 
 j1Console::j1Console() : j1Module()
@@ -122,7 +123,6 @@ ConsoleCommand* j1Console::LookForCommand(const char* com)
 			ret = command->data;
 			if (ret->type == CommandType::MAP || ret->type == CommandType::FPS) //We look for the map number	
 					ret->argument = FromCharToInt(c);
-
 			break;
 		}
 	}
@@ -143,18 +143,32 @@ void j1Console::ExecuteCommand(ConsoleCommand* com)
 			
 		break;
 	case CommandType::LIST:
-		GetLog("list: display all the commands god_mode: activate god mode quit: exti the game map<number of map>: go to that specific map fps<number fps>: change the fps cap to that number");
+		GetLog("list: display all the commands god: activate god mode quit: exit the game map<number of map>: go to that specific map fps<number fps>: change the fps cap to that number");
 
 		break;
 	case CommandType::MAP:
-		LOG("Changing map to %i", com->argument);
+		if(com->argument == App->current_level)
+			LOG("You are already in %i map", com->argument);
+		else if(com->argument > 2)
+			LOG("The map %i doesn't exists", com->argument);
+		else
+		{
+			LOG("Changing map to %i", com->argument);
+			App->current_level = com->argument;
+			App->fade->StartfadetoBlack();
+		}		
 		break;
 	case CommandType::QUIT:
 		App->exit = true;
 		break;
 	case CommandType::FPS:
-		App->SetFPScap(com->argument);
-		LOG("FPS cap now is : %i", com->argument);
+		if(com->argument <= 0)
+			LOG("FPS cap has to be greater than 0");
+		else
+		{
+			App->SetFPScap(com->argument);
+			LOG("FPS cap now is : %i", com->argument);
+		}		
 		break;
 	}
 }
@@ -163,7 +177,7 @@ int j1Console::FromCharToInt(p2SString c)
 {
 	char* nums = nullptr;
 	int start = -1;
-	int result = 0;
+	int result = -1;
 	int finish = -1;
 	for (int i = 0; i < c.Length(); i++)
 	{
@@ -175,7 +189,8 @@ int j1Console::FromCharToInt(p2SString c)
 		}
 	}
 	if (start >= 0 && finish >= 0)
-	{		
+	{	
+		result = 0;
 		for (int j = start; j <= finish; ++j)
 		{
 			char fps = c.GetString()[j];

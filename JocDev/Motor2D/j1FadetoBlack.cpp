@@ -79,13 +79,16 @@ void j1FadetoBlack::NewLevel()
 	switch (App->current_level)
 	{
 	case 0:
-		App->scene->DestroyHUD();
+		if(App->scene->coins_label)
+			App->scene->DestroyHUD();
 		App->scene->active = false;
 		App->main_menu->active = true;
 		App->main_menu->Start();
 
 		break;
-	case 1:		
+	case 1:
+		if (App->main_menu->continue_button)
+			App->main_menu->DestroyMainMenu();
 		App->scene->CreateHUD();
 		App->main_menu->active = false;
 		App->scene->active = true;
@@ -103,6 +106,8 @@ void j1FadetoBlack::NewLevel()
 		break;
 	case 2:
 		//App->scene->DestroyHUD();
+		if (App->main_menu->continue_button)
+			App->main_menu->DestroyMainMenu();
 		App->scene->CreateHUD();
 		App->main_menu->active = false;
 		App->scene->active = true;
@@ -121,6 +126,7 @@ void j1FadetoBlack::NewLevel()
 		break;
 	default:
 		LOG("Error, that level doesn't exist.");
+		return;
 	}
 	App->entityManager->Start();
 }
@@ -136,7 +142,6 @@ bool j1FadetoBlack::StartfadetoBlack(float time)
 		start_time = SDL_GetTicks();
 		ret = true;
 	}
-
 
 	return ret;
 }
