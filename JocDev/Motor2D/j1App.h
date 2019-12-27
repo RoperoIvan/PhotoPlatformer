@@ -111,7 +111,7 @@ private:
 	p2List<j1Module*>	modules;
 	uint				frames;
 	float				dt;
-	bool				cap_fps;
+	bool				cap_fps = true;
 	uint				frames_cap = 0;
 	j1Timer				timer_frames;
 	j1Timer				timer_frames_second;

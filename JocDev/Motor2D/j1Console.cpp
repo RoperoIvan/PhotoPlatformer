@@ -18,9 +18,8 @@ j1Console::~j1Console()
 bool j1Console::Start()
 {
 	bool ret = true;
-	//CreateConsole();
 	CreateCommand("map", CommandType::MAP);
-	CreateCommand("fps)", CommandType::FPS);
+	CreateCommand("fps", CommandType::FPS);
 	CreateCommand("quit", CommandType::QUIT);
 	CreateCommand("god", CommandType::GOD_MODE);
 	CreateCommand("list", CommandType::LIST);
@@ -48,7 +47,6 @@ bool j1Console::CleanUp()
 	p2List_item<ConsoleCommand*>* command = commands.start;
 	while (command != NULL)
 	{
-		//command->data->CleanUp();
 		delete command->data;
 		command->data = nullptr;
 		command = command->next;
@@ -122,16 +120,9 @@ ConsoleCommand* j1Console::LookForCommand(const char* com)
 		if (c.Find(command->data->name.GetString()) >= 1)
 		{
 			ret = command->data;
-			if (ret->type == CommandType::MAP) //We look for the map number
-			{
-				for (int i = 0; i < c.Length(); i++)
-				{
-					if (c.GetString()[i] == '<')
-					{
-						ret->argument = console_input->GetText().GetString()[i+=1] - '0';
-					}
-				}
-			}
+			if (ret->type == CommandType::MAP || ret->type == CommandType::FPS) //We look for the map number	
+					ret->argument = FromCharToInt(c);
+
 			break;
 		}
 	}
@@ -148,19 +139,61 @@ void j1Console::ExecuteCommand(ConsoleCommand* com)
 	case CommandType::GOD_MODE:
 		if(App->entityManager->player)
 			App->collisions->GodMode();
+		(App->collisions->god_mode) ? LOG("GOD MODE: ON") : LOG("GOD MODE: OFF");
+			
 		break;
 	case CommandType::LIST:
 		GetLog("list: display all the commands god_mode: activate god mode quit: exti the game map<number of map>: go to that specific map fps<number fps>: change the fps cap to that number");
 
 		break;
 	case CommandType::MAP:
-		LOG("HOILA");
+		LOG("Changing map to %i", com->argument);
 		break;
 	case CommandType::QUIT:
 		App->exit = true;
 		break;
 	case CommandType::FPS:
 		App->SetFPScap(com->argument);
+		LOG("FPS cap now is : %i", com->argument);
 		break;
 	}
+}
+
+int j1Console::FromCharToInt(p2SString c)
+{
+	char* nums = nullptr;
+	int start = -1;
+	int result = 0;
+	int finish = -1;
+	for (int i = 0; i < c.Length(); i++)
+	{
+		if (c.GetString()[i] == '>')
+			finish = i - 1;
+		if (c.GetString()[i] == '<')
+		{
+			start = i + 1;
+		}
+	}
+	if (start >= 0 && finish >= 0)
+	{		
+		for (int j = start; j <= finish; ++j)
+		{
+			char fps = c.GetString()[j];
+			int sign = 1;
+			if (fps == '-')
+			{
+				sign = -1;
+				fps++;
+			}
+			int num = 0;
+			num = ((fps)-'0') + num * 10;
+			int pot = 1;
+			for (int k = 0; k < finish - j; ++k)
+			{
+				pot *= 10;
+			}
+			result += num * pot;
+		}
+	}
+		return result;
 }

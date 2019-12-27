@@ -56,6 +56,9 @@ public:
 	ConsoleCommand* CreateCommand(const char* name, CommandType t, uint argument = 0);
 	ConsoleCommand* LookForCommand(const char*);
 	void ExecuteCommand(ConsoleCommand* com);
+
+	int FromCharToInt(p2SString ch_i);
+
 public:
 	InputBox* console_input = nullptr;
 	Image* console_panel = nullptr;
