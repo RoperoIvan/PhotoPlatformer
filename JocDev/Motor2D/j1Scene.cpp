@@ -37,20 +37,11 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//App->win->SetTitle("PhotoPlatformer 0.1.1");
-	/*App->audio->PlayMusic("audio/music/awesomeness.ogg",2.0);*/
 	App->map->Load("MainMenu.tmx");
-	/*if (App->map->Load("Level1.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+	//App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
+	start_time = SDL_GetTicks();
+	str_time.create("00:00");
 
-		RELEASE_ARRAY(data);
-	}*/
-	App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
-	
 	return true;
 }
 
@@ -92,6 +83,7 @@ bool j1Scene::PostUpdate(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		(App->Pause()) ? CreatePauseMenu() : DestroyPauseMenu();
 	}
+	TimerManage();
 
 	return ret;
 }
@@ -274,11 +266,15 @@ void j1Scene::DestroySettingsMenu()
 
 void j1Scene::CreateHUD()
 {
-	heart_1 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 788, 210, 59 }, false);
-	heart_2 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 716, 210, 59 }, false);
-	heart_3 = App->gui->CreateImage(fPoint(0, 10), App->gui->screen, { 77, 647, 210, 59 }, true);
+	heart_1 = App->gui->CreateImage(fPoint(0, 14), App->gui->screen, { 77, 788, 210, 59 }, false);
+	heart_2 = App->gui->CreateImage(fPoint(0, 14), App->gui->screen, { 77, 716, 210, 59 }, false);
+	heart_3 = App->gui->CreateImage(fPoint(0, 14), App->gui->screen, { 77, 647, 210, 59 }, true);
 	coin = App->gui->CreateImage(fPoint(App->win->GetWindowWidth() - 150, 20), App->gui->screen, { 77, 873, 67, 66 }, true);
-	coins_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth() - 70, -25), coin, "", BLACK, "fonts/Final_Fantasy_font.ttf", 130);
+	coins_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth() - 70, -25), coin, "", BLACK, "fonts/Final_Fantasy_font.ttf", 130);	
+	/*points_panel = App->gui->CreateImage(fPoint(5, 70), App->gui->screen, { 62, 1588, 305, 112 }, true);*/
+	points_image = App->gui->CreateImage(fPoint(280, 12), App->gui->screen, { 171, 871, 66, 61 }, true);
+	points_label = App->gui->CreateLabel(fPoint(350, -30), App->gui->screen, "0", BLACK, "fonts/Final_Fantasy_font.ttf", 130);
+	timer_label = App->gui->CreateLabel(fPoint(App->win->GetWindowWidth()/2, -28), App->gui->screen, str_time.GetString(), BLACK, "fonts/Final_Fantasy_font.ttf", 130);
 }
 
 void j1Scene::DestroyHUD()
@@ -302,4 +298,26 @@ void j1Scene::DestroyHUD()
 	coins_label->to_delete = true;
 	App->gui->DeleteElement(coins_label);
 	coins_label = nullptr;
+
+	points_image->to_delete = true;
+	App->gui->DeleteElement(points_image);
+	points_image = nullptr;
+
+	points_label->to_delete = true;
+	App->gui->DeleteElement(points_label);
+	points_label = nullptr;
+
+	timer_label->to_delete = true;
+	App->gui->DeleteElement(timer_label);
+	timer_label = nullptr;
+}
+
+void j1Scene::TimerManage()
+{
+	if (timer_label)
+	{
+		str_time.create("%.2i:%.2i", (SDL_GetTicks() - start_time) / 60000, (SDL_GetTicks() - start_time) / 1000 % 60);
+		timer_label->SetText(str_time.GetString());
+	}
+	
 }

@@ -68,6 +68,8 @@ private:
 	bool hit_time = false;
 	
 	j1Timer time_to_hit;
+	int num_lvl = 0;
+	bool changing = false;
 public:
 	Uint8 alpha = 255;
 	int lifes = 3;

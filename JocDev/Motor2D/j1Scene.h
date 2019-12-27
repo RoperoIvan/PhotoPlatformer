@@ -58,6 +58,8 @@ public:
 
 	void DestroyHUD();
 
+	void TimerManage();
+
 public:
 
 	iPoint	respawn;
@@ -91,6 +93,13 @@ public:
 	Image* heart_3 = nullptr;
 	Image* coin = nullptr;
 	Label* coins_label = nullptr;
+	Image* points_image = nullptr;
+	Image* points_panel = nullptr;
+	Label* points_label = nullptr;
+	Label* timer_label = nullptr;
+
+	p2SString str_time;
+	int start_time = 0;
 };
 
 #endif // __j1SCENE_H__
