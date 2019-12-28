@@ -10,7 +10,6 @@
 #include "j1Textures.h"
 #include "UI.h"
 
-
 #define CURSOR_WIDTH 2
 
 class UI;
@@ -46,8 +45,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
-	// Gui creation functions
+	// Creation functions
 	Button* CreateButton(const fPoint & pos, UI* parent, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push, const UI::Button_Type& type);
 	Image * CreateImage(const fPoint & pos, UI* parent, const SDL_Rect & rect, bool drawable);
 	Label * CreateLabel(const fPoint & pos, UI* parent, const char * text, const Color& c, const char * font,const uint& size = DEFAULT_FONT_SIZE, uint32 wrap_length = 0U);
@@ -60,7 +58,6 @@ public:
 	bool Select()const;
 	const SDL_Texture* GetAtlas() const;
 
-	void DeleteElement(UI* ui);
 	void SetPosition(UI*ui, const int& x, const int& y);
 private:
 

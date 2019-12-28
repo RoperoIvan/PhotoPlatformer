@@ -213,21 +213,6 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-void j1Gui::DeleteElement(UI* ui) //TODO: Change this atrocity
-{
-	/*p2List_item<UI*>* item = objects.start;
-	while (item != nullptr)
-	{
-		if (item->data->to_delete == true && item->data != nullptr)
-		{
-			objects.del(item);
-			break;
-		}
-		item = item->next;
-
-	}*/
-}
-
 void j1Gui::SetPosition(UI*ui, const int& x, const int& y)
 {
 	ui->position.x = x;

@@ -30,7 +30,6 @@ bool j1Console::Start()
 	CreateCommand("quit", CommandType::QUIT);
 	CreateCommand("god", CommandType::GOD_MODE);
 	CreateCommand("list", CommandType::LIST);
-	SetLog("hehehehehehe");
 	return ret;
 }
 
@@ -66,10 +65,11 @@ void j1Console::CreateConsole()
 	App->gui->CreateScreen();
 	console_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, {1212, 1904, 754, 548}, true);
 	console_input = App->gui->CreateInputBox(fPoint(10, console_panel->position.h - 40), "", console_panel, BLACK, "fonts/open_sans/OpenSans-Bold.ttf", { 453, 2409, 717, 24}, true);
+	App->input->input_text.Clear();
 	int separation = 0;
 	for (int i = log_buffers.count() -1; i >= 0; i--)
 	{
-		Label* new_log = App->gui->CreateLabel(fPoint(0, (-15 * separation)), console_panel, log_buffers[i].GetString(), BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
+		Label* new_log = App->gui->CreateLabel(fPoint(0, (-15 * separation)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
 		logs_labels.add(new_log);
 		separation++;
 	}
@@ -80,21 +80,18 @@ void j1Console::CreateConsole()
 void j1Console::DestroyConsole()
 {
 	console_panel->to_delete = true;
-	App->gui->DeleteElement(console_panel);
-	console_panel = nullptr;
-
-	console_input->text.Clear();
-	/*delete console_input->cursor;
-	console_input->cursor = nullptr;*/
 	console_input->to_delete = true;
-	App->gui->DeleteElement(console_input);
-	console_input = nullptr;
-
+	console_input->text.Clear();
+	App->input->input_text.Clear();
 	for (int i = 0; i < log_buffers.count(); i++)
 	{
-		logs_labels[i]->to_delete = true;
-		App->gui->DeleteElement(logs_labels[i]);
-		logs_labels[i] = nullptr;
+		if (logs_labels[i] != nullptr)
+		{
+			logs_labels[i]->to_delete;
+			logs_labels[i]->CleanUp();
+			delete logs_labels[i];
+			logs_labels[i] = nullptr;
+		}		
 	}
 	logs_labels.clear();
 	for (int i = 0; i < log_buffers.count(); i++)
@@ -103,23 +100,19 @@ void j1Console::DestroyConsole()
 	}
 	log_buffers.clear();
 	command_button->to_delete = true;
-	App->gui->DeleteElement(command_button);
-	command_button = nullptr;
-
 	command_label->to_delete = true;
-	App->gui->DeleteElement(command_label);
-	command_label = nullptr;
-	
-}
-
-void j1Console::GetLog(const char* log)
-{
-	//log_buff += log;
 }
 
 void j1Console::SetLog(p2SString log)
 {
 	log_buffers.add(log);
+	int separation = 0;
+	for (int i = log_buffers.count() - 1; i >= 0; i--)
+	{
+		Label* new_log = App->gui->CreateLabel(fPoint(0, ((-15 * separation) + 300)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
+		logs_labels.add(new_log);
+		separation++;
+	}
 }
 
 ConsoleCommand* j1Console::CreateCommand(const char* name, CommandType t, uint argument)
@@ -138,13 +131,16 @@ ConsoleCommand* j1Console::LookForCommand(const char* com)
 	c.create(com);
 	for (p2List_item<ConsoleCommand*>* command = commands.start; command != nullptr; command = command->next)
 	{
-		if (c.Find(command->data->name.GetString()) >= 1)
+		if (c.GetCapacity() > 3)
 		{
-			ret = command->data;
-			if (ret->type == CommandType::MAP || ret->type == CommandType::FPS) //We look for the map number	
+			if (c.Find(command->data->name.GetString()) >= 1)
+			{
+				ret = command->data;
+				if (ret->type == CommandType::MAP || ret->type == CommandType::FPS) //We look for the map number	
 					ret->argument = FromCharToInt(c);
-			break;
-		}
+				break;
+			}
+		}		
 	}
 
 	return ret;
@@ -163,8 +159,7 @@ void j1Console::ExecuteCommand(ConsoleCommand* com)
 			
 		break;
 	case CommandType::LIST:
-		GetLog("list: display all the commands god: activate god mode quit: exit the game map<number of map>: go to that specific map fps<number fps>: change the fps cap to that number");
-
+		SetLog("list: display all the commands god: activate god mode quit: exit the game map<number of map>: go to that specific map fps<number fps>: change the fps cap to that number");
 		break;
 	case CommandType::MAP:
 		if(com->argument == App->current_level)
