@@ -13,18 +13,18 @@ public:
 	void CleanUp();
 	void InnerDraw();
 	void PostUpdate();
-
+	void CalculateFinalValue();
+	bool IsInLimits();
 public:
-	float slider_value;
+	float value;
 private:
-
-	float value = 0.0F;
-	Slider_TYPE type = Slider_TYPE::Y;
+	Slider_TYPE type = Slider_TYPE::X;
 	SDL_Rect image = { 0,0,0,0 };
 	int size_of_limits = 0;
-	int min_pos;
-	int max_pos;
-	iPoint dot;
+	int min_place;
+	int max_place;
+	iPoint current_place_thumb;
+	iPoint m_pos;
 };
 
 #endif

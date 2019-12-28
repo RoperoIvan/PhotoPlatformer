@@ -44,7 +44,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("MainMenu.tmx");
-	//App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
+	App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
 	start_time = SDL_GetTicks();
 	str_time.create("00:00");
 
@@ -94,9 +94,7 @@ bool j1Scene::PostUpdate(float dt)
 
 	if (slider_volume)
 	{
-		float vol = slider_volume->slider_value;
-		int final_vol = (int)(vol * 180);
-		App->audio->SetVolume(final_vol);
+		App->audio->AdjustSliderVolume(slider_volume);
 	}
 
 	return ret;
@@ -214,18 +212,18 @@ void j1Scene::DestroyPauseMenu()
 void j1Scene::CreateSettingsMenu()
 {
 	//Panel
-	settings_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1504,960,503,717 }, true);
+	settings_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1704, 57, 1024, 768 }, true);
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
-	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
-	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
-	slider_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 40), (settings_panel->position.h / 2) - 270), settings_panel, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
+	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), settings_panel, { 193, 423, 469, 10 }, true);
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
+	slider_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 260), (settings_panel->position.h / 2) - 270), settings_panel, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 	//CheckBox
-	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 280, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
-	fullscreen_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 60, (settings_panel->position.h / 2) - 10), to_pause_menu_button, "Fullscreen", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
+	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) -100, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
+	fullscreen_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) -320, (settings_panel->position.h / 2) - 10), to_pause_menu_button, "Fullscreen", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
 	//Buttons	 
-	to_pause_menu_button = App->gui->CreateButton(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) + 120), settings_panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Return);
-	to_pause_menu_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 170, (settings_panel->position.h / 2) + 150), to_pause_menu_button, "Return", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
+	to_pause_menu_button = App->gui->CreateButton(fPoint((settings_panel->position.w / 2) - 100, (settings_panel->position.h / 2) + 120), settings_panel, { 77, 109, 363, 178 }, { 462, 109, 362, 178 }, { 845, 109, 362, 178 }, UI::Button_Type::Return);
+	to_pause_menu_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) - 10, (settings_panel->position.h / 2) + 150), to_pause_menu_button, "Return", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 100);
 }
 
 void j1Scene::DestroySettingsMenu()
@@ -267,11 +265,12 @@ void j1Scene::DestroyHUD()
 
 void j1Scene::TimerManage()
 {
-	if (timer_label)
+	if (timer_label && !App->pause_game)
 	{
 		str_time.create("%.2i:%.2i", (SDL_GetTicks() - start_time) / 60000, (SDL_GetTicks() - start_time) / 1000 % 60);
 		timer_label->SetText(str_time.GetString());
 	}
+
 	
 }
 

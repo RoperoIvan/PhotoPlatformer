@@ -106,10 +106,10 @@ void j1Console::DestroyConsole()
 void j1Console::SetLog(p2SString log)
 {
 	log_buffers.add(log);
-	int separation = 0;
+	int separation = 30;
 	for (int i = log_buffers.count() - 1; i >= 0; i--)
 	{
-		Label* new_log = App->gui->CreateLabel(fPoint(0, ((-15 * separation) + 300)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
+		Label* new_log = App->gui->CreateLabel(fPoint(0, ((separation) + 50)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
 		logs_labels.add(new_log);
 		separation++;
 	}

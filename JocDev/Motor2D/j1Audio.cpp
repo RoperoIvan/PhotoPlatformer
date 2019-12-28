@@ -207,3 +207,10 @@ int j1Audio::DecreaseVolume()
 
 	return Mix_VolumeMusic(music_volume);
 }
+
+void j1Audio::AdjustSliderVolume(Slider* slid)
+{
+	float vol = slid->value;
+	int final_vol = (int)(vol * 180);
+	SetVolume(final_vol);
+}

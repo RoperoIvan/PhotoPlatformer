@@ -64,9 +64,7 @@ bool j1MainMenu::PostUpdate(float dt)
 	bool ret = true;
 	if (slider_volume)
 	{
-		float vol = slider_volume->slider_value;
-		int final_vol = (int)(vol* 180);
-		App->audio->SetVolume(final_vol);
+		App->audio->AdjustSliderVolume(slider_volume);
 	}
 	return ret;
 }

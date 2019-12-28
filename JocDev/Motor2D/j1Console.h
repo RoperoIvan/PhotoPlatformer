@@ -50,7 +50,6 @@ public:
 	void CreateConsole();
 	void DestroyConsole();
 
-	void GetLog(const char* log);
 	void SetLog(p2SString log);
 	ConsoleCommand* CreateCommand(const char* name, CommandType t, uint argument = 0);
 	ConsoleCommand* LookForCommand(const char*);
@@ -63,7 +62,6 @@ public:
 	Image* console_panel = nullptr;
 	Button* command_button = nullptr;
 	Label* command_label = nullptr;
-
 	bool has_console = false;
 	p2List<p2SString> log_buffers;
 	p2List<Label*> logs_labels;

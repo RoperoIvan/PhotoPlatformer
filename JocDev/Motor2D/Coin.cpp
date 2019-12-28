@@ -54,6 +54,7 @@ void Coin::PushBack()
 
 	anim_idle.loop = true;
 }
+
 void Coin::Draw()
 {
 	if (current_animation != nullptr)
@@ -67,4 +68,19 @@ void Coin::OnCollision(Collider* col1)
 		/*collider->to_delete = true;*/
 		this->to_delete = true;
 	}
+}
+
+bool Coin::Load(pugi::xml_node& node)
+{
+	pugi::xml_node c_stats = node.child("player_stats");
+	position.x = c_stats.attribute("position_x").as_int();
+	position.y = c_stats.attribute("position_y").as_int();
+	return false;
+}
+bool Coin::Save(pugi::xml_node& node) const
+{
+	pugi::xml_node c_stats = node.append_child("player_stats");
+	c_stats.append_attribute("position_x") = (int)position.x;
+	c_stats.append_attribute("position_y") = (int)position.y;
+	return false;
 }

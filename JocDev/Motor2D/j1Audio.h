@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "SDL_mixer\include\SDL_mixer.h"
 #include "p2List.h"
+#include "Slider.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -43,7 +44,7 @@ public:
 	{
 		return music_volume;
 	}
-
+	void AdjustSliderVolume(Slider* sld);
 private:
 
 	_Mix_Music*			music;

@@ -11,7 +11,6 @@ Slider::Slider(const int& pos_x, const int& pos_y, const SDL_Rect& slider_rect, 
 	image = slider_rect;
 	type = slider_type;
 	ui_type = UI::Type::SLIDER;
-	value = 0.0F;
 	SetSliderValueStart();
 }
 
@@ -21,14 +20,12 @@ Slider::~Slider()
 
 void Slider::SetSliderValueStart()
 {
-	min_pos = (position.x);
-	max_pos = (position.x + 470);
-	dot.x = min_pos;
-	dot.y = position.y;
-	position.x = dot.x;
-	position.y = dot.y;
-	position.w = image.w;
-	position.h = image.h;
+	min_place = (position.x);
+	max_place = (position.x + 470);
+	current_place_thumb.x = min_place;
+	current_place_thumb.y = position.y;
+	position.x = current_place_thumb.x;
+	position.y = current_place_thumb.y;
 }
 
 void Slider::CleanUp()
@@ -40,22 +37,40 @@ void Slider::InnerDraw()
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &image, false, SDL_FLIP_NONE, 0.0f, 255, true);
 }
 
+
+void Slider::CalculateFinalValue()
+{
+	float maximum_value = max_place - min_place;
+	float actual_value = max_place - current_place_thumb.x;
+
+	float final_val = actual_value / maximum_value;
+
+	value = 1 - final_val;
+}
+
+bool Slider::IsInLimits()
+{
+	bool ret = false;
+
+	
+	App->input->GetMousePosition(m_pos.x, m_pos.y);
+	if (m_pos.x >= min_place && m_pos.x <= max_place)
+		ret = true;
+
+	return ret;
+}
+
+
 void Slider::PostUpdate()
 {
 	if (m_state == MouseState::PUSH)
 	{
-		iPoint m_pos;
-		App->input->GetMousePosition(m_pos.x, m_pos.y);
-		if (m_pos.x >= min_pos && m_pos.x <= max_pos)
+		
+		if (IsInLimits())
 		{
-			position.x = m_pos.x - image.w / 2;
-			dot.x = m_pos.x;
+			position.x = m_pos.x - image.w * 0.5f;
+			current_place_thumb.x = m_pos.x;
 		}
 	}
-	float total = max_pos - min_pos;
-	float actual = max_pos - dot.x;
-
-	float val = actual / total;
-
-	slider_value = 1 - val;
+	CalculateFinalValue();
 }
