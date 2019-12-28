@@ -82,6 +82,27 @@
     <ClCompile Include="j1Console.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckBox.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBox.cpp">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -189,6 +210,27 @@
     <ClInclude Include="j1Console.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckBox.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBox.h">
+      <Filter>Desenvolupament  ========\Modules\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -217,6 +259,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Documents">
       <UniqueIdentifier>{f8d6f444-6440-4b60-8fed-668a65e7cdca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\GUI">
+      <UniqueIdentifier>{ef8a28b6-f8cb-4ea5-9642-1e452481a031}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,12 @@
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
+#include "Button.h"
+#include "Label.h"
+#include "Image.h"
+#include "CheckBox.h"
+#include "Slider.h"
+#include "InputBox.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -196,29 +202,12 @@ void j1Scene::DestroyPauseMenu()
 	if (panel != nullptr)
 	{
 		panel->to_delete = true;
-		App->gui->DeleteElement(panel);
-		panel = nullptr;
-
 		resume_button->to_delete = true;
-		App->gui->DeleteElement(resume_button);
-		resume_button = nullptr;
 		resume_label->to_delete = true;
-		App->gui->DeleteElement(resume_label);
-		resume_label = nullptr;
-
 		exit_button->to_delete = true;
-		App->gui->DeleteElement(exit_button);
-		exit_button = nullptr;
 		exit_label->to_delete = true;
-		App->gui->DeleteElement(exit_label);
-		exit_label = nullptr;
-
 		settings_button->to_delete = true;
-		App->gui->DeleteElement(settings_button);
-		settings_button = nullptr;
 		settings_label->to_delete = true;
-		App->gui->DeleteElement(settings_label);
-		settings_label = nullptr;
 	}	
 }
 
@@ -242,28 +231,13 @@ void j1Scene::CreateSettingsMenu()
 void j1Scene::DestroySettingsMenu()
 {
 	settings_panel->to_delete = true;
-	App->gui->DeleteElement(settings_panel);
-	settings_panel = nullptr;
-
+	volume_level->to_delete = true;
+	slider_label->to_delete = true;
 	slider_volume->to_delete = true;
-	App->gui->DeleteElement(slider_volume);
-	slider_volume = nullptr;
-
 	fullscreen_checkbox->to_delete = true;
-	App->gui->DeleteElement(fullscreen_checkbox);
-	fullscreen_checkbox = nullptr;
-
 	fullscreen_label->to_delete = true;
-	App->gui->DeleteElement(fullscreen_label);
-	fullscreen_label = nullptr;
-
 	to_pause_menu_button->to_delete = true;
-	App->gui->DeleteElement(to_pause_menu_button);
-	to_pause_menu_button = nullptr;
-
 	to_pause_menu_label->to_delete = true;
-	App->gui->DeleteElement(to_pause_menu_label);
-	to_pause_menu_label = nullptr;
 }
 
 void j1Scene::CreateHUD()
@@ -282,36 +256,13 @@ void j1Scene::CreateHUD()
 void j1Scene::DestroyHUD()
 {
 	heart_1->to_delete = true;
-	App->gui->DeleteElement(heart_1);
-	heart_1 = nullptr;
-
 	heart_2->to_delete = true;
-	App->gui->DeleteElement(heart_2);
-	heart_2 = nullptr;
-
 	heart_3->to_delete = true;
-	App->gui->DeleteElement(heart_3);
-	heart_3 = nullptr;
-
 	coin->to_delete = true;
-	App->gui->DeleteElement(coin);
-	coin = nullptr;
-
 	coins_label->to_delete = true;
-	App->gui->DeleteElement(coins_label);
-	coins_label = nullptr;
-
 	points_image->to_delete = true;
-	App->gui->DeleteElement(points_image);
-	points_image = nullptr;
-
 	points_label->to_delete = true;
-	App->gui->DeleteElement(points_label);
-	points_label = nullptr;
-
 	timer_label->to_delete = true;
-	App->gui->DeleteElement(timer_label);
-	timer_label = nullptr;
 }
 
 void j1Scene::TimerManage()

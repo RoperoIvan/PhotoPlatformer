@@ -12,7 +12,12 @@
 #include "p2Log.h"
 #include "j1Window.h"
 #include "j1Gui.h"
-
+#include "Button.h"
+#include "Label.h"
+#include "Image.h"
+#include "CheckBox.h"
+#include "Slider.h"
+#include "InputBox.h"
 #include "SDL/include/SDL_scancode.h"
 
 Player::Player(const fPoint &position) : Entity(position,"player",ENTITY_TYPE::PLAYER)

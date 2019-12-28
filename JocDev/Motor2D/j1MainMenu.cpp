@@ -7,6 +7,12 @@
 #include "j1Window.h"
 #include "j1Audio.h"
 #include "p2Log.h"
+#include "Button.h"
+#include "Label.h"
+#include "Image.h"
+#include "CheckBox.h"
+#include "Slider.h"
+#include "InputBox.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -105,48 +111,16 @@ void j1MainMenu::CreateMainMenu()
 void j1MainMenu::DestroyMainMenu()
 {
 	panel->to_delete = true;
-	App->gui->DeleteElement(panel);
-	panel = nullptr;
-
 	play_button->to_delete = true;
-	App->gui->DeleteElement(play_button);
-	play_button = nullptr;
-
 	play_label->to_delete = true;
-	App->gui->DeleteElement(play_label);
-	play_label = nullptr;
-
 	continue_button->to_delete = true;
-	App->gui->DeleteElement(continue_button);
-	continue_button = nullptr;
-
 	continue_label->to_delete = true;
-	App->gui->DeleteElement(continue_label);
-	continue_label = nullptr;
-
 	main_settings_button->to_delete = true;
-	App->gui->DeleteElement(main_settings_button);
-	main_settings_button = nullptr;
-
 	main_settings_label->to_delete = true;
-	App->gui->DeleteElement(main_settings_label);
-	main_settings_label = nullptr;
-
 	credits_button->to_delete = true;
-	App->gui->DeleteElement(credits_button);
-	credits_button = nullptr;
-
 	credits_label->to_delete = true;
-	App->gui->DeleteElement(credits_label);
-	credits_label = nullptr;
-
 	exit_button->to_delete = true;
-	App->gui->DeleteElement(exit_button);
-	exit_button = nullptr;
-
 	exit_label->to_delete = true;
-	App->gui->DeleteElement(exit_label);
-	exit_label = nullptr;
 }
 
 void j1MainMenu::CreateSettingsMenu()
@@ -170,36 +144,13 @@ void j1MainMenu::CreateSettingsMenu()
 void j1MainMenu::DestroySettingsMenu()
 {
 	settings_panel->to_delete = true;
-	App->gui->DeleteElement(settings_panel);
-	settings_panel = nullptr;
-
 	volume_level->to_delete = true;
-	App->gui->DeleteElement(volume_level);
-	volume_level = nullptr;
-
 	slider_volume->to_delete = true;
-	App->gui->DeleteElement(slider_volume);
-	slider_volume = nullptr;
-
 	volume_label->to_delete = true;
-	App->gui->DeleteElement(volume_label);
-	volume_label = nullptr;
-
 	fullscreen_checkbox->to_delete = true;
-	App->gui->DeleteElement(fullscreen_checkbox);
-	fullscreen_checkbox = nullptr;
-
 	fullscreen_label->to_delete = true;
-	App->gui->DeleteElement(fullscreen_label);
-	fullscreen_label = nullptr;
-
 	to_main_menu_button->to_delete = true;
-	App->gui->DeleteElement(to_main_menu_button);
-	to_main_menu_button = nullptr;
-
 	to_main_menu_label->to_delete = true;
-	App->gui->DeleteElement(to_main_menu_label);
-	to_main_menu_label = nullptr;
 }
 
 void j1MainMenu::CreateCreditsMenu()
@@ -224,50 +175,15 @@ void j1MainMenu::CreateCreditsMenu()
 void j1MainMenu::DestroyCreditsMenu()
 {
 	credits_panel->to_delete = true;
-	App->gui->DeleteElement(credits_panel);
-	credits_panel = nullptr;
-
 	authors_label->to_delete = true;
-	App->gui->DeleteElement(authors_label);
-	authors_label = nullptr;
-
 	didac_button->to_delete = true;
-	App->gui->DeleteElement(didac_button);
-	didac_button = nullptr;
-
 	didac_label->to_delete = true;
-	App->gui->DeleteElement(didac_label);
-	didac_label = nullptr;
-
 	ivan_button->to_delete = true;
-	App->gui->DeleteElement(ivan_button);
-	ivan_button = nullptr;
-
 	ivan_label->to_delete = true;
-	App->gui->DeleteElement(ivan_label);
-	ivan_label = nullptr;
-
 	license_text_label->to_delete = true;
-	App->gui->DeleteElement(license_text_label);
-	license_text_label = nullptr;
-
 	license_label->to_delete = true;
-	App->gui->DeleteElement(license_label);
-	license_label = nullptr;
-
 	page_button->to_delete = true;
-	App->gui->DeleteElement(page_button);
-	page_button = nullptr;
-
 	page_label->to_delete = true;
-	App->gui->DeleteElement(page_label);
-	page_label = nullptr;
-
 	to_main_menu_button->to_delete = true;
-	App->gui->DeleteElement(to_main_menu_button);
-	to_main_menu_button = nullptr;
-
 	to_main_menu_label->to_delete = true;
-	App->gui->DeleteElement(to_main_menu_label);
-	to_main_menu_label = nullptr;
 }

@@ -11,6 +11,12 @@
 #include "j1Scene.h";
 #include "j1Audio.h"
 #include "j1Gui.h"
+#include "Button.h"
+#include "Label.h"
+#include "Image.h"
+#include "CheckBox.h"
+#include "Slider.h"
+#include "InputBox.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -44,9 +50,12 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate(float dt)
 {
-	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next) {
-			CheckMouse(item->data);
+	for (int i = 0; i < objects.count(); ++i)
+	{
+		if (objects[i] == nullptr)
+			continue;
+
+		CheckMouse(objects[i]);
 	}
 
 	if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_DOWN && selected == nullptr)
@@ -59,14 +68,25 @@ bool j1Gui::PreUpdate(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate(float dt)
 {
-	for (int i = 0; i < objects.count(); ++i) {
+	for (int i = 0; i < objects.count(); ++i) 
+	{
+		if (objects[i] == nullptr)
+			continue;
 		objects[i]->PostUpdate();
 	}
 
-	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next) {
-		if(item->data->drawable)
-			item->data->Draw();
+	for (int i = 0; i < objects.count(); ++i)
+	{
+		if (objects[i] == nullptr)
+			continue;
+		objects[i]->Draw();
+
+		if (objects[i]->to_delete)
+		{
+			objects[i]->CleanUp();
+			delete objects[i];
+			objects[i] = nullptr;
+		}
 	}
 	return true;
 }
@@ -75,10 +95,16 @@ bool j1Gui::PostUpdate(float dt)
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
-	p2List_item<UI*>* item;
-	for (item = objects.start; item; item = item->next) {
-		RELEASE(item->data);
+
+	for (int i = 0; i < objects.count(); ++i)
+	{
+		if (objects[i] == nullptr)
+			continue;
+
+		objects[i]->CleanUp();
 	}
+	objects.clear();
+	App->tex->UnLoad(atlas);
 	return true;
 }
 
@@ -163,17 +189,18 @@ void j1Gui::CheckMouse(UI *b)
 bool j1Gui::Select() const
 {
 	const bool ret = true;
-	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next)
+	for (int i = 0; i < objects.count(); ++i)
 	{
-		if (item->data->m_state == UI::MouseState::PUSH && item->data->ui_type == UI::Type::BUTTON)
+		if (objects[i] == nullptr)
+			continue;
+		if (objects[i]->m_state == UI::MouseState::PUSH && objects[i]->ui_type == UI::Type::BUTTON)
 		{
-			dynamic_cast<Button*>(item->data)->ClickLogic();
+			dynamic_cast<Button*>(objects[i])->ClickLogic();
 			break;
 		}
-		if (item->data->m_state == UI::MouseState::PUSH && item->data->ui_type == UI::Type::CHECK_BOX)
+		if (objects[i]->m_state == UI::MouseState::PUSH && objects[i]->ui_type == UI::Type::CHECK_BOX)
 		{
-			dynamic_cast<CheckBox*>(item->data)->ClickLogic();
+			dynamic_cast<CheckBox*>(objects[i])->ClickLogic();
 			break;
 		}
 	}
@@ -188,7 +215,7 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 void j1Gui::DeleteElement(UI* ui) //TODO: Change this atrocity
 {
-	p2List_item<UI*>* item = objects.start;
+	/*p2List_item<UI*>* item = objects.start;
 	while (item != nullptr)
 	{
 		if (item->data->to_delete == true && item->data != nullptr)
@@ -198,408 +225,11 @@ void j1Gui::DeleteElement(UI* ui) //TODO: Change this atrocity
 		}
 		item = item->next;
 
-	}
+	}*/
 }
 
 void j1Gui::SetPosition(UI*ui, const int& x, const int& y)
 {
 	ui->position.x = x;
 	ui->position.y = y;
-}
-
-iPoint UI::GetGlobalPosition() const
-{
-	return draw_offset;
-}
-
-// class Gui ---------------------------------------------------
-
-bool UI::Draw()
-{
-
-	draw_offset.x = position.x;
-	draw_offset.y = position.y;
-
-	if (parent != nullptr) {
-		for (UI* p = parent; p; p = p->parent) {
-			draw_offset.x += p->position.x;
-			draw_offset.y += p->position.y;
-		}
-	}
-	
-	/*if (App->gui->ui_debug)
-		DebugDraw();*/
-
-	InnerDraw();
-
-	return true;
-}
-void Image::InnerDraw()
-{
-	if (drawable)
-	{
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, true, SDL_FLIP_NONE, 0.0F, 255,
-			true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
-	}
-	
-}
-void Button::InnerDraw()
-{
-	switch (m_state) {
-	case UI::MouseState::ONHOVER:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, true,SDL_FLIP_NONE ,0.0f, 255, true);
-		break;
-	case UI::MouseState::IDLE:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, true,SDL_FLIP_NONE, 0.0f, 255, true);
-		break;
-	case UI::MouseState::PUSH:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true,SDL_FLIP_NONE, 0.0f, 255, true);
-		break;
-	case UI::MouseState::REPEAT:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, true, SDL_FLIP_NONE, 0.0f, 255, true);
-		break;
-	}
-}
-
-void Button::ClickLogic()
-{	
-	switch (type)
-	{
-	case Button_Type::Go_to_Menu:
-		App->scene->DestroyPauseMenu();
-		App->current_level = 0;
-		App->fade->StartfadetoBlack();
-		break;
-	case Button_Type::Settings_Menu:
-		App->scene->DestroyPauseMenu();
-		App->scene->CreateSettingsMenu();
-		break;
-	case Button_Type::Exit:
-		App->exit = true;
-		break;
-	case Button_Type::Credits:
-		App->main_menu->DestroyMainMenu();
-		App->main_menu->CreateCreditsMenu();
-		break;
-	case Button_Type::Play:
-		App->current_level = 1;
-		App->main_menu->DestroyMainMenu();
-		App->fade->StartfadetoBlack();
-
-		break;
-	case Button_Type::Continue:
-		App->main_menu->DestroyMainMenu();
-		App->LoadGame();
-		break;
-	case Button_Type::Resume:
-		(App->Pause()) ? App->scene->CreatePauseMenu() : App->scene->DestroyPauseMenu();
-		break;
-	case Button_Type::Slider:
-		this->position.x = App->input->GetMousePosition().x;
-		/*this->position.y = ;*/
-			//App->audio->SetVolume(dynamic_cast<Slider*>(parent)->GetSliderValue());		
-		break;
-	case Button_Type::Return:
-		if (App->scene->active == true)
-		{
-			App->scene->DestroySettingsMenu();
-			App->scene->CreatePauseMenu();
-		}
-		else if(App->main_menu->active == true)
-		{
-			App->main_menu->DestroySettingsMenu();
-			App->main_menu->CreateMainMenu();
-		}
-		break;
-	case Button_Type::Main_Settings_Menu:
-		App->main_menu->DestroyMainMenu();
-		App->main_menu->CreateSettingsMenu();
-		break;
-	case Button_Type::Return_MainMenu:
-		App->main_menu->DestroyCreditsMenu();
-		App->main_menu->CreateMainMenu();	
-		break;
-	case Button_Type::Profile_Didac:
-		ShellExecuteA(NULL, "open", "https://github.com/didaclis", NULL, NULL, SW_SHOWNORMAL);
-		break;
-	case Button_Type::Profile_Ivan:
-		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan", NULL, NULL, SW_SHOWNORMAL);
-		break;
-	case Button_Type::Webpage:
-		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan/PhotoPlatformer", NULL, NULL, SW_SHOWNORMAL); //TODO: LINK THE REAL WEBPAGE
-		break;
-	case Button_Type::Command:		
-		ConsoleCommand* command;
-		command = App->console->LookForCommand(App->console->console_input->GetText().GetString());
-		
-		if(command)
-			App->console->ExecuteCommand(command);
-		break;
-	case Button_Type::No_button:
-		break;
-	default:
-		break;
-	}
-}
-
-void Label::InnerDraw()
-{
-	if(drawable)
-		App->render->Blit(texture, position.x, position.y, 0, false ,SDL_FLIP_NONE, 0.0f, 255, true);
-
-}
-
-void Label::SetColor(Color c)
-{
-	switch (c) {
-	case RED:
-		color = { 255,0,0,color.a };
-		break;
-	case GREEN:
-		color = { 0,255,0,color.a };
-		break;
-	case BLUE:
-		color = { 0,0,255,color.a };
-		break;
-	case YELLOW:
-		color = { 255,255,0,color.a };
-		break;
-	case GREY:
-		color = { 150,150,150,color.a };
-		break;
-	case BLACK:
-		color = { 0,0,0,color.a };
-		break;
-	case WHITE:
-		color = { 255,255,255,color.a };
-		break;
-	default:
-		color = { 255,255,255,color.a };
-		break;
-	}
-	texture = App->fonts->Print(text.GetString(), color, font);
-}
-
-void Label::SetColor(SDL_Color c)
-{
-	color = c;
-	texture = App->fonts->Print(text.GetString(), color, font);
-}
-
-void Label::SetText(const char * txt)
-{
-	text.create(txt);
-	App->tex->UnLoad(texture);
-	texture = App->fonts->Print(text.GetString(), color, font);
-	App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
-}
-
-void CheckBox::InnerDraw()
-{
-	if (drawable)
-	{
-		if (is_active)
-		{
-			switch (m_state)
-			{
-			case UI::MouseState::ONHOVER:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_hover, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			case UI::MouseState::IDLE:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_idle, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			case UI::MouseState::PUSH:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			case UI::MouseState::REPEAT:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &active_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			}
-		}
-			
-			
-		else
-		{
-			switch (m_state)
-			{
-			case UI::MouseState::ONHOVER:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_hover, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			case UI::MouseState::IDLE:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_idle, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			case UI::MouseState::PUSH:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			case UI::MouseState::REPEAT:
-				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &disactive_push, true, SDL_FLIP_NONE, 0.0f, 255, true);
-				break;
-			}
-		}
-	}
-}
-
-void CheckBox::ClickLogic()
-{
-	switch (type)
-	{
-	case CheckBox_Type::No_checkbox:
-			break;
-	case CheckBox_Type::Fullscreen:
-		App->win->fullscreen = !App->win->fullscreen;
-		if(App->win->fullscreen)
-			SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		else
-			SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_SHOWN);
-		break;
-	}
-	is_active = !is_active;
-}
-
-void Slider::SetSliderValueStart()
-{
-	min_pos = (position.x );
-	max_pos = (position.x + 470);
-	dot.x = min_pos;
-	dot.y = position.y;
-	position.x = dot.x;
-	position.y = dot.y;
-	position.w = image.w;
-	position.h = image.h;
-}
-
-void Slider::InnerDraw()
-{
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &image, false, SDL_FLIP_NONE, 0.0f, 255, true);
-}
-
-void Slider::PostUpdate()
-{
-	if (m_state == MouseState::PUSH)
-	{
-		iPoint m_pos;
-		App->input->GetMousePosition(m_pos.x, m_pos.y);
-		if (m_pos.x >= min_pos && m_pos.x <= max_pos)
-		{
-			position.x = m_pos.x - image.w / 2;
-			dot.x = m_pos.x;
-		}
-	}
-	float total = max_pos - min_pos;
-	float actual = max_pos - dot.x;
-
-	float val = actual / total;
-	
-	slider_value = 1 - val;
-	LOG("val: %f, max: %f, min: %f", val, total, actual);
-}
-
-void InputBox::InnerDraw()
-{
-	if (text.Length() <= MAX_CHARACTERS) {
-		SDL_StartTextInput();
-		if ((char*)App->input->input_text.GetString()[0] != '\0') {
-			p2SString t = App->input->input_text;
-			App->input->input_text.Clear();
-			AddText(t.GetString());
-		}
-	}
-	else
-		App->input->input_text.Clear();
-
-	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN && text.GetCapacity() != 0)
-	{
-		DeleteText();
-	}
-	//Input Box blit
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &box, true, SDL_FLIP_NONE, 0.0F, 255,
-		true, false, { parent->GetGlobalPosition().x, parent->GetGlobalPosition().y, parent->position.w,parent->position.h });
-
-	uint width_ = 0u, height_ = 0u;
-	App->tex->GetSize(texture, width_, height_);
-	//Text blit
-	if (texture != nullptr)
-		App->render->Blit(texture, position.x + 10, position.y, 0, false, SDL_FLIP_NONE, 0.0f, 255, true);
-	//Cursor blit
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x + width_ + 10, position.y + 5, &cursor->GetCurrentFrame(), false, SDL_FLIP_NONE, 0.0F);
-}
-
-void InputBox::SetText(const char* txt)
-{
-	text.create(txt);
-	App->tex->UnLoad(texture);
-	texture = App->fonts->Print(text.GetString(), color, font);
-	App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
-}
-
-void InputBox::SetColor(const Color& c)
-{
-	switch (c) {
-	case RED:
-		color = { 255,0,0,color.a };
-		break;
-	case GREEN:
-		color = { 0,255,0,color.a };
-		break;
-	case BLUE:
-		color = { 0,0,255,color.a };
-		break;
-	case YELLOW:
-		color = { 255,255,0,color.a };
-		break;
-	case GREY:
-		color = { 150,150,150,color.a };
-		break;
-	case BLACK:
-		color = { 0,0,0,color.a };
-		break;
-	case WHITE:
-		color = { 255,255,255,color.a };
-		break;
-	default:
-		color = { 255,255,255,color.a };
-		break;
-	}
-	texture = App->fonts->Print(text.GetString(), color, font);
-}
-
-void InputBox::SetColor(const SDL_Color& c)
-{
-	color = c;
-}
-
-p2SString InputBox::GetText()
-{
-	return text;
-}
-
-void InputBox::ChangeFont(const char* f, const int& size)
-{
-	App->fonts->Load(f, size);
-	texture = App->fonts->Print(text.GetString(), color, font);
-}
-
-void InputBox::AddText(const char* txt)
-{
-	if (text.Length() <= MAX_CHARACTERS) {
-		text += txt;
-		App->tex->UnLoad(texture);
-		texture = App->fonts->Print(text.GetString(), color, font);
-		App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
-	}
-}
-
-void InputBox::DeleteText()
-{
-	if (text.Length() > 0) {
-		int i = 0;
-		while (text.Getchar()[i] != '\0')//Remove last character
-		{
-			i++;
-		}
-		text.Getchar()[i - 1] = '\0';
-		text.Length();
-		App->tex->UnLoad(texture);
-		texture = App->fonts->Print(text.GetString(), color, font);
-	}
 }

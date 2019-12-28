@@ -5,6 +5,12 @@
 #include "j1Collisions.h"
 #include "j1FadetoBlack.h"
 #include "j1Gui.h"
+#include "Button.h"
+#include "Label.h"
+#include "Image.h"
+#include "CheckBox.h"
+#include "Slider.h"
+#include "InputBox.h"
 
 j1Console::j1Console() : j1Module()
 {
@@ -24,7 +30,7 @@ bool j1Console::Start()
 	CreateCommand("quit", CommandType::QUIT);
 	CreateCommand("god", CommandType::GOD_MODE);
 	CreateCommand("list", CommandType::LIST);
-
+	SetLog("hehehehehehe");
 	return ret;
 }
 
@@ -37,8 +43,8 @@ bool j1Console::Update(float dt)
 		has_console = !has_console;
 		(has_console) ? CreateConsole() : DestroyConsole();
 	}
-	if (logs_label)
-		logs_label->text = log_buff;
+	/*if (logs_label)
+		logs_label->text = log_buff;*/
 
 	return ret;
 }
@@ -60,7 +66,13 @@ void j1Console::CreateConsole()
 	App->gui->CreateScreen();
 	console_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, {1212, 1904, 754, 548}, true);
 	console_input = App->gui->CreateInputBox(fPoint(10, console_panel->position.h - 40), "", console_panel, BLACK, "fonts/open_sans/OpenSans-Bold.ttf", { 453, 2409, 717, 24}, true);
-	//logs_label = App->gui->CreateLabel(fPoint(0, 0), console_panel, log_buff.GetString(), BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
+	int separation = 0;
+	for (int i = log_buffers.count() -1; i >= 0; i--)
+	{
+		Label* new_log = App->gui->CreateLabel(fPoint(0, (-15 * separation)), console_panel, log_buffers[i].GetString(), BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
+		logs_labels.add(new_log);
+		separation++;
+	}
 	command_button = App->gui->CreateButton(fPoint(console_panel->position.w - 100, console_panel->position.h - 50), console_panel, {1098, 2357, 72, 39}, { 1006, 2357, 72, 39 }, { 916, 2357, 72, 39 }, UI::Button_Type::Command);
 	command_label = App->gui->CreateLabel(fPoint(console_panel->position.w - 90, console_panel->position.h - 42), command_button, "Search", BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 15);
 }
@@ -71,15 +83,25 @@ void j1Console::DestroyConsole()
 	App->gui->DeleteElement(console_panel);
 	console_panel = nullptr;
 
+	console_input->text.Clear();
+	/*delete console_input->cursor;
+	console_input->cursor = nullptr;*/
 	console_input->to_delete = true;
 	App->gui->DeleteElement(console_input);
 	console_input = nullptr;
 
-	/*logs_label->to_delete = true;
-	App->gui->DeleteElement(logs_label);
-	logs_label = nullptr;
-	log_buff.Clear();*/
-
+	for (int i = 0; i < log_buffers.count(); i++)
+	{
+		logs_labels[i]->to_delete = true;
+		App->gui->DeleteElement(logs_labels[i]);
+		logs_labels[i] = nullptr;
+	}
+	logs_labels.clear();
+	for (int i = 0; i < log_buffers.count(); i++)
+	{
+		log_buffers[i].Clear();
+	}
+	log_buffers.clear();
 	command_button->to_delete = true;
 	App->gui->DeleteElement(command_button);
 	command_button = nullptr;
@@ -90,16 +112,14 @@ void j1Console::DestroyConsole()
 	
 }
 
-void j1Console::HideConsole()
-{
-	console_panel->drawable = !console_panel->drawable;
-	console_input->drawable = !console_input->drawable;
-	logs_label->drawable = !logs_label->drawable;
-}
-
 void j1Console::GetLog(const char* log)
 {
-	log_buff += log;
+	//log_buff += log;
+}
+
+void j1Console::SetLog(p2SString log)
+{
+	log_buffers.add(log);
 }
 
 ConsoleCommand* j1Console::CreateCommand(const char* name, CommandType t, uint argument)
