@@ -20,7 +20,7 @@ This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garc
 
 ### Dídac Llop
 
-<img src="https://github.com/RoperoIvan/PhotoPlatformer/blob/master/docs/WebsiteImages/dudec.png"/>
+<img src="https://github.com/RoperoIvan/PhotoPlatformer/blob/master/docs/WebsiteImages/dudec.png?raw=true"/>
 
 - [Profile](https://github.com/didaclis)
 
