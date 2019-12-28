@@ -72,15 +72,13 @@ void Coin::OnCollision(Collider* col1)
 
 bool Coin::Load(pugi::xml_node& node)
 {
-	pugi::xml_node c_stats = node.child("player_stats");
-	position.x = c_stats.attribute("position_x").as_int();
-	position.y = c_stats.attribute("position_y").as_int();
-	return false;
+	return true;
 }
 bool Coin::Save(pugi::xml_node& node) const
 {
-	pugi::xml_node c_stats = node.append_child("player_stats");
+	pugi::xml_node c_stats = node.append_child("enemy_stats");
 	c_stats.append_attribute("position_x") = (int)position.x;
 	c_stats.append_attribute("position_y") = (int)position.y;
-	return false;
+	c_stats.append_attribute("type") = (int)type;
+	return true;
 }

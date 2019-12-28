@@ -162,6 +162,7 @@ bool j1Scene::Load(pugi::xml_node& node)
 	if (App->current_level != lvl_stats.attribute("level").as_uint())
 		App->current_level = lvl_stats.attribute("level").as_uint();
 	
+	DestroyHUD();
 	App->fade->NewLevel();
 	return ret;
 }

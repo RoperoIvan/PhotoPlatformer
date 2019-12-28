@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="216">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="217">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="60" columns="6">
   <image source="tileset.png" width="96" height="160"/>
  </tileset>
@@ -115672,18 +115672,14 @@
  <objectgroup color="#550000" id="9" name="GroundEnemy">
   <object id="195" x="1151.51" y="1596.97" width="54.5455" height="39.3939"/>
   <object id="201" x="3263.64" y="1092.42" width="54.5455" height="39.3939"/>
-  <object id="202" x="2237.33" y="880.97" width="20.5455" height="14.7272"/>
   <object id="203" x="1271.23" y="606.5" width="54.5455" height="39.3939"/>
-  <object id="204" x="2193.94" y="250" width="54.5455" height="39.3939"/>
-  <object id="208" x="2256.61" y="615.152" width="54.5455" height="39.3939"/>
-  <object id="209" x="1760.61" y="434.849" width="54.5455" height="39.3939"/>
   <object id="210" x="1060.61" y="440.909" width="54.5455" height="39.3939"/>
-  <object id="211" x="783.151" y="875.273" width="23.8788" height="18.7272"/>
   <object id="212" x="1895.88" y="874.364" width="21.2122" height="17.3939"/>
   <object id="214" x="2893.56" y="743.924" width="8.62126" height="12.3939"/>
+  <object id="216" x="2103.03" y="295.455" width="54.5455" height="39.3939"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="6" name="CheckPoint">
-  <object id="28" x="666.425" y="1487.27" width="72.7272" height="54.5454">
+  <object id="28" x="714.91" y="1111.51" width="55.7272" height="43.5454">
    <properties>
     <property name="first" type="bool" value="true"/>
    </properties>
@@ -115724,11 +115720,8 @@
   <object id="198" x="3574.24" y="1500" width="39.3939" height="42.4242"/>
   <object id="199" x="3268.18" y="342.424" width="39.3939" height="42.4242"/>
   <object id="200" x="1313.64" y="206.061" width="39.3939" height="42.4242"/>
-  <object id="205" x="1595.45" y="472.727" width="39.3939" height="42.4242"/>
-  <object id="206" x="2074.24" y="615.152" width="39.3939" height="42.4242"/>
   <object id="207" x="1840.91" y="751.515" width="39.3939" height="42.4242"/>
   <object id="213" x="2790.91" y="592.424" width="54.5455" height="39.3939"/>
-  <object id="215" x="1750" y="266.667" width="39.3939" height="42.4242"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="7" name="MapDamage">
   <object id="34" x="2192" y="1702.25" width="1614.5" height="10.75"/>
