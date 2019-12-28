@@ -73,7 +73,7 @@ public:
 	};
 
 	bool Draw();
-
+	void DebugDraw();
 	iPoint GetGlobalPosition() const;
 	virtual void InnerDraw() {}
 	virtual void PostUpdate() {}

@@ -68,6 +68,7 @@ private:
 
 public:
 	UI * screen = nullptr;
+	bool debug_ui = false;
 };
 
 #endif // __j1GUI_H__

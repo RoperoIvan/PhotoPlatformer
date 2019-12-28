@@ -61,6 +61,8 @@ bool j1Gui::PreUpdate(float dt)
 	if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_DOWN && selected == nullptr)
 		Select();
 
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		debug_ui = !debug_ui;
 
 	return true;
 }
