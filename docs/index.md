@@ -1,10 +1,69 @@
 # PhotoPlatformer
 
-PhotoPlatformer is a 2D sidescrolling platformer where you are a mermelade toast that can make copies of itself to reach to inaccesible places.
+PhotoPlatformer is a 2D sidescrolling platformer where you are a marmalade toast that can make copies of itself to reach to inaccesible places.
+
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Watch the game trailer]()
+
+[Download the game](https://github.com/RoperoIvan/PhotoPlatformer/releases)
+
+[See the repository code](https://github.com/RoperoIvan/PhotoPlatformer)
 
 ## Getting started
 
 This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garcia, of the CITM UPC center for the development assignment. 
+
+## Members
+
+<img src="https://github.com/RoperoIvan/PhotoPlatformer/blob/master/docs/WebsiteImages/group_photo.png?raw=true"/>
+
+### Dídac Llop
+
+<img src="https://github.com/RoperoIvan/PhotoPlatformer/blob/master/docs/WebsiteImages/dudec.png"/>
+
+- [Profile](https://github.com/didaclis)
+
+#### Work done
+
+- Info in XML
+- Copies of the player feature
+- Entities handling
+- Entity class base
+- Collisions
+- Movement
+- Camera Culling
+- Camera
+- Death
+- CheckPoints
+- Level making
+- Pathfinding module
+- Movement walking and flying enemy
+
+### Ivan Ropero
+
+<img src="https://github.com/RoperoIvan/PhotoPlatformer/blob/master/docs/WebsiteImages/ebon.png?raw=true"/>
+
+- [Profile](https://github.com/RoperoIvan)
+
+#### Work done
+
+- Sounds and music
+- Parallax
+- Save and Load
+- Debug keys
+- Art
+- Changing levels
+- Sprites and animations from Tiled
+- Level making
+- DT implementation
+- Enemy class
+- Brofiler
+- UML
+- All gui
+- Coins
+- HUD
+
 
 ### Installation
 
@@ -27,17 +86,12 @@ This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garc
 - F3 start from the beginning of the current level
 - F5 save the current state of the game
 - F6 load the latest saved game
+- F8 view debug UI
 - F9 view the colliders of the game
 - F10 activate god mode( when you do it the player begins to fall, just jump and you will begin to fly without falling again when you are standing still)
+- F11 Enable/Disable FPS cap to 30
 
-## Tools used
-
-- Visual Studio 2017/19
-- Tiled
-- SDL
-- Pugi
-
-## Art, sounds and music
+## Art, sounds, music and fonts credits
 
 [Main theme](https://opengameart.org/content/menu-music)
 
@@ -47,52 +101,9 @@ This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garc
 
 [Level 2](https://beyonderboy.itch.io/simple-platform-tileset-16x16)
 
-## Authors
+[GUI Font](https://www.dafont.com/wolfs-bane.font)
 
-[Dídac Llop Serna](https://github.com/didaclis)
-
-[Ivan Ropero Garcia](https://github.com/RoperoIvan)
-
-[Repository](https://github.com/RoperoIvan/PhotoPlatformer)
-
-## Innovations
-
-### First assignment
-
-- Animations loaded from Tiled, from a tsx
-- Player copies handling feature
-- Camera culling with the function IsOnCamera
-- Colliders loaded and defined from Tiled
-- Checkpoints also loaded and defined from Tiled
-
-## Who made what
-
-This is the trello of the team [link](https://trello.com/b/x8vXZMoM/photoplatformer)
-
-### Dídac Llop Serna
-
-- Info in XML
-- Copies of the player feature
-- Entities handling
-- Entity class base
-- Collisions
-- Movement
-- Camera Culling
-- Camera
-- Death
-- CheckPoints
-- Level making
-
-### Ivan Ropero Garcia
-
-- Sounds and music
-- Parallax
-- Save and Load
-- Debug keys
-- Art
-- Changing levels
-- Sprites and animations from Tiled
-- Level making
+[GUI atlas](https://www.gameart2d.com/free-fantasy-game-gui.html)
 
 ## License
 
