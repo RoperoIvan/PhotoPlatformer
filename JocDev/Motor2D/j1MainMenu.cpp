@@ -33,7 +33,7 @@ bool j1MainMenu::Start()
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
-	
+	App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
 	CreateMainMenu();
 
 	return ret;
@@ -59,7 +59,7 @@ bool j1MainMenu::PostUpdate(float dt)
 	if (slider_volume)
 	{
 		float vol = slider_volume->slider_value;
-		int final_vol = (int)(vol * 180);
+		int final_vol = (int)(vol* 180);
 		App->audio->SetVolume(final_vol);
 	}
 	return ret;
@@ -171,6 +171,10 @@ void j1MainMenu::DestroySettingsMenu()
 	settings_panel->to_delete = true;
 	App->gui->DeleteElement(settings_panel);
 	settings_panel = nullptr;
+
+	volume_level->to_delete = true;
+	App->gui->DeleteElement(volume_level);
+	volume_level = nullptr;
 
 	slider_volume->to_delete = true;
 	App->gui->DeleteElement(slider_volume);

@@ -184,7 +184,7 @@ void j1Audio::UnLoadFx()
 
 int j1Audio::SetVolume(float vol)
 {
-	return Mix_VolumeMusic(MIX_MAX_VOLUME*vol);
+	return Mix_VolumeMusic(vol);
 }
 
 int j1Audio::RaiseVolume()

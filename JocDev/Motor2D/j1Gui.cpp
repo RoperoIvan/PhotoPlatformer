@@ -470,7 +470,6 @@ void Slider::SetSliderValueStart()
 
 void Slider::InnerDraw()
 {
-	//App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &thumb, false, SDL_FLIP_NONE, 0.0f, 255, true);
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &image, false, SDL_FLIP_NONE, 0.0f, 255, true);
 }
 
