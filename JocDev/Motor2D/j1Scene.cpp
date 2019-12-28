@@ -47,6 +47,10 @@ bool j1Scene::Start()
 	App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
 	start_time = SDL_GetTicks();
 	str_time.create("00:00");
+	start_time = 0;
+	score = 100;
+	minus_time = 10;
+	timer = 0;
 
 	return true;
 }
@@ -161,8 +165,9 @@ bool j1Scene::Load(pugi::xml_node& node)
 	pugi::xml_node lvl_stats = node.child("lvl_stats");
 	if (App->current_level != lvl_stats.attribute("level").as_uint())
 		App->current_level = lvl_stats.attribute("level").as_uint();
-	
-	DestroyHUD();
+	score = lvl_stats.attribute("score").as_uint();
+	timer = lvl_stats.attribute("timer").as_uint();
+	//DestroyHUD();
 	App->fade->NewLevel();
 	return ret;
 }
@@ -173,6 +178,8 @@ bool j1Scene::Save(pugi::xml_node& node) const
 	bool ret = true;
 	pugi::xml_node lvl_stats = node.append_child("lvl_stats");
 	lvl_stats.append_attribute("level") = App->current_level;
+	lvl_stats.append_attribute("score") = (int)score;
+	lvl_stats.append_attribute("timer") = (int)timer;
 	return ret;
 }
 
@@ -268,7 +275,8 @@ void j1Scene::TimerManage()
 {
 	if (timer_label && !App->pause_game)
 	{
-		str_time.create("%.2i:%.2i", (SDL_GetTicks() - start_time) / 60000, (SDL_GetTicks() - start_time) / 1000 % 60);
+		timer = SDL_GetTicks() - start_time;
+		str_time.create("%.2i:%.2i", (timer) / 60000, (timer) / 1000 % 60);
 		timer_label->SetText(str_time.GetString());
 	}
 
@@ -277,7 +285,7 @@ void j1Scene::TimerManage()
 
 void j1Scene::ScoreManage()
 {
-	int time = (SDL_GetTicks() - start_time) / 1000 % 60;
+	int time = (timer) / 1000 % 60;
 	if ( time - minus_time >= 0)
 	{
 		minus_time += 10;

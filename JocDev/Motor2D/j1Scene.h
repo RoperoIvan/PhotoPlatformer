@@ -104,6 +104,7 @@ public:
 	int start_time = 0;
 	int score = 100;
 	int minus_time = 10;
+	int timer = 0;
 };
 
 #endif // __j1SCENE_H__

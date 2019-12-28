@@ -76,11 +76,11 @@ void j1FadetoBlack::NewLevel()
 	App->entityManager->CleanUp();
 	App->map->CleanUp();
 	App->audio->UnLoadFx();
+	if (App->scene->coins_label)
+		App->scene->DestroyHUD();
 	switch (App->current_level)
 	{
 	case 0:
-		if(App->scene->coins_label)
-			App->scene->DestroyHUD();
 		App->scene->active = false;
 		App->main_menu->active = true;
 		App->main_menu->Start();
