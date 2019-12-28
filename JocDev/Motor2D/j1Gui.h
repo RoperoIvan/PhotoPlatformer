@@ -186,25 +186,24 @@ public:
 		type = slider_type;
 		ui_type = UI::Type::SLIDER;
 		value = 0.0F;
+		SetSliderValueStart();
 	}
-
-	void AddTargets(UI*);
-	void AddThumb(Button*);
-	void SetSliderValueStart(float slider_value);
+	void SetSliderValueStart();
 
 	void InnerDraw();
 	void PostUpdate();
 
-	float GetSliderValue() const;
-	Button* GetSliderButton() const;
-
+public:
+	float slider_value;
 private:
 
 	float value = 0.0F;
 	Slider_TYPE type = Slider_TYPE::Y;
-	Button* thumb = nullptr;
 	SDL_Rect image = { 0,0,0,0 };
-	p2List<UI*> control;
+	int size_of_limits = 0;
+	int min_pos;
+	int max_pos;
+	iPoint dot;
 };
 
 class InputBox : public UI

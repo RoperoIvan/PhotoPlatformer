@@ -78,7 +78,6 @@ public:
 	Slider* slider_volume = nullptr;
 	Button* to_main_menu_button = nullptr;
 	Label* to_main_menu_label = nullptr;
-	Button* thumb_button = nullptr;
 	CheckBox* fullscreen_checkbox = nullptr;
 	Label* fullscreen_label = nullptr;
 

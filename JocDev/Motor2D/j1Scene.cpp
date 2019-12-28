@@ -222,9 +222,9 @@ void j1Scene::CreateSettingsMenu()
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
 	/*volume_level = App->gui->CreateImage(fPoint(0, 0), settings_panel, {}, true);*/
-	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), {193, 423, 469, 10}, Slider_TYPE::X, settings_panel);
+	/*slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), {193, 423, 469, 10}, Slider_TYPE::X, settings_panel);
 	thumb_button = App->gui->CreateButton(fPoint(500, 200), slider_volume, { 77, 400, 30, 45 }, { 77, 400, 30, 45 }, { 77, 456, 30, 45 }, UI::Button_Type::Slider);
-	slider_volume->AddThumb(thumb_button);
+	slider_volume->AddThumb(thumb_button);*/
 	
 	//CheckBox
 	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 280, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });

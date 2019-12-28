@@ -115,7 +115,7 @@ Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const
 Slider * j1Gui::CreateSlider(const fPoint & pos, const SDL_Rect & slider_rect, Slider_TYPE type, UI * parent)
 {
 	Slider* ret = nullptr;
-	ret = new Slider(pos.x, pos.y, slider_rect, parent, type);
+	ret = new Slider(pos.x, pos.y, slider_rect,parent, type);
 	objects.add(ret);
 	return ret;
 }
@@ -297,7 +297,7 @@ void Button::ClickLogic()
 	case Button_Type::Slider:
 		this->position.x = App->input->GetMousePosition().x;
 		/*this->position.y = ;*/
-			App->audio->SetVolume(dynamic_cast<Slider*>(parent)->GetSliderValue());		
+			//App->audio->SetVolume(dynamic_cast<Slider*>(parent)->GetSliderValue());		
 		break;
 	case Button_Type::Return:
 		if (App->scene->active == true)
@@ -456,66 +456,43 @@ void CheckBox::ClickLogic()
 	is_active = !is_active;
 }
 
-void Slider::AddTargets(UI * target)
+void Slider::SetSliderValueStart()
 {
-	control.add(target);
-}
-
-void Slider::AddThumb(Button * thumb_b)
-{
-	if (thumb == nullptr) {
-		thumb = thumb_b;
-	}
-	else {
-		thumb->to_delete = true;
-	}
-}
-
-void Slider::SetSliderValueStart(float slider_value)
-{
-	if (slider_value >= 0.0f && slider_value <= 1.0f) {
-		value = slider_value;
-	}
-	else {
-		value = 0;
-	}
-
-	//App->gui->SetPosition(thumb, position.x * value, position.y * value);
+	min_pos = (position.x );
+	max_pos = (position.x + 470);
+	dot.x = min_pos;
+	dot.y = position.y;
+	position.x = dot.x;
+	position.y = dot.y;
+	position.w = image.w;
+	position.h = image.h;
 }
 
 void Slider::InnerDraw()
 {
+	//App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &thumb, false, SDL_FLIP_NONE, 0.0f, 255, true);
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &image, false, SDL_FLIP_NONE, 0.0f, 255, true);
 }
 
 void Slider::PostUpdate()
 {
-	//if (thumb->position.x < 0)
-	//	thumb->position.x = 0;
+	if (m_state == MouseState::PUSH)
+	{
+		iPoint m_pos;
+		App->input->GetMousePosition(m_pos.x, m_pos.y);
+		if (m_pos.x >= min_pos && m_pos.x <= max_pos)
+		{
+			position.x = m_pos.x - image.w / 2;
+			dot.x = m_pos.x;
+		}
+	}
+	float total = max_pos - min_pos;
+	float actual = max_pos - dot.x;
 
-	///*if (thumb->position.y < 0)
-	//	thumb->position.y = 0;*/
-
-	//if (thumb->position.x > position.w - thumb->position.w)
-	//	thumb->position.x = position.w - thumb->position.w;
-
-	//if (thumb->position.y > position.h - thumb->position.h)
-	//	thumb->position.y = position.h - thumb->position.h;
-
-	if (type == Slider_TYPE::X)
-		value = (float)(thumb->position.x + thumb->position.w / 2) / (float)position.w;
-	else
-		value = (float)(thumb->position.y + thumb->position.h / 2) / (float)position.h;
-}
-
-float Slider::GetSliderValue() const
-{
-	return value;
-}
-
-Button * Slider::GetSliderButton() const
-{
-	return thumb;
+	float val = actual / total;
+	
+	slider_value = 1 - val;
+	LOG("val: %f, max: %f, min: %f", val, total, actual);
 }
 
 void InputBox::InnerDraw()

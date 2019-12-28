@@ -5,6 +5,7 @@
 #include "j1FadetoBlack.h"
 #include "j1Gui.h"
 #include "j1Window.h"
+#include "j1Audio.h"
 #include "p2Log.h"
 
 j1MainMenu::j1MainMenu()
@@ -55,7 +56,12 @@ bool j1MainMenu::Update(float dt)
 bool j1MainMenu::PostUpdate(float dt)
 {
 	bool ret = true;
-
+	if (slider_volume)
+	{
+		float vol = slider_volume->slider_value;
+		int final_vol = (int)(vol * 180);
+		App->audio->SetVolume(final_vol);
+	}
 	return ret;
 }
 
@@ -149,10 +155,8 @@ void j1MainMenu::CreateSettingsMenu()
 	settings_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1704, 57, 1024, 768 }, true);
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
-	/*volume_level = App->gui->CreateImage(fPoint(0, 0), settings_panel, {}, true);*/
-	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), { 193, 423, 469, 10 }, Slider_TYPE::X, settings_panel);
-	thumb_button = App->gui->CreateButton(fPoint(500, 200), slider_volume, { 77, 400, 30, 45 }, { 77, 400, 30, 45 }, { 77, 456, 30, 45 }, UI::Button_Type::Slider);
-	slider_volume->AddThumb(thumb_button);
+	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2), (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2), (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
 
 	//CheckBox
 	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 120, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
@@ -171,10 +175,6 @@ void j1MainMenu::DestroySettingsMenu()
 	slider_volume->to_delete = true;
 	App->gui->DeleteElement(slider_volume);
 	slider_volume = nullptr;
-
-	thumb_button->to_delete = true;
-	App->gui->DeleteElement(thumb_button);
-	thumb_button = nullptr;
 
 	fullscreen_checkbox->to_delete = true;
 	App->gui->DeleteElement(fullscreen_checkbox);
