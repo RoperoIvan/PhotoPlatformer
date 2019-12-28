@@ -86,6 +86,13 @@ bool j1Scene::PostUpdate(float dt)
 	TimerManage();
 	ScoreManage();
 
+	if (slider_volume)
+	{
+		float vol = slider_volume->slider_value;
+		int final_vol = (int)(vol * 180);
+		App->audio->SetVolume(final_vol);
+	}
+
 	return ret;
 }
 
@@ -221,11 +228,9 @@ void j1Scene::CreateSettingsMenu()
 	settings_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1504,960,503,717 }, true);
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
-	/*volume_level = App->gui->CreateImage(fPoint(0, 0), settings_panel, {}, true);*/
-	/*slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), {193, 423, 469, 10}, Slider_TYPE::X, settings_panel);
-	thumb_button = App->gui->CreateButton(fPoint(500, 200), slider_volume, { 77, 400, 30, 45 }, { 77, 400, 30, 45 }, { 77, 456, 30, 45 }, UI::Button_Type::Slider);
-	slider_volume->AddThumb(thumb_button);*/
-	
+	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) + 80, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
+	slider_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 40), (settings_panel->position.h / 2) - 270), settings_panel, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 	//CheckBox
 	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 280, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
 	fullscreen_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) + 60, (settings_panel->position.h / 2) - 10), to_pause_menu_button, "Fullscreen", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
@@ -243,10 +248,6 @@ void j1Scene::DestroySettingsMenu()
 	slider_volume->to_delete = true;
 	App->gui->DeleteElement(slider_volume);
 	slider_volume = nullptr;
-
-	thumb_button->to_delete = true;
-	App->gui->DeleteElement(thumb_button);
-	thumb_button = nullptr;
 
 	fullscreen_checkbox->to_delete = true;
 	App->gui->DeleteElement(fullscreen_checkbox);

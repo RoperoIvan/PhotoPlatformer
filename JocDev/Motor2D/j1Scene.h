@@ -83,9 +83,9 @@ public:
 	Image* settings_panel = nullptr;
 	Image* volume_level = nullptr;
 	Slider* slider_volume = nullptr;
+	Label* slider_label = nullptr;
 	Button* to_pause_menu_button = nullptr;
 	Label* to_pause_menu_label = nullptr;
-	Button* thumb_button = nullptr;
 	CheckBox* fullscreen_checkbox = nullptr;
 	Label* fullscreen_label = nullptr;
 
