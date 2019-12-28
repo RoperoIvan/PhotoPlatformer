@@ -155,8 +155,9 @@ void j1MainMenu::CreateSettingsMenu()
 	settings_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, { 1704, 57, 1024, 768 }, true);
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
-	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2), (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
-	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2), (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
+	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) -40, (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
+	volume_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 260), (settings_panel->position.h / 2) - 270), fullscreen_checkbox, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 
 	//CheckBox
 	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 120, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
@@ -179,6 +180,10 @@ void j1MainMenu::DestroySettingsMenu()
 	slider_volume->to_delete = true;
 	App->gui->DeleteElement(slider_volume);
 	slider_volume = nullptr;
+
+	volume_label->to_delete = true;
+	App->gui->DeleteElement(volume_label);
+	volume_label = nullptr;
 
 	fullscreen_checkbox->to_delete = true;
 	App->gui->DeleteElement(fullscreen_checkbox);

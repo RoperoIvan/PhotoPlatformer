@@ -75,6 +75,7 @@ public:
 	//Settings Menu
 	Image* settings_panel = nullptr;
 	Image* volume_level = nullptr;
+	Label* volume_label = nullptr;
 	Slider* slider_volume = nullptr;
 	Button* to_main_menu_button = nullptr;
 	Label* to_main_menu_label = nullptr;
