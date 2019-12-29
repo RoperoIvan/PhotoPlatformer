@@ -134,7 +134,8 @@ void j1Fonts::DeleteFonts(_TTF_Font* font)
 		if (item->data == nullptr)
 			continue;
 		if (item->data == font)
-		{			
+		{
+			TTF_CloseFont(item->data);
 			fonts.del(item);
 			item->data = nullptr;
 			/*break;*/

@@ -67,6 +67,7 @@ public:
 	p2List<p2SString> log_buffers;
 	p2List<Label*> logs_labels;
 	p2List<ConsoleCommand*> commands;
+	int separation;
 };
 
 

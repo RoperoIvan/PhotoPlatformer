@@ -30,6 +30,7 @@ bool j1Console::Start()
 	CreateCommand("quit", CommandType::QUIT);
 	CreateCommand("god", CommandType::GOD_MODE);
 	CreateCommand("list", CommandType::LIST);
+	separation = 0;
 	return ret;
 }
 
@@ -79,10 +80,10 @@ void j1Console::CreateConsole()
 	console_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, {1212, 1904, 754, 548}, true);
 	console_input = App->gui->CreateInputBox(fPoint(10, console_panel->position.h - 40), "", console_panel, BLACK, "fonts/open_sans/OpenSans-Bold.ttf", { 453, 2409, 717, 24}, true);
 	App->input->input_text.Clear();
-	int separation = 0;
+
 	for (int i = log_buffers.count() -1; i >= 0; i--)
 	{
-		Label* new_log = App->gui->CreateLabel(fPoint(0, (15 * separation)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U, false);
+		Label* new_log = App->gui->CreateLabel(fPoint(0, (30 * i)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U, false);
 		logs_labels.add(new_log);
 		separation++;
 	}
@@ -103,7 +104,7 @@ void j1Console::DestroyConsole()
 			logs_labels[i]->CleanUp();
 			delete logs_labels[i];
 			logs_labels[i] = nullptr;
-		}		
+		}
 	}
 	logs_labels.clear();
 	/*for (int i = 0; i < log_buffers.count(); i++)
@@ -113,11 +114,18 @@ void j1Console::DestroyConsole()
 	log_buffers.clear();*/
 	command_button->to_delete = true;
 	command_label->to_delete = true;
+	separation = 0;
 }
 
 void j1Console::SetLog(p2SString log)
 {
 	log_buffers.add(log);
+	if (logs_labels.count() > 0)
+	{
+		Label* new_log = App->gui->CreateLabel(fPoint(0, (30 * logs_labels.count())), console_panel, log.GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U, false);
+		logs_labels.add(new_log);
+		separation++;
+	}
 }
 
 ConsoleCommand* j1Console::CreateCommand(const char* name, CommandType t, uint argument)
