@@ -17,6 +17,7 @@
 #include "CheckBox.h"
 #include "Slider.h"
 #include "InputBox.h"
+#include "Brofiler/Brofiler.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -50,6 +51,8 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate(float dt)
 {
+	BROFILER_CATEGORY("GUI PreUpdate", Profiler::Color::Gray);
+
 	for (int i = 0; i < objects.count(); ++i)
 	{
 		if (objects[i] == nullptr)
@@ -70,6 +73,8 @@ bool j1Gui::PreUpdate(float dt)
 // Called after all Updates
 bool j1Gui::PostUpdate(float dt)
 {
+	BROFILER_CATEGORY("GUI PostUpdate", Profiler::Color::BlanchedAlmond);
+
 	for (int i = 0; i < objects.count(); ++i) 
 	{
 		if (objects[i] == nullptr)
