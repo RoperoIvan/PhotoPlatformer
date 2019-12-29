@@ -83,10 +83,10 @@ void Button::ClickLogic()
 		(App->Pause()) ? App->scene->CreatePauseMenu() : App->scene->DestroyPauseMenu();
 		break;
 	case Button_Type::Slider_Up:
-			
+		App->console->GoUp();
 		break;
 	case Button_Type::Slider_Down:
-		
+		App->console->GoDown();
 		break;
 	case Button_Type::Return:
 		if (!App->console->has_console)

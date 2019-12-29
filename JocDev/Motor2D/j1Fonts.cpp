@@ -138,7 +138,7 @@ void j1Fonts::DeleteFonts(_TTF_Font* font)
 			TTF_CloseFont(item->data);
 			fonts.del(item);
 			item->data = nullptr;
-			/*break;*/
+			break;
 		}
 	}
 }

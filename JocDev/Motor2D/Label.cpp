@@ -22,6 +22,7 @@ void Label::CleanUp()
 {
 	App->tex->UnLoad(texture);
 	App->fonts->DeleteFonts(font);
+	font = nullptr;
 	text.Clear();
 }
 

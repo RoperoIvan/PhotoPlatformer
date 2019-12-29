@@ -393,14 +393,14 @@ void Player::OnCollision(Collider *col1)
 			num_lvl++;
 
 			col1->to_delete = true;
-		if (App->current_level == 1 && num_lvl == 1)
+		if (App->current_level == 1)
 		{
 			
 			App->current_level = 2;
 			App->scene->DestroyHUD();
 			App->fade->StartfadetoBlack();
 		}
-		else if(App->current_level == 2 && num_lvl == 2)
+		else if(App->current_level == 2)
 		{
 			App->current_level = 1;
 			App->scene->DestroyHUD();

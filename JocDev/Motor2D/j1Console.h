@@ -49,9 +49,14 @@ public:
 	bool CleanUp();
 
 	void CreateConsole();
+	void CreateLabels();
 	void DestroyConsole();
 
+	void DeleteLabels();
+
 	void SetLog(p2SString log);
+	void GoUp();
+	void GoDown();
 	ConsoleCommand* CreateCommand(const char* name, CommandType t, uint argument = 0);
 	ConsoleCommand* LookForCommand(const char*);
 	void ExecuteCommand(ConsoleCommand* com);
@@ -69,9 +74,11 @@ public:
 	Label* down_pos_label = nullptr;
 	bool has_console = false;
 	p2List<p2SString> log_buffers;
+	p2List<p2SString> show_logs;
 	p2List<Label*> logs_labels;
 	p2List<ConsoleCommand*> commands;
-	int separation;
+	int min_log_show = 1;
+	int max_log_show = 1;
 };
 
 
