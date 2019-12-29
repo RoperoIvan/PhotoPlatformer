@@ -349,7 +349,7 @@ void Player::OnCollision(Collider *col1)
 			else if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 			{
 				state = Player_States::fall_State;
-				speed.y = 0;
+				speed.y = -initialJumpSpeed/2;
 			}
 		}
 		

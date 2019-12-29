@@ -34,7 +34,7 @@
       <respawn_fx path = "audio/fx/respawn_fx.wav"/>
     </player>
     <platform>
-      <size x ="34" y ="4"/> 
+      <size x ="34" y ="7"/> 
       <offset x ="0" y ="56"/>
     </platform>
     <GroundEnemy>
