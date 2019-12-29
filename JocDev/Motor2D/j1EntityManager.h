@@ -45,6 +45,7 @@ public:
 	Entity* player = nullptr;
 	int coin_sfx;
 	int win_life_sfx;
+	int player_damage_sfx;
 };
 
 

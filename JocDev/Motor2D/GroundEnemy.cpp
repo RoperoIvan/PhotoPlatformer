@@ -66,6 +66,7 @@ void GroundEnemy::Move(float dt)
 					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
+					position.x += direction.x * speed.x * dt;
 				}
 			}
 		}

@@ -380,7 +380,8 @@ void Player::OnCollision(Collider *col1)
 		{
 			lifes--;
 			hit_time = true;
-			time_to_hit.Start();			
+			time_to_hit.Start();	
+			App->audio->PlayFx(App->entityManager->player_damage_sfx);
 		}
 		
 	}
