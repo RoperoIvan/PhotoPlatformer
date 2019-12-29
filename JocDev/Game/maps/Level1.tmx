@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="217">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-up" width="247" height="117" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="226">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="60" columns="6">
   <image source="tileset.png" width="96" height="160"/>
  </tileset>
@@ -115670,13 +115670,24 @@
   <object id="186" x="800" y="401.333" width="1748" height="13.3333"/>
  </objectgroup>
  <objectgroup color="#550000" id="9" name="GroundEnemy">
-  <object id="195" x="1151.51" y="1596.97" width="54.5455" height="39.3939"/>
-  <object id="201" x="3263.64" y="1092.42" width="54.5455" height="39.3939"/>
-  <object id="203" x="1271.23" y="606.5" width="54.5455" height="39.3939"/>
-  <object id="210" x="1060.61" y="440.909" width="54.5455" height="39.3939"/>
-  <object id="212" x="1895.88" y="874.364" width="21.2122" height="17.3939"/>
-  <object id="214" x="2893.56" y="743.924" width="8.62126" height="12.3939"/>
-  <object id="216" x="2103.03" y="295.455" width="54.5455" height="39.3939"/>
+  <object id="195" x="1239.51" y="1448.97" width="54.5455" height="39.3939"/>
+  <object id="201" x="3433.64" y="1144.42" width="54.5455" height="39.3939"/>
+  <object id="203" x="1935.23" y="634.5" width="54.5455" height="39.3939"/>
+  <object id="210" x="1344.61" y="508.909" width="54.5455" height="39.3939"/>
+  <object id="212" x="2299.88" y="920.364" width="21.2122" height="17.3939"/>
+  <object id="214" x="2903.56" y="727.924" width="24.6213" height="22.3939"/>
+  <object id="216" x="2135.03" y="345.455" width="50.5455" height="39.3939"/>
+ </objectgroup>
+ <objectgroup color="#ffffff" id="12" name="Coins">
+  <object id="217" x="926" y="1500" width="36" height="32"/>
+  <object id="218" x="2222" y="766" width="30" height="34"/>
+  <object id="219" x="1024" y="630" width="44" height="34"/>
+  <object id="220" x="670" y="246" width="28" height="36"/>
+  <object id="221" x="3112" y="220" width="28" height="28"/>
+  <object id="222" x="2650" y="1150" width="22" height="24"/>
+  <object id="223" x="3474" y="1508" width="34" height="26"/>
+  <object id="224" x="2494" y="1402" width="28" height="34"/>
+  <object id="225" x="2462" y="1018" width="30" height="34"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="6" name="CheckPoint">
   <object id="28" x="678.546" y="1578.18" width="55.7272" height="43.5454">

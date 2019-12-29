@@ -10,6 +10,8 @@
 #include "p2Log.h"
 #include"j1Audio.h"
 
+#define CAMERA_OFFSET 20
+
 j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.create("entities");
@@ -59,7 +61,7 @@ bool j1EntityManager::PreUpdate(float dt)
 			entityItem->data->CleanUp();
 			entities.del(entityItem);
 		}
-		else
+		else if (App->render->IsOnCamera(entityItem->data->position.x - CAMERA_OFFSET, entityItem->data->position.y - CAMERA_OFFSET, entityItem->data->size.x + CAMERA_OFFSET, entityItem->data->size.y + CAMERA_OFFSET))
 			entityItem->data->PreUpdate(dt);
 		
 		entityItem = entityItem->next;
@@ -75,7 +77,8 @@ bool j1EntityManager::Update(float dt)
 	App->entityManager->player;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		entityItem->data->Move(dt);		
+		if(App->render->IsOnCamera(entityItem->data->position.x - CAMERA_OFFSET, entityItem->data->position.y - CAMERA_OFFSET, entityItem->data->size.x + CAMERA_OFFSET, entityItem->data->size.y + CAMERA_OFFSET))
+			entityItem->data->Move(dt);		
 	}
 	return ret;
 }
@@ -85,6 +88,7 @@ bool j1EntityManager::PostUpdate(float dt)
 	bool ret = true;
 	for (p2List_item<Entity*> *entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next) {
 		if (entityItem != nullptr) {
+			if (App->render->IsOnCamera(entityItem->data->position.x - CAMERA_OFFSET, entityItem->data->position.y - CAMERA_OFFSET, entityItem->data->size.x + CAMERA_OFFSET, entityItem->data->size.y + CAMERA_OFFSET))
 			entityItem->data->Draw();
 		}
 	}
@@ -147,17 +151,20 @@ void j1EntityManager::OnCollision(Collider *col1, Collider *col2)
 	{
 		if (entityItem != nullptr && entityItem->data->collider == col1)
 		{
-			if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER && entityItem->data->type == ENTITY_TYPE::PLAYER)
+			if (App->render->IsOnCamera(entityItem->data->position.x - CAMERA_OFFSET, entityItem->data->position.y - CAMERA_OFFSET, entityItem->data->size.x + CAMERA_OFFSET, entityItem->data->size.y + CAMERA_OFFSET))
 			{
-				entityItem->data->OnCollision(col2);
-			}
-			if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY && (entityItem->data->type == ENTITY_TYPE::FLYING_ENEMY || entityItem->data->type == ENTITY_TYPE::GROUND_ENEMY))
-			{
-				entityItem->data->OnCollision(col2);
-			}
-			if (col1->type == COLLIDER_TYPE::COLLIDER_COIN && entityItem->data->type == ENTITY_TYPE::COIN )
-			{
-				entityItem->data->OnCollision(col2);
+				if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER && entityItem->data->type == ENTITY_TYPE::PLAYER)
+				{
+					entityItem->data->OnCollision(col2);
+				}
+				if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY && (entityItem->data->type == ENTITY_TYPE::FLYING_ENEMY || entityItem->data->type == ENTITY_TYPE::GROUND_ENEMY))
+				{
+					entityItem->data->OnCollision(col2);
+				}
+				if (col1->type == COLLIDER_TYPE::COLLIDER_COIN && entityItem->data->type == ENTITY_TYPE::COIN)
+				{
+					entityItem->data->OnCollision(col2);
+				}
 			}
 		}
 	}

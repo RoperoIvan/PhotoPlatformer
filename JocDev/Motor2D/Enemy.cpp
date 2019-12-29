@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "j1Collisions.h"
 #include "j1Map.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 
 Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity(position, name,type)
 {
@@ -23,6 +25,7 @@ Enemy::~Enemy()
 
 bool Enemy::Update(float dt)
 {
+
 	return true;
 }
 
@@ -83,7 +86,7 @@ void Enemy::OnCollision(Collider* col1)
 		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
 		{
 			position.y -= gravity * App->GetDT();
-			
+	
 		}
 
 		//horitzontal collisions

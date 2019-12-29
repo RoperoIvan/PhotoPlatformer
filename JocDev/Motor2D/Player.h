@@ -59,7 +59,6 @@ private:
 	Player_States check_state;
 	j1Timer jumpTime;
 	float initialJumpSpeed;
-	fPoint respawn;
 	float grav;
 	p2List<Entity*> platforms;
 
@@ -71,6 +70,7 @@ private:
 	int num_lvl = 0;
 	bool changing = false;
 public:
+	fPoint respawn;
 	Uint8 alpha = 255;
 	int lifes = 3;
 	int coins = 0;

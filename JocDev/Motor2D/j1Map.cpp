@@ -477,6 +477,10 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 		{
 			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
 		}
+		else if (name == "Coins")
+		{
+			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::COIN);
+		}
 	}
 			
 
