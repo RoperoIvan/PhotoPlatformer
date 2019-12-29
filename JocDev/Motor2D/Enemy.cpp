@@ -102,11 +102,8 @@ void Enemy::OnCollision(Collider* col1)
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
 			state = EnemyState::DEAD;
+			collider->type = COLLIDER_TYPE::COLLIDER_MAX;
 			//collider->to_delete = true;
-		}
-		else
-		{
-			state = EnemyState::IDLE;
 		}
 	}
 }

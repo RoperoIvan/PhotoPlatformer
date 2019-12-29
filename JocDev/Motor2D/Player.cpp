@@ -91,11 +91,14 @@ void Player::Move(float dt)
 
 	if (state == Player_States::die_state && anim_death.Done())
 	{
-		App->audio->PlayFx(respawn_sfx);
-		position = respawn;
-		lifes = 3;
+		//App->audio->PlayFx(respawn_sfx);
+		//position = respawn;
+		//lifes = 3;
 		anim_death.Reset();
 		state = Player_States::fall_State;
+		App->scene->DestroyPauseMenu();
+		App->current_level = 0;
+		App->fade->StartfadetoBlack();
 	}		
 
 	if (state == Player_States::god_mode_state)
@@ -232,7 +235,7 @@ void Player::RestartAlpha(bool& reset_alpha)
 
 void Player::HitTimeManagement()
 {
-	if (time_to_hit.ReadSec() >= 5)
+	if (time_to_hit.ReadSec() >= 2)
 	{
 		hit_time = false;
 	}

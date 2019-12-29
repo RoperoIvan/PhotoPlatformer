@@ -44,7 +44,6 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("MainMenu.tmx");
-	App->entityManager->CreateEntity(fPoint(680, 1487), ENTITY_TYPE::COIN);
 	start_time = SDL_GetTicks();
 	str_time.create("00:00");
 	start_time = 0;

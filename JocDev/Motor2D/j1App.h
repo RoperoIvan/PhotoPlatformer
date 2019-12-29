@@ -60,7 +60,8 @@ public:
 	float GetDT();
 	void SetFPScap(uint fps)
 	{
-		fps_cap = 1000 / fps;
+		if (fps > 0)
+			fps_cap = 1000 / fps;
 	}
 	bool Pause();
 private:
