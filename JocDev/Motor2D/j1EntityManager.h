@@ -44,6 +44,7 @@ public:
 	EntityData queue[15];
 	Entity* player = nullptr;
 	int coin_sfx;
+	int win_life_sfx;
 };
 
 

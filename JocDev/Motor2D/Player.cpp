@@ -249,6 +249,7 @@ void Player::CoinsManagement()
 		lifes++;
 		coins -= 10;
 		App->scene->score -= 20;
+		App->audio->PlayFx(App->entityManager->win_life_sfx);
 	}
 }
 
