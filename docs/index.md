@@ -2,9 +2,9 @@
 
 PhotoPlatformer is a 2D sidescrolling platformer where you are a marmalade toast that can make copies of itself to reach to inaccesible places.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Qion8XIVRPE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OwbZcCwomj4&feature=youtu.be" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-[Watch the game trailer]()
+[Watch the game trailer](https://www.youtube.com/watch?v=OwbZcCwomj4&feature=youtu.be)
 
 [Download the game](https://github.com/RoperoIvan/PhotoPlatformer/releases)
 
@@ -104,6 +104,8 @@ This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garc
 [GUI Font](https://www.dafont.com/wolfs-bane.font)
 
 [GUI atlas](https://www.gameart2d.com/free-fantasy-game-gui.html)
+
+[Main Menu Theme](https://www.bensound.com/)
 
 ## License
 
