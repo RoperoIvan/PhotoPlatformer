@@ -96,7 +96,6 @@ void Player::Move(float dt)
 		//lifes = 3;
 		anim_death.Reset();
 		state = Player_States::fall_State;
-		App->scene->DestroyPauseMenu();
 		App->current_level = 0;
 		App->fade->StartfadetoBlack();
 	}		
@@ -342,7 +341,7 @@ void Player::OnCollision(Collider *col1)
 		//vertical collisions
 		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
 		{
-			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != Player_States::jump_State && state != Player_States::walking_state)
+			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != Player_States::jump_State && state != Player_States::walking_state && state != Player_States::die_state)
 			{
 				speed.y = -initialJumpSpeed/2;
 				state = Player_States::idle_State;
@@ -385,6 +384,11 @@ void Player::OnCollision(Collider *col1)
 			hit_time = true;
 			time_to_hit.Start();	
 			App->audio->PlayFx(App->entityManager->player_damage_sfx);
+			if (lifes == 0)
+			{
+				current_animation = &anim_death;
+				state = Player_States::die_state;
+			}
 		}
 		
 	}
