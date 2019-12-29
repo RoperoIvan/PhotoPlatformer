@@ -43,6 +43,8 @@ bool j1EntityManager::Start()
 
 	coin_sfx = App->audio->LoadFx("audio/fx/coin_fx.wav");
 	win_life_sfx = App->audio->LoadFx("audio/fx/win_life_fx.wav");
+	player_damage_sfx = App->audio->LoadFx("audio/fx/player_damage_fx.wav");
+
 	return true;
 }
 
