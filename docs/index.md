@@ -14,6 +14,25 @@ PhotoPlatformer is a 2D sidescrolling platformer where you are a marmalade toast
 
 This is a little game made by two students, Dídac Llop Serna & Ivan Ropero Garcia, of the CITM UPC center for the development assignment. 
 
+## Core subsystems
+
+On the top of everything there is the main module called j1App.cpp . This module manages all the other modules calling in a loop its respective Awake, PreUpdate, Update, Postupdte, Cleanup that they share through a base class j1Module.h . Do not forget that there is a Main.cpp that has a switch of the different states said before.
+
+Then the game is divided in 4 main blocks:
+
+- The j1Scene where everything is printed managed by a module called j1Scene.
+- The Modules that manage different aspects of the game such as: audio, input, collisions, renderer, console, etc…
+- The j1Entities such as: coins, enemies and player; managed by a module called EntityManager.
+- The j1Gui where there are some classes that represent diferent elements of gui such as: images, buttons, labels, sliders, checkbox, input boxes. This is managed by a module called j1Gui.
+
+## Innovations
+
+- Animations loaded from Tiled, from a tsx
+- Player copies handling feature
+- Camera culling with the function IsOnCamera
+- Colliders loaded and defined from Tiled
+- Checkpoints also loaded and defined from Tiled
+
 ## Members
 
 <img src="https://github.com/RoperoIvan/PhotoPlatformer/blob/master/docs/WebsiteImages/group_photo.png?raw=true"/>
