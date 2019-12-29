@@ -79,8 +79,11 @@ void Button::ClickLogic()
 	case Button_Type::Resume:
 		(App->Pause()) ? App->scene->CreatePauseMenu() : App->scene->DestroyPauseMenu();
 		break;
-	case Button_Type::Slider:
-		this->position.x = App->input->GetMousePosition().x;	
+	case Button_Type::Slider_Up:
+			
+		break;
+	case Button_Type::Slider_Down:
+		
 		break;
 	case Button_Type::Return:
 		if (App->scene->active == true)

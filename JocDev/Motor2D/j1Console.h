@@ -63,6 +63,10 @@ public:
 	Image* console_panel = nullptr;
 	Button* command_button = nullptr;
 	Label* command_label = nullptr;
+	Button* up_pos_button = nullptr;
+	Label* up_pos_label = nullptr;
+	Button* down_pos_button = nullptr;
+	Label* down_pos_label = nullptr;
 	bool has_console = false;
 	p2List<p2SString> log_buffers;
 	p2List<Label*> logs_labels;

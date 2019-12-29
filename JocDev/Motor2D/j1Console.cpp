@@ -78,6 +78,10 @@ void j1Console::CreateConsole()
 {
 	App->gui->CreateScreen();
 	console_panel = App->gui->CreateImage(fPoint(0, 0), App->gui->screen, {1212, 1904, 754, 548}, true);
+	up_pos_button = App->gui->CreateButton(fPoint(console_panel->position.w + 10, 0), console_panel, { 1098, 2357, 72, 39 }, { 1006, 2357, 72, 39 }, { 916, 2357, 72, 39 }, UI::Button_Type::Slider_Up);
+	up_pos_label = App->gui->CreateLabel(fPoint(console_panel->position.w + 20,  8), up_pos_button, "UP", BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 15);
+	down_pos_button = App->gui->CreateButton(fPoint(console_panel->position.w + 10, console_panel->position.h - 50), console_panel, { 1098, 2357, 72, 39 }, { 1006, 2357, 72, 39 }, { 916, 2357, 72, 39 }, UI::Button_Type::Slider_Down);
+	down_pos_label = App->gui->CreateLabel(fPoint(console_panel->position.w + 20, console_panel->position.h - 42), down_pos_button, "DOWN", BLACK, "fonts/open_sans/OpenSans-Bold.ttf", 15);
 	console_input = App->gui->CreateInputBox(fPoint(10, console_panel->position.h - 40), "", console_panel, BLACK, "fonts/open_sans/OpenSans-Bold.ttf", { 453, 2409, 717, 24}, true);
 	App->input->input_text.Clear();
 
@@ -114,6 +118,10 @@ void j1Console::DestroyConsole()
 	log_buffers.clear();*/
 	command_button->to_delete = true;
 	command_label->to_delete = true;
+	up_pos_button->to_delete = true;
+	up_pos_label->to_delete = true;
+	down_pos_button->to_delete = true;
+	down_pos_label->to_delete = true;
 	separation = 0;
 }
 
