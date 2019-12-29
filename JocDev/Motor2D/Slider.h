@@ -7,9 +7,9 @@ class Slider : public UI
 {
 public:
 
-	Slider(const int& pos_x, const int& pos_y, const SDL_Rect& slider_rect, UI* parent = nullptr, Slider_TYPE slider_type = Slider_TYPE::Y);
+	Slider(const int& pos_x, const int& pos_y, const SDL_Rect& slider_rect, int value_to_calculate, UI* parent = nullptr, Slider_TYPE slider_type = Slider_TYPE::Y);
 	~Slider();
-	void SetSliderValueStart();
+	void SetSliderValueStart(int pos_start);
 	void CleanUp();
 	void InnerDraw();
 	void PostUpdate();

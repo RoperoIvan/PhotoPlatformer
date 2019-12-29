@@ -42,6 +42,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
+	button_sfx = App->audio->LoadFx("audio/fx/click_fx.wav");
 	CreateScreen();
 
 	return true;
@@ -140,10 +141,10 @@ Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const
 	return ret;
 }
 
-Slider * j1Gui::CreateSlider(const fPoint & pos, const SDL_Rect & slider_rect, Slider_TYPE type, UI * parent)
+Slider * j1Gui::CreateSlider(const fPoint & pos, const SDL_Rect & slider_rect, Slider_TYPE type, int value_to_calculate, UI * parent)
 {
 	Slider* ret = nullptr;
-	ret = new Slider(pos.x, pos.y, slider_rect,parent, type);
+	ret = new Slider(pos.x, pos.y, slider_rect, value_to_calculate, parent, type);
 	objects.add(ret);
 	return ret;
 }

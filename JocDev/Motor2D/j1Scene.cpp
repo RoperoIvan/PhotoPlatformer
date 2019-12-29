@@ -224,7 +224,7 @@ void j1Scene::CreateSettingsMenu()
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
 	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), settings_panel, { 193, 423, 469, 10 }, true);
-	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, App->audio->GetVolume() * 100 / 185, settings_panel);
 	slider_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 260), (settings_panel->position.h / 2) - 270), settings_panel, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 	//CheckBox
 	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) -100, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });

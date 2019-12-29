@@ -10,6 +10,7 @@
 #include "j1Input.h"
 #include "j1Console.h"
 #include "InputBox.h"
+#include "j1Audio.h"
 
 
 Button::Button(int pos_x, int pos_y, UI* parent, const SDL_Rect& idle, const SDL_Rect& hover, const SDL_Rect& push, const UI::Button_Type& type, bool drawable)
@@ -45,6 +46,7 @@ void Button::InnerDraw()
 
 void Button::ClickLogic()
 {
+	App->audio->PlayFx(App->gui->button_sfx);
 	switch (type)
 	{
 	case Button_Type::Go_to_Menu:

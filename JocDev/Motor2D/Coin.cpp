@@ -2,6 +2,9 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Collisions.h"
+#include "j1Audio.h"
+#include "j1EntityManager.h"
+
 Coin::Coin(const fPoint& pos) :Entity(pos, "coin", ENTITY_TYPE::COIN)
 {
 	LoadData("Coins.tsx");
@@ -66,6 +69,7 @@ void Coin::OnCollision(Collider* col1)
 	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER)
 	{
 		/*collider->to_delete = true;*/
+		App->audio->PlayFx(App->entityManager->coin_sfx);
 		this->to_delete = true;
 	}
 }

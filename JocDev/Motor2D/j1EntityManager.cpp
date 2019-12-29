@@ -8,6 +8,7 @@
 #include "GroundEnemy.h"
 #include "Coin.h"
 #include "p2Log.h"
+#include"j1Audio.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
 {
@@ -39,6 +40,8 @@ bool j1EntityManager::Start()
 	{		
 		entityItem->data->Start();
 	}
+
+	coin_sfx = App->audio->LoadFx("audio/fx/coin_fx.wav");
 	return true;
 }
 

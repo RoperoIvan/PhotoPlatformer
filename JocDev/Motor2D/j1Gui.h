@@ -49,7 +49,7 @@ public:
 	Button* CreateButton(const fPoint & pos, UI* parent, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push, const UI::Button_Type& type);
 	Image * CreateImage(const fPoint & pos, UI* parent, const SDL_Rect & rect, bool drawable);
 	Label * CreateLabel(const fPoint & pos, UI* parent, const char * text, const Color& c, const char * font,const uint& size = DEFAULT_FONT_SIZE, uint32 wrap_length = 0U);
-	Slider * CreateSlider(const fPoint & pos, const SDL_Rect &slider_rect, Slider_TYPE type, UI* parent = nullptr);
+	Slider * CreateSlider(const fPoint & pos, const SDL_Rect &slider_rect, Slider_TYPE type, int value_to_calculate, UI* parent = nullptr);
 	CheckBox* CreateCheckbox(const fPoint & pos, const bool &is_active, UI* parent, bool drawable, UI::CheckBox_Type type,const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,
 		const SDL_Rect& disactive_hover, const SDL_Rect& disactive_push);
 	InputBox* CreateInputBox(const fPoint& pos, const char* text, UI* parent, Color color, const char* font_path, const SDL_Rect& rect, bool drawable);
@@ -69,6 +69,7 @@ private:
 public:
 	UI * screen = nullptr;
 	bool debug_ui = false;
+	int button_sfx;
 };
 
 #endif // __j1GUI_H__

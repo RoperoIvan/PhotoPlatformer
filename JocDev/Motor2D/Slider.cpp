@@ -5,24 +5,24 @@
 #include "j1Gui.h"
 #include "p2Log.h"
 
-Slider::Slider(const int& pos_x, const int& pos_y, const SDL_Rect& slider_rect, UI* parent, Slider_TYPE slider_type) : UI(pos_x, pos_y, parent, slider_rect.w, slider_rect.h, true)
+Slider::Slider(const int& pos_x, const int& pos_y, const SDL_Rect& slider_rect, int value_to_calculate, UI* parent, Slider_TYPE slider_type) : UI(pos_x, pos_y, parent, slider_rect.w, slider_rect.h, true)
 {
 	position = { pos_x, pos_y, slider_rect.w, slider_rect.h };
 	image = slider_rect;
 	type = slider_type;
 	ui_type = UI::Type::SLIDER;
-	SetSliderValueStart();
+	SetSliderValueStart(value_to_calculate);
 }
 
 Slider::~Slider()
 {
 }
 
-void Slider::SetSliderValueStart()
+void Slider::SetSliderValueStart(int pos_start)
 {
 	min_place = (position.x);
 	max_place = (position.x + 470);
-	current_place_thumb.x = min_place;
+	current_place_thumb.x = min_place + ((max_place - min_place) * pos_start/100);
 	current_place_thumb.y = position.y;
 	position.x = current_place_thumb.x;
 	position.y = current_place_thumb.y;

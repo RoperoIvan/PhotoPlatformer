@@ -39,7 +39,7 @@ bool j1MainMenu::Start()
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
-	App->audio->PlayMusic("audio/music/awesomeness.ogg", 2.0);
+	App->audio->PlayMusic("audio/music/bensound-retrosoul.ogg", 2.0);
 	CreateMainMenu();
 
 	return ret;
@@ -128,7 +128,7 @@ void j1MainMenu::CreateSettingsMenu()
 	App->gui->SetPosition(settings_panel, (App->win->GetWindowWidth() - settings_panel->position.w) / 2, (App->win->GetWindowHeight() - settings_panel->position.h) / 2);
 	//Slider
 	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) -40, (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
-	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X, settings_panel);
+	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X,App->audio->GetVolume()*100/ 185, settings_panel);
 	volume_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 260), (settings_panel->position.h / 2) - 270), settings_panel, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
 
 	//CheckBox
