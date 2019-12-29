@@ -72,7 +72,7 @@ void Player::Move(float dt)
 		jumpTime.Start();
 
 		if (speed.y < -initialJumpSpeed)
-			speed.y += gravity;
+			speed.y += gravity * 3.5;
 		
 
 		position.y += speed.y * dt;
@@ -80,13 +80,13 @@ void Player::Move(float dt)
 	if (state == Player_States::jump_State)
 	{
 		gravity = grav;
-		if (speed.y > 0)
+		if (speed.y > -5)
 			state = Player_States::fall_State;
 		else if (speed.y <= -initialJumpSpeed)
 			speed.y += gravity;
 		
 
-		position.y += speed.y * dt;
+		position.y += speed.y*dt ;
 	}
 
 	if (state == Player_States::die_state && anim_death.Done())

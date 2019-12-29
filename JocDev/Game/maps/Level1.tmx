@@ -115724,7 +115724,7 @@
   <object id="213" x="2790.91" y="592.424" width="54.5455" height="39.3939"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="7" name="MapDamage">
-  <object id="34" x="2192" y="1702.25" width="1614.5" height="10.75"/>
+  <object id="34" x="2192" y="1700.25" width="1614.5" height="12.75"/>
   <object id="114" x="2976" y="1486" width="127.333" height="8.66667"/>
   <object id="115" x="3193.33" y="1300" width="11.3333" height="409.333"/>
   <object id="116" x="3408" y="1299.33" width="8" height="11.3333"/>
