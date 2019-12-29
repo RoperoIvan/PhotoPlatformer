@@ -88,7 +88,9 @@ public:
 	Label* to_pause_menu_label = nullptr;
 	CheckBox* fullscreen_checkbox = nullptr;
 	Label* fullscreen_label = nullptr;
-
+	Image* volume_fx_level = nullptr;
+	Label* volume_fx_label = nullptr;
+	Slider* slider_volume_fx = nullptr;
 	//HUD
 	Image* heart_1 = nullptr;
 	Image* heart_2 = nullptr;

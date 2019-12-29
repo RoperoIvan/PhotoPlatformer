@@ -81,7 +81,9 @@ public:
 	Label* to_main_menu_label = nullptr;
 	CheckBox* fullscreen_checkbox = nullptr;
 	Label* fullscreen_label = nullptr;
-
+	Image* volume_fx_level = nullptr;
+	Label* volume_fx_label = nullptr;
+	Slider* slider_volume_fx = nullptr;
 	//Credits Menu
 	Image* credits_panel = nullptr;
 	Label* authors_label = nullptr;

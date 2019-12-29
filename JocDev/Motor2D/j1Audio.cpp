@@ -191,6 +191,16 @@ int j1Audio::SetVolume(float vol)
 	return Mix_VolumeMusic(music_volume);
 }
 
+int j1Audio::SetFXVolume(float vol)
+{
+	fx_volume = vol;
+	p2List_item<Mix_Chunk*>* item;
+	for (item = fx.start; item != NULL; item = item->next)
+	 Mix_VolumeChunk(item->data, fx_volume);
+
+	return fx_volume;
+}
+
 int j1Audio::RaiseVolume()
 {
 	if (music_volume <= MIX_MAX_VOLUME)
@@ -216,4 +226,10 @@ void j1Audio::AdjustSliderVolume(Slider* slid)
 	float vol = slid->value;
 	int final_vol = (int)(vol * 180);
 	SetVolume(final_vol);
+}
+void j1Audio::AdjustFXSliderVolume(Slider* slid)
+{
+	float vol = slid->value;
+	int final_vol = (int)(vol * 180);
+	SetFXVolume(final_vol);
 }

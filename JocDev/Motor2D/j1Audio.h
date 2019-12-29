@@ -38,18 +38,25 @@ public:
 	void UnLoadFx();
 
 	int SetVolume(float vol);
+	int SetFXVolume(float vol);
 	int RaiseVolume();
 	int DecreaseVolume();
 	int GetVolume() const
 	{
 		return music_volume;
 	}
+	int GetVolumeFX() const
+	{
+		return fx_volume;
+	}
 	void AdjustSliderVolume(Slider* sld);
+	void AdjustFXSliderVolume(Slider* sld);
 private:
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 	int music_volume = 100;
+	int fx_volume = 80;
 };
 
 #endif // __j1AUDIO_H__

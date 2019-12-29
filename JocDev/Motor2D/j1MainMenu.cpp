@@ -68,6 +68,10 @@ bool j1MainMenu::PostUpdate(float dt)
 	{
 		App->audio->AdjustSliderVolume(slider_volume);
 	}
+	if (slider_volume_fx)
+	{
+		App->audio->AdjustFXSliderVolume(slider_volume_fx);
+	}
 	return ret;
 }
 
@@ -132,7 +136,9 @@ void j1MainMenu::CreateSettingsMenu()
 	volume_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) -40, (settings_panel->position.h / 2) - 250), settings_panel, {193, 423, 469, 10}, true);
 	slider_volume = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 250), { 77, 400, 30, 45 }, Slider_TYPE::X,App->audio->GetVolume()*100/ 185, settings_panel);
 	volume_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 260), (settings_panel->position.h / 2) - 270), settings_panel, "Music volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
-
+	volume_fx_level = App->gui->CreateImage(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 200), settings_panel, { 193, 423, 469, 10 }, true);
+	volume_fx_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2 - 260), (settings_panel->position.h / 2) - 220), settings_panel, "FX volume :", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 50);
+	slider_volume_fx = App->gui->CreateSlider(fPoint((settings_panel->position.w / 2) - 40, (settings_panel->position.h / 2) - 200), { 77, 400, 30, 45 }, Slider_TYPE::X, App->audio->GetVolumeFX() * 100 / 185, settings_panel);
 	//CheckBox
 	fullscreen_checkbox = App->gui->CreateCheckbox(fPoint((settings_panel->position.w / 2) + 120, (settings_panel->position.h / 2) - 60), false, settings_panel, true, UI::CheckBox_Type::Fullscreen, { 829, 573, 177, 178 }, { 1026, 573, 176, 178 }, { 1223, 573, 176, 178 }, { 829, 334, 177, 178 }, { 1026, 334, 176, 178 }, { 1223, 334, 176, 178 });
 	fullscreen_label = App->gui->CreateLabel(fPoint((settings_panel->position.w / 2) -100, (settings_panel->position.h / 2) - 10), fullscreen_checkbox, "Fullscreen", BLACK, "fonts/wolfsbane/wolfsbane2acad.ttf", 90);
@@ -151,6 +157,9 @@ void j1MainMenu::DestroySettingsMenu()
 	fullscreen_label->to_delete = true;
 	to_main_menu_button->to_delete = true;
 	to_main_menu_label->to_delete = true;
+	volume_fx_level->to_delete = true;
+	volume_fx_label->to_delete = true;
+	slider_volume_fx->to_delete = true;
 }
 
 void j1MainMenu::CreateCreditsMenu()
