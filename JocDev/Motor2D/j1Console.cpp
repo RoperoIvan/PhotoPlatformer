@@ -48,6 +48,19 @@ bool j1Console::Update(float dt)
 	return ret;
 }
 
+bool j1Console::PostUpdate(float dt)
+{
+	bool ret = true;
+
+	for (int i = 0; i < logs_labels.count(); ++i)
+	{
+		if (logs_labels[i] == nullptr)
+			continue;
+		logs_labels[i]->Draw();
+	}
+	return ret;
+}
+
 bool j1Console::CleanUp()
 {
 	p2List_item<ConsoleCommand*>* command = commands.start;
@@ -69,7 +82,7 @@ void j1Console::CreateConsole()
 	int separation = 0;
 	for (int i = log_buffers.count() -1; i >= 0; i--)
 	{
-		Label* new_log = App->gui->CreateLabel(fPoint(0, (-15 * separation)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
+		Label* new_log = App->gui->CreateLabel(fPoint(0, (15 * separation)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U, false);
 		logs_labels.add(new_log);
 		separation++;
 	}
@@ -83,22 +96,21 @@ void j1Console::DestroyConsole()
 	console_input->to_delete = true;
 	console_input->text.Clear();
 	App->input->input_text.Clear();
-	for (int i = 0; i < log_buffers.count(); i++)
+	for (int i = 0; i < logs_labels.count(); i++)
 	{
 		if (logs_labels[i] != nullptr)
 		{
-			logs_labels[i]->to_delete;
 			logs_labels[i]->CleanUp();
 			delete logs_labels[i];
 			logs_labels[i] = nullptr;
 		}		
 	}
 	logs_labels.clear();
-	for (int i = 0; i < log_buffers.count(); i++)
+	/*for (int i = 0; i < log_buffers.count(); i++)
 	{
 		log_buffers[i].Clear();
 	}
-	log_buffers.clear();
+	log_buffers.clear();*/
 	command_button->to_delete = true;
 	command_label->to_delete = true;
 }
@@ -106,13 +118,6 @@ void j1Console::DestroyConsole()
 void j1Console::SetLog(p2SString log)
 {
 	log_buffers.add(log);
-	int separation = 30;
-	for (int i = log_buffers.count() - 1; i >= 0; i--)
-	{
-		Label* new_log = App->gui->CreateLabel(fPoint(0, ((separation) + 50)), console_panel, log_buffers[i].GetString(), WHITE, "fonts/open_sans/OpenSans-Bold.ttf", 12, 700U);
-		logs_labels.add(new_log);
-		separation++;
-	}
 }
 
 ConsoleCommand* j1Console::CreateCommand(const char* name, CommandType t, uint argument)

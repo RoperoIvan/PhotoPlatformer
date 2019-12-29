@@ -1,6 +1,7 @@
 #include "Label.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "SDL_ttf/include/SDL_ttf.h"
 #include "j1Fonts.h"
 
 
@@ -20,6 +21,7 @@ Label::Label(int pos_x, int pos_y, const char* txt, const Color& c, const char* 
 void Label::CleanUp()
 {
 	App->tex->UnLoad(texture);
+	App->fonts->DeleteFonts(font);
 	text.Clear();
 }
 
