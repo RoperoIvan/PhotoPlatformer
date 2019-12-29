@@ -50,14 +50,17 @@ void Button::ClickLogic()
 	switch (type)
 	{
 	case Button_Type::Go_to_Menu:
-		App->scene->DestroyPauseMenu();
-		App->current_level = 0;
-		App->fade->StartfadetoBlack();
-		App->Pause();
+		if (!App->console->has_console)
+		{
+			App->scene->DestroyPauseMenu();
+			App->current_level = 0;
+			App->fade->StartfadetoBlack();
+			App->Pause();
+		}		
 		break;
 	case Button_Type::Settings_Menu:
-		App->scene->DestroyPauseMenu();
-		App->scene->CreateSettingsMenu();
+			App->scene->DestroyPauseMenu();
+			App->scene->CreateSettingsMenu();	
 		break;
 	case Button_Type::Exit:
 		App->exit = true;
@@ -86,20 +89,26 @@ void Button::ClickLogic()
 		
 		break;
 	case Button_Type::Return:
-		if (App->scene->active == true)
+		if (!App->console->has_console)
 		{
-			App->scene->DestroySettingsMenu();
-			App->scene->CreatePauseMenu();
-		}
-		else if (App->main_menu->active == true)
-		{
-			App->main_menu->DestroySettingsMenu();
-			App->main_menu->CreateMainMenu();
-		}
+			if (App->scene->active == true)
+			{
+				App->scene->DestroySettingsMenu();
+				App->scene->CreatePauseMenu();
+			}
+			else if (App->main_menu->active == true)
+			{
+				App->main_menu->DestroySettingsMenu();
+				App->main_menu->CreateMainMenu();
+			}
+		}		
 		break;
 	case Button_Type::Main_Settings_Menu:
-		App->main_menu->DestroyMainMenu();
-		App->main_menu->CreateSettingsMenu();
+		if (!App->console->has_console)
+		{
+			App->main_menu->DestroyMainMenu();
+			App->main_menu->CreateSettingsMenu();
+		}
 		break;
 	case Button_Type::Return_MainMenu:
 		App->main_menu->DestroyCreditsMenu();
