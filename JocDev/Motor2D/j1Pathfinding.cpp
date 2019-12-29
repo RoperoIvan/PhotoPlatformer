@@ -208,6 +208,8 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, E
 
 	while ( open.list.count() != 0)
 	{
+		if (close.list.count() > 20)
+			return -1;
 		close.list.add(open.GetNodeLowestScore()->data);
 		open.list.del(open.GetNodeLowestScore());
 		if (close.list.end->data.pos == destination)

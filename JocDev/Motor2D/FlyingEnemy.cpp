@@ -69,6 +69,8 @@ void FlyingEnemy::Move(float dt)
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
 					direction.x *= path_speed;
 					direction.y *= path_speed;
+					position.x += direction.x * speed.x * dt;
+					position.y += direction.y * speed.y * dt;
 				}
 			}
 			if (direction.x > 0)
@@ -123,11 +125,12 @@ void FlyingEnemy::Move(float dt)
 			if (objective.x != 0)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
+				position.x += direction.x * speed.x * dt;
+				position.y += direction.y * speed.y * dt;
 			}
 		}
-		position.x += direction.x * speed.x * dt;
-		position.y += direction.y * speed.y * dt;
-		collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
+		
+		
 	}
 	else if (state == EnemyState::DEAD)
 	{
@@ -137,6 +140,7 @@ void FlyingEnemy::Move(float dt)
 		if (!App->render->IsOnCamera(position.x, position.y, size.x, size.y))
 			to_delete = true;
 	}
+	collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
 }
 
 void FlyingEnemy::Draw()

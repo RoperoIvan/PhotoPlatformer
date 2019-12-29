@@ -103,7 +103,7 @@ void Enemy::OnCollision(Collider* col1)
 		}
 		else
 		{
-			enemy_path = nullptr;
+			state = EnemyState::IDLE;
 		}
 	}
 }

@@ -96,14 +96,11 @@ void GroundEnemy::Move(float dt)
 			if (objective.x != 0)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
-
+				position.x += direction.x * speed.x * dt;
 			}
+		
 		}
-
-
 		position.y += gravity * dt;
-		position.x += direction.x * speed.x * dt;
-
 		if (direction.x > 0)
 		{
 			current_animation = &anim_walking;
@@ -126,6 +123,8 @@ void GroundEnemy::Move(float dt)
 		alpha -= 10;
 		if (alpha < 20)
 			to_delete = true;
+		speed.x = 0; 
+		position.y -= speed.y * dt;
 	}
 }
 
