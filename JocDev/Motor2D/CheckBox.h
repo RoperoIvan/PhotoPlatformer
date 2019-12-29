@@ -3,6 +3,7 @@
 
 #include "UI.h"
 
+
 class CheckBox :public UI {
 public:
 	CheckBox(int pos_x, int pos_y, const bool& is_active, UI* parent, bool drawable, CheckBox_Type type, const SDL_Rect& active_idle, const SDL_Rect& active_hover, const SDL_Rect& active_push, const SDL_Rect& disactive_idle,

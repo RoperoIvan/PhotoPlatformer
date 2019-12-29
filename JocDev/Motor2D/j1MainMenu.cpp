@@ -13,6 +13,7 @@
 #include "CheckBox.h"
 #include "Slider.h"
 #include "InputBox.h"
+#include "Brofiler/Brofiler.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -61,6 +62,7 @@ bool j1MainMenu::Update(float dt)
 
 bool j1MainMenu::PostUpdate(float dt)
 {
+	BROFILER_CATEGORY("UpdateMainMenu", Profiler::Color::Red);
 	bool ret = true;
 	if (slider_volume)
 	{

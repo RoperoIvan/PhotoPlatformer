@@ -111,7 +111,7 @@ void Button::ClickLogic()
 		ShellExecuteA(NULL, "open", "https://github.com/RoperoIvan", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case Button_Type::Webpage:
-		ShellExecuteA(NULL, "open", "https://roperoivan.github.io/PhotoPlatformer/", NULL, NULL, SW_SHOWNORMAL); //TODO: LINK THE REAL WEBPAGE
+		ShellExecuteA(NULL, "open", "https://roperoivan.github.io/PhotoPlatformer/", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case Button_Type::Command:
 		ConsoleCommand* command;
