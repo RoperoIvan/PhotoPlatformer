@@ -6,26 +6,31 @@
 	<audio />
 	<map />
 	<scene>
-		<lvl_stats level="1" score="70" timer="30976" />
+		<lvl_stats level="1" score="100" timer="8459" />
 	</scene>
 	<main_menu />
 	<entities>
-		<player_stats gravity="1.79999995" position_x="805" position_y="2666" num_platforms="0" alpha="255" />
 		<enemy_stats position_x="680" position_y="1487" type="5" />
-		<enemy_stats type="4" gravity="80" position_x="-1186" position_y="4712" />
-		<enemy_stats type="4" gravity="80" position_x="1917" position_y="1657" />
-		<enemy_stats type="4" gravity="80" position_x="-1084" position_y="3013" />
-		<enemy_stats type="4" gravity="80" position_x="-595" position_y="1789" />
-		<enemy_stats type="4" gravity="80" position_x="1731" position_y="1655" />
-		<enemy_stats type="4" gravity="80" position_x="-369366176" position_y="3373" />
-		<enemy_stats type="4" gravity="80" position_x="872" position_y="535" />
-		<enemy_stats type="3" gravity="80" position_x="1317" position_y="1415" />
-		<enemy_stats type="3" gravity="80" position_x="3346" position_y="1368" />
-		<enemy_stats type="3" gravity="80" position_x="3370" position_y="1474" />
-		<enemy_stats type="3" gravity="80" position_x="3076" position_y="334" />
-		<enemy_stats type="3" gravity="80" position_x="1107" position_y="206" />
-		<enemy_stats type="3" gravity="80" position_x="1634" position_y="751" />
-		<enemy_stats type="3" gravity="80" position_x="2628" position_y="592" />
+		<enemy_stats type="4" gravity="80" position_x="784" position_y="2086" />
+		<enemy_stats type="4" gravity="80" position_x="3046" position_y="1430" />
+		<enemy_stats type="4" gravity="80" position_x="903" position_y="804" />
+		<enemy_stats type="4" gravity="80" position_x="1057" position_y="665" />
+		<enemy_stats type="4" gravity="80" position_x="1528" position_y="1364" />
+		<enemy_stats type="4" gravity="80" position_x="2602" position_y="1085" />
+		<enemy_stats type="4" gravity="80" position_x="1735" position_y="534" />
+		<player_stats gravity="1.79999995" position_x="678" position_y="1591" num_platforms="4" alpha="255">
+			<platform_stats position_x="678" position_y="1963" alpha="235" />
+			<platform_stats position_x="678" position_y="1635" alpha="235" />
+			<platform_stats position_x="678" position_y="1605" alpha="235" />
+			<platform_stats position_x="678" position_y="1598" alpha="235" />
+		</player_stats>
+		<enemy_stats type="3" gravity="80" position_x="1457" position_y="1415" />
+		<enemy_stats type="3" gravity="80" position_x="2619" position_y="1427" />
+		<enemy_stats type="3" gravity="80" position_x="3507" position_y="1500" />
+		<enemy_stats type="3" gravity="80" position_x="3201" position_y="342" />
+		<enemy_stats type="3" gravity="80" position_x="1246" position_y="206" />
+		<enemy_stats type="3" gravity="80" position_x="1774" position_y="751" />
+		<enemy_stats type="3" gravity="80" position_x="2724" position_y="592" />
 	</entities>
 	<pathfinding />
 	<:anonymous />
@@ -34,6 +39,6 @@
 	<console />
 	<gui />
 	<rendeerer>
-		<camera x="-566" y="-2374" />
+		<camera x="-530" y="-1287" />
 	</rendeerer>
 </game_state>

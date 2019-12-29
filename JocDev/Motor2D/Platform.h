@@ -19,7 +19,7 @@ public:
 	void PushBack() override;
 
 	void SaveDataXML(pugi::xml_node&)const;
-
+	void SetAlpha(uint a);
 	void Draw();
 
 

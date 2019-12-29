@@ -221,18 +221,10 @@ bool j1Map::Load(const char* file_name)
 
 	if (ret == true)
 	{
-		LOG("Successfully parsed map XML file: %s", file_name);
-		LOG("width: %d height: %d", data.columns, data.rows);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
-
 		p2List_item<TileSet*>* item = data.tilesets.start;
 		while (item != NULL)
 		{
 			TileSet* s = item->data;
-			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
 
@@ -240,9 +232,6 @@ bool j1Map::Load(const char* file_name)
 		while (item_layer != NULL)
 		{
 			MapLayer* l = item_layer->data;
-			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
-			LOG("tile width: %d tile height: %d", l->columns, l->rows);
 			item_layer = item_layer->next;
 		}
 	}
@@ -442,35 +431,29 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 	if (node == NULL)
 		LOG("Error");
 	p2SString name(node.attribute("name").as_string());
-	
-	if (name == "Colliders")
+	for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		if (name == "Colliders")
 		{
 			pugi::xml_node properties = obj.child("properties").child("property");
 			bool is_win = properties.attribute("value").as_bool();
 			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WALL);
-
 		}
-			
-	}
 
-	else if (name == "MapDamage")
-	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		else if (name == "MapDamage")
+		{
+
 			App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_ENEMY);
-	}
+		}
 
-	else if (name == "CheckPoint")
-	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		else if (name == "CheckPoint")
 		{
 			pugi::xml_node properties = obj.child("properties").child("property");
-			
+
 			p2SString check_point_type = properties.attribute("name").as_string();
 
 			bool value = properties.attribute("value").as_bool();
-			
+
 			if (check_point_type == "win" && value)
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_WIN);
 			else if (check_point_type == "first" && value)
@@ -483,20 +466,19 @@ bool j1Map::LoadObjects(pugi::xml_node & node)
 			else
 			{
 				App->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_CHECKPOINT);
-			}			
+			}
+
+		}
+		else if (name == "GroundEnemy")
+		{
+			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
+		}
+		else if (name == "FlyingEnemy")
+		{
+			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
 		}
 	}
-	else if (name == "GroundEnemy")
-	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
-	}
-	else if (name == "FlyingEnemy")
-	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			App->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
-	}
-
+			
 
 	return ret;
 }

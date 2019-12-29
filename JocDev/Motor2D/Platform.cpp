@@ -26,7 +26,6 @@ void Platform::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 
-	App->tex->UnLoad(data.tiled.texture);
 	data.tiled.texture = nullptr;
 }
 
@@ -65,6 +64,11 @@ void Platform::SaveDataXML(pugi::xml_node&node) const
 	p_stats.append_attribute("position_x") = (int)position.x;
 	p_stats.append_attribute("position_y") = (int)position.y;
 	p_stats.append_attribute("alpha") = (int)alpha;
+}
+
+void Platform::SetAlpha(uint a)
+{
+	alpha = a;
 }
 
 void Platform::Draw()

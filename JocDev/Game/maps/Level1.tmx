@@ -115679,7 +115679,7 @@
   <object id="216" x="2103.03" y="295.455" width="54.5455" height="39.3939"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="6" name="CheckPoint">
-  <object id="28" x="714.91" y="1111.51" width="55.7272" height="43.5454">
+  <object id="28" x="678.546" y="1578.18" width="55.7272" height="43.5454">
    <properties>
     <property name="first" type="bool" value="true"/>
    </properties>

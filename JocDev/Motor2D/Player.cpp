@@ -62,7 +62,6 @@ void Player::PreUpdate(float dt)
 
 void Player::Move(float dt)
 {
-	
 	if(state != Player_States::die_state)
 		InPut(dt);
 
@@ -134,6 +133,10 @@ void Player::Move(float dt)
 		ManageLifesHUD();
 		CoinsManagement();
 	}
+	if (App->fade->IsFading())
+	{
+		position = respawn;
+	}
 }
 
 void Player::Draw()
@@ -161,13 +164,14 @@ bool Player::Load(pugi::xml_node& node)
 	position.x = p_stats.attribute("position_x").as_int();
 	position.y = p_stats.attribute("position_y").as_int();
 	alpha = p_stats.attribute("alpha").as_int();
-	int num_platforms = p_stats.attribute("num_platforms").as_int();
 
 	DeletePlatforms();
 	pugi::xml_node platform_stats = p_stats.child("platform_stats");
 	for (platform_stats; platform_stats != nullptr; platform_stats = platform_stats.next_sibling("platform_stats"))
 	{
-		platforms.add(App->entityManager->CreateEntity({ platform_stats.attribute("position_x").as_float(),platform_stats.attribute("position_y").as_float() }, ENTITY_TYPE::PLATFORM));
+		Platform* p = dynamic_cast<Platform*>(App->entityManager->CreateEntity({ platform_stats.attribute("position_x").as_float(),platform_stats.attribute("position_y").as_float() }, ENTITY_TYPE::PLATFORM));
+		p->SetAlpha(platform_stats.attribute("alpha").as_uint());
+		platforms.add(p);
 	}
 
 	return ret;
