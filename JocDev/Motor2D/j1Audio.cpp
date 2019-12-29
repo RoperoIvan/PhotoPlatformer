@@ -2,6 +2,8 @@
 #include "p2Log.h"
 #include "j1Audio.h"
 #include "p2List.h"
+#include "j1App.h"
+#include "j1Console.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -21,6 +23,7 @@ j1Audio::~j1Audio()
 bool j1Audio::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Audio Mixer");
+	App->console->SetLog("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
 

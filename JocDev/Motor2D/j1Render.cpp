@@ -7,6 +7,7 @@
 #include "j1Scene.h"
 #include "j1EntityManager.h"
 #include "j1Collisions.h"
+#include "j1Console.h"
 #include "Brofiler/Brofiler.h"
 
 
@@ -32,6 +33,7 @@ j1Render::~j1Render()
 bool j1Render::Awake(pugi::xml_node& config)
 {
 	LOG("Create SDL rendering context");
+	App->console->SetLog("Create SDL rendering context");
 	bool ret = true;
 	// load flags
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
@@ -64,6 +66,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 bool j1Render::Start()
 {
 	LOG("render start");
+	App->console->SetLog("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
 

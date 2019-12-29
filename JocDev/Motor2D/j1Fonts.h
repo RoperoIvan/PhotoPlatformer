@@ -32,7 +32,7 @@ public:
 	SDL_Texture* Print(const char* text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
 	SDL_Texture* PrintWrapped(const char* text, SDL_Color color, _TTF_Font* font, Uint32 wrap_length);
 	bool CalcSize(const char* text, int& width, int& height, _TTF_Font* font = NULL) const;
-
+	void DeleteFonts(_TTF_Font* font);
 public:
 
 	p2List<_TTF_Font*>	fonts;

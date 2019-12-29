@@ -17,6 +17,7 @@
 #include "CheckBox.h"
 #include "Slider.h"
 #include "InputBox.h"
+#include "j1Console.h"
 #include "Brofiler/Brofiler.h"
 
 j1Gui::j1Gui() : j1Module()
@@ -32,6 +33,7 @@ j1Gui::~j1Gui()
 bool j1Gui::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading GUI atlas");
+	App->console->SetLog("Loading GUI atlas");
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
@@ -83,17 +85,19 @@ bool j1Gui::PostUpdate(float dt)
 		objects[i]->PostUpdate();
 	}
 
-	for (int i = 0; i < objects.count(); ++i)
+	p2List_item<UI*>* item = objects.start;
+	for (; item != nullptr; item = item->next)
 	{
-		if (objects[i] == nullptr)
+		if (item->data == nullptr)
 			continue;
-		objects[i]->Draw();
+		item->data->Draw();
 
-		if (objects[i]->to_delete)
+		if (item->data->to_delete)
 		{
-			objects[i]->CleanUp();
-			delete objects[i];
-			objects[i] = nullptr;
+			item->data->CleanUp();
+			objects.del(item);
+			item->data = nullptr;
+			/*break;*/
 		}
 	}
 	return true;
@@ -138,11 +142,13 @@ Image* j1Gui::CreateImage(const fPoint & pos, UI* parent, const SDL_Rect & rect,
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const Color& c,const char* font,const uint& size, uint32 wrap_length)
+Label* j1Gui::CreateLabel(const fPoint & pos, UI* parent,const char* text, const Color& c,const char* font,const uint& size, uint32 wrap_length, bool ui_element)
 {
 	Label* ret = nullptr;
 	ret = new Label(pos.x, pos.y, text, c,font, size, parent, true, wrap_length);
-	objects.add(ret);
+	if(ui_element)
+		objects.add(ret);
+
 	return ret;
 }
 

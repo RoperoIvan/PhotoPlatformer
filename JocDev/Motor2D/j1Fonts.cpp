@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Fonts.h"
-
+#include "j1Console.h"
 #include "SDL\include\SDL.h"
 #include "SDL_ttf\include\SDL_ttf.h"
 #pragma comment( lib, "SDL_ttf/libx86/SDL2_ttf.lib" )
@@ -21,6 +21,7 @@ j1Fonts::~j1Fonts()
 bool j1Fonts::Awake(pugi::xml_node& conf)
 {
 	LOG("Init True Type Font library");
+	App->console->SetLog("Init True Type Font library");
 	bool ret = true;
 
 	if (TTF_Init() == -1)
@@ -46,7 +47,8 @@ bool j1Fonts::CleanUp()
 
 	for (item = fonts.start; item != NULL; item = item->next)
 	{
-		TTF_CloseFont(item->data);
+		if(item->data != nullptr)
+			TTF_CloseFont(item->data);
 	}
 
 	fonts.clear();
@@ -122,4 +124,20 @@ bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* fon
 		ret = true;
 
 	return ret;
+}
+
+void j1Fonts::DeleteFonts(_TTF_Font* font)
+{
+	p2List_item<_TTF_Font*>* item = fonts.start;
+	for (; item != nullptr; item = item->next)
+	{
+		if (item->data == nullptr)
+			continue;
+		if (item->data == font)
+		{			
+			fonts.del(item);
+			item->data = nullptr;
+			/*break;*/
+		}
+	}
 }

@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Gui.h"
+#include "SDL_ttf/include/SDL_ttf.h"
 #include "j1Input.h"
 
 InputBox::InputBox(const int& pos_x, const int& pos_y, const char* txt, const Color& c, const char* path_font, const SDL_Rect& rect, bool drawable, UI* parent) : UI(pos_x, pos_y, parent, 0, 0, drawable)
@@ -40,6 +41,7 @@ void InputBox::CleanUp()
 	delete cursor;
 	cursor = nullptr;
 	App->tex->UnLoad(texture);
+	App->fonts->DeleteFonts(font);
 }
 
 void InputBox::InnerDraw()

@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Console.h"
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
@@ -27,6 +28,7 @@ j1Input::~j1Input()
 bool j1Input::Awake(pugi::xml_node& config)
 {
 	LOG("Init SDL input event system");
+	App->console->SetLog("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
